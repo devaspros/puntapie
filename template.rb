@@ -56,6 +56,7 @@ def add_gems
   end
 
   gem_group :development, :test do
+    gem 'amazing_print', '1.2.2'
     gem 'dotenv-rails'
   end
 
@@ -75,6 +76,20 @@ def set_application_name
 
   # Announce the user where they can change the application name in the future.
   puts "You can change application name inside: ./config/application.rb"
+end
+
+def disable_default_generators
+file 'config/initializers/generators.rb', <<-CODE
+Rails.application.config.generators do |g|
+  g.javascripts false
+  g.jbuilder false
+  g.stylesheets false
+  g.assets false
+  g.helper false
+  g.view_specs false
+  g.helper_specs false
+end
+CODE
 end
 
 def stop_spring
@@ -188,6 +203,7 @@ add_gems
 
 after_bundle do
   set_application_name
+  disable_default_generators
   stop_spring
   add_users
   add_authorization
