@@ -1,6 +1,18 @@
 require "fileutils"
 require "shellwords"
 
+def rails_version
+  @rails_version ||= Gem::Version.new(Rails::VERSION::STRING)
+end
+
+def rails_5?
+  Gem::Requirement.new(">= 5.2.0", "< 6.0.0.beta1").satisfied_by? rails_version
+end
+
+def rails_6?
+  Gem::Requirement.new(">= 6.0.0.beta1", "< 7").satisfied_by? rails_version
+end
+
 # Copied from: https://github.com/mattbrictson/rails-template
 # Add this template directory to source_paths so that Thor actions like
 # copy_file and template resolve against our source files. If this file was
@@ -23,18 +35,6 @@ def add_template_repository_to_source_path
   else
     source_paths.unshift(File.dirname(__FILE__))
   end
-end
-
-def rails_version
-  @rails_version ||= Gem::Version.new(Rails::VERSION::STRING)
-end
-
-def rails_5?
-  Gem::Requirement.new(">= 5.2.0", "< 6.0.0.beta1").satisfied_by? rails_version
-end
-
-def rails_6?
-  Gem::Requirement.new(">= 6.0.0.beta1", "< 7").satisfied_by? rails_version
 end
 
 def add_gems
@@ -69,6 +69,10 @@ def set_application_name
 
   # Announce the user where they can change the application name in the future.
   puts "You can change application name inside: ./config/application.rb"
+end
+
+def stop_spring
+  run "spring stop"
 end
 
 def add_users
@@ -129,6 +133,24 @@ JS
   insert_into_file 'config/webpack/environment.js', content + "\n", before: "module.exports = environment"
 end
 
+def add_sidekiq
+  environment "config.active_job.queue_adapter = :sidekiq"
+
+  insert_into_file "config/routes.rb",
+    "require 'sidekiq/web'\n\n",
+    before: "Rails.application.routes.draw do"
+
+  content = <<~RUBY
+              authenticate :user, lambda { |u| u.admin? } do
+                mount Sidekiq::Web => '/sidekiq'
+
+                namespace :admin do
+                end
+              end
+            RUBY
+  insert_into_file "config/routes.rb", "#{content}\n", after: "Rails.application.routes.draw do\n"
+end
+
 def copy_templates
   remove_file "app/assets/stylesheets/application.css"
 
@@ -139,30 +161,8 @@ def copy_templates
   directory "app", force: true
 end
 
-def add_sidekiq
-  environment "config.active_job.queue_adapter = :sidekiq"
-
-  insert_into_file "config/routes.rb",
-    "require 'sidekiq/web'\n\n",
-    before: "Rails.application.routes.draw do"
-
-  content = <<~RUBY
-                authenticate :user, lambda { |u| u.admin? } do
-                  mount Sidekiq::Web => '/sidekiq'
-
-                  namespace :admin do
-                  end
-                end
-            RUBY
-  insert_into_file "config/routes.rb", "#{content}\n", after: "Rails.application.routes.draw do\n"
-end
-
 def add_whenever
   run "wheneverize ."
-end
-
-def stop_spring
-  run "spring stop"
 end
 
 # Main setup
