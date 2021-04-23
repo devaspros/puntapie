@@ -51,6 +51,7 @@ def add_gems
   gem 'whenever', require: false
 
   gem_group :development do
+    gem 'annotate', '~> 3'
     gem 'foreman'
   end
 
@@ -160,6 +161,8 @@ def add_sidekiq
 end
 
 def copy_templates
+  remove_file "config/credentials.yml.enc"
+  remove_file "config/master.key"
   remove_file "app/assets/stylesheets/application.css"
 
   copy_file "Procfile"
@@ -167,6 +170,7 @@ def copy_templates
   copy_file ".foreman"
   copy_file ".env.example"
   copy_file ".env"
+  copy_file "lib/tasks/auto_annotate_models.rake"
 
   copy_file "gitignore", ".gitignore", force: true
 
