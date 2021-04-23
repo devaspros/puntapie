@@ -11,10 +11,10 @@ trim_trailing_whitespace = true
 
 # Matches multiple files with brace expansion notation
 # Set default charset
-[*.{js,rb,erb,css,scss}]
+[*.{js,rb,erb,css,scss,tt}]
 charset = utf-8
 
 # 2 space indentation
-[*.{js,rb,erb,css,scss,rake}]
+[*.{js,rb,erb,css,scss,rake,tt}]
 indent_style = space
 indent_size = 2

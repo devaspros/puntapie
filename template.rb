@@ -209,7 +209,8 @@ end
 # Main setup
 add_template_repository_to_source_path
 
-add_gems
+template "Gemfile.tt", force: true
+# add_gems
 
 after_bundle do
   set_application_name
