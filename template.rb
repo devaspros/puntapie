@@ -37,35 +37,6 @@ def add_template_repository_to_source_path
   end
 end
 
-def add_gems
-  gem 'bootstrap', '~> 4.5'
-  gem 'blueprinter'
-  gem 'devise', '~> 4.7', '>= 4.7.1'
-  gem 'devise-bootstrapped', github: 'excid3/devise-bootstrapped', branch: 'bootstrap4'
-  gem 'devise_masquerade', '~> 1.2'
-  gem 'font-awesome-sass', '~> 5.13'
-  gem 'name_of_person', '~> 1.1'
-  gem 'pundit', '~> 2.1'
-  gem 'redis', '~> 4.2', '>= 4.2.2'
-  gem 'sidekiq', '~> 6.1'
-  gem 'whenever', require: false
-
-  gem_group :development do
-    gem 'annotate', '~> 3'
-    gem 'foreman'
-  end
-
-  gem_group :development, :test do
-    gem 'amazing_print', '1.2.2'
-    gem 'dotenv-rails'
-  end
-
-  if rails_5?
-    gsub_file "Gemfile", /gem 'sqlite3'/, "gem 'sqlite3', '~> 1.3.0'"
-    gem 'webpacker', '~> 5.1', '>= 5.1.1'
-  end
-end
-
 def set_application_name
   # Add Application Name to Config
   if rails_5?
@@ -210,7 +181,6 @@ end
 add_template_repository_to_source_path
 
 template "Gemfile.tt", force: true
-# add_gems
 
 after_bundle do
   set_application_name
