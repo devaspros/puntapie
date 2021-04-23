@@ -200,6 +200,5 @@ after_bundle do
   say "  # Update config/database.yml with your database credentials"
   say
   say "  rails db:create db:migrate"
-  say "  rails g madmin:install # Generate admin dashboards"
   say "  foreman start # Run Rails, sidekiq, and webpack-dev-server"
 end
