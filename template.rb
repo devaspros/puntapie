@@ -108,6 +108,9 @@ def add_users
       /  # config.secret_key = .+/,
       "  config.secret_key = Rails.application.credentials.secret_key_base"
   end
+
+  # Add Devise masqueradable to users
+  inject_into_file("app/models/user.rb", " :masqueradable, ", after: "devise")
 end
 
 def add_authorization
