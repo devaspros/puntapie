@@ -23,3 +23,28 @@ o desde archivo local:
 ```bash
 rails new myapp -d postgresql -m template.rb
 ```
+
+## ¿Qué incluye?
+
+- Namespace de API
+- .editorconfig
+- Archivos .env
+- Archivos Foreman (Procfile)
+- Vistas de Devise con Bootstrap
+
+Gemas:
+
+- Puma
+- Webpacker
+- Turbolinks
+- Devise
+- Blueprinter
+- Bootstrap
+- Devise Masquerade
+- Pundit
+- Redis
+- Sidekiq
+- Annotate
+- Foreman
+- Amazing Print
+- Dotenv Rails
