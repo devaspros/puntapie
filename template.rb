@@ -53,6 +53,10 @@ def add_gems
     gem 'foreman'
   end
 
+  gem_group :development, :test do
+    gem 'dotenv-rails'
+  end
+
   if rails_5?
     gsub_file "Gemfile", /gem 'sqlite3'/, "gem 'sqlite3', '~> 1.3.0'"
     gem 'webpacker', '~> 5.1', '>= 5.1.1'
@@ -157,6 +161,10 @@ def copy_templates
   copy_file "Procfile"
   copy_file "Procfile.dev"
   copy_file ".foreman"
+  copy_file ".env.example"
+  copy_file ".env"
+
+  copy_file "gitignore", ".gitignore", force: true
 
   directory "app", force: true
 end
