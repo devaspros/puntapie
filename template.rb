@@ -166,6 +166,7 @@ def copy_templates
   copy_file ".foreman"
   copy_file ".env.example"
   copy_file ".env"
+  copy_file ".editorconfig"
   copy_file "lib/tasks/auto_annotate_models.rake"
 
   copy_file "gitignore", ".gitignore", force: true
