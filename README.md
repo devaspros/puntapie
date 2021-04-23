@@ -12,7 +12,7 @@ Plantilla para empezar aplicaciones Rails.
 
 ## Modo de uso
 
-Desde el repositorio
+Desde el repositorio:
 
 ```bash
 rails new myapp -d postgresql -m https://raw.githubusercontent.com/devaspros/puntapie/master/template.rb
@@ -21,5 +21,5 @@ rails new myapp -d postgresql -m https://raw.githubusercontent.com/devaspros/pun
 o desde archivo local:
 
 ```bash
-rails new myapp -d postgresql -m template.rb --rc ./.railsrc
+rails new myapp -d postgresql -m template.rb
 ```
