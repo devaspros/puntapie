@@ -100,9 +100,6 @@ def add_users
       /  # config.secret_key = .+/,
       "  config.secret_key = Rails.application.credentials.secret_key_base"
   end
-
-  # Add Devise masqueradable to users
-  inject_into_file("app/models/user.rb", ":masqueradable, :", after: "devise :")
 end
 
 def add_authorization
@@ -110,11 +107,6 @@ def add_authorization
 end
 
 def add_webpack
-  # Rails 6+ comes with webpacker by default, so we can skip this step
-  return if rails_6?
-
-  # Our application layout already includes the javascript_pack_tag,
-  # so we don't need to inject it
   rails_command 'webpacker:install'
 end
 
@@ -126,12 +118,12 @@ def add_javascript
   end
 
 content = <<-JS
-  const webpack = require('webpack')
-  environment.plugins.append('Provide', new webpack.ProvidePlugin({
-    $: 'jquery',
-    jQuery: 'jquery',
-    Rails: '@rails/ujs'
-  }))
+const webpack = require('webpack')
+environment.plugins.append('Provide', new webpack.ProvidePlugin({
+  $: 'jquery',
+  jQuery: 'jquery',
+  Rails: '@rails/ujs'
+}))
 JS
 
   insert_into_file 'config/webpack/environment.js', content + "\n", before: "module.exports = environment"
@@ -189,8 +181,6 @@ after_bundle do
 
   copy_templates
   add_whenever
-
-  rails_command "active_storage:install"
 
   # Commit everything to git
   unless ENV["SKIP_GIT"]

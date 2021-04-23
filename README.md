@@ -21,5 +21,5 @@ rails new myapp -d postgresql -m https://raw.githubusercontent.com/devaspros/pun
 o desde archivo local:
 
 ```bash
-rails new myapp -d postgresql -m template.rb
+rails new myapp -d postgresql -m template.rb --rc ./.railsrc
 ```
