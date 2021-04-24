@@ -178,6 +178,20 @@ def add_whenever
   run "wheneverize ."
 end
 
+def configure_rspec
+  generate 'rspec:install'
+
+  copy_file "spec/support/factory_bot.rb"
+  copy_file "spec/support/shoulda_matchers.rb"
+  copy_file "spec/support/database_cleaner.rb"
+  copy_file "spec/support/request_spec_helper.rb"
+  copy_file "spec/rails_helper.rb", force: true
+  copy_file "spec/spec_helper.rb", force: true
+
+  copy_file ".simplecov"
+  copy_file ".spec"
+end
+
 # Main setup
 add_template_repository_to_source_path
 
@@ -197,6 +211,8 @@ after_bundle do
   copy_templates
   add_whenever
 
+  configure_rspec
+
   # Commit everything to git
   unless ENV["SKIP_GIT"]
     git :init
@@ -212,7 +228,7 @@ after_bundle do
   say "To get started with your new app:", :green
   say "  cd #{app_name}"
   say
-  say "  # Update config/database.yml with your database credentials"
+  say "  Update config/database.yml with your database credentials"
   say
   say "  rails db:create db:migrate"
   say "  foreman start # Run Rails, sidekiq, and webpack-dev-server"
