@@ -1,13 +1,13 @@
 # Puntapie
 
-Plantilla para empezar aplicaciones Rails.
+Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 
 ## Requisitos
 
 * Ruby 2.5+
 * Redis
-* bundler - `gem install bundler`
-* rails - `gem install rails`
+* Bundler - `gem install bundler`
+* Rails - `gem install rails`
 * Yarn - `brew install yarn` o [Install Yarn](https://yarnpkg.com/en/docs/install)
 
 ## Modo de uso
@@ -15,13 +15,14 @@ Plantilla para empezar aplicaciones Rails.
 Desde el repositorio:
 
 ```bash
-rails new myapp -d postgresql -m https://raw.githubusercontent.com/devaspros/puntapie/master/template.rb
+rails new /path/to/app -d postgresql \
+  -m https://raw.githubusercontent.com/devaspros/puntapie/master/template.rb
 ```
 
 o desde archivo local:
 
 ```bash
-rails new myapp -d postgresql -m template.rb
+rails new /path/to/app -d postgresql -m ~/puntapie/template.rb
 ```
 
 ## ¿Qué incluye?
@@ -31,6 +32,7 @@ rails new myapp -d postgresql -m template.rb
 - Archivos .env
 - Archivos Foreman (Procfile)
 - Vistas de Devise con Bootstrap
+- RSpec y configuración general
 
 Gemas:
 
@@ -48,3 +50,8 @@ Gemas:
 - Foreman
 - Amazing Print
 - Dotenv Rails
+- RSpec Rails
+- Factory Bot
+- Shoulda Matchers
+- Databse Cleaner
+- Simplecov
