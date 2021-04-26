@@ -154,6 +154,8 @@ def copy_templates
 
   copy_file "config/routes.rb", force: true
 
+  template "README.md.tt", force: true
+
   directory "app", force: true
 end
 
