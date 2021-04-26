@@ -68,24 +68,20 @@ def stop_spring
 end
 
 def add_users
-  # Install Devise
   generate "devise:install"
 
   # Configure Devise
   environment "config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }",
               env: 'development'
-  route "root to: 'home#index'"
 
   # Devise notices are installed via Bootstrap
   generate "devise:views:bootstrapped"
 
-  # Create Devise User
   generate :devise, "User",
            "first_name",
            "last_name",
            "admin:boolean"
 
-  # Set admin default to false
   in_root do
     migration = Dir.glob("db/migrate/*").max_by{ |f| File.mtime(f) }
     gsub_file migration, /:admin/, ":admin, default: false"
@@ -97,7 +93,6 @@ def add_users
       "  config.secret_key = Rails.application.credentials.secret_key_base"
   end
 
-  # Add Devise masqueradable to users
   inject_into_file("app/models/user.rb", " :masqueradable, ", after: "devise")
 end
 
@@ -130,20 +125,6 @@ end
 
 def add_sidekiq
   environment "config.active_job.queue_adapter = :sidekiq"
-
-  insert_into_file "config/routes.rb",
-    "require 'sidekiq/web'\n\n",
-    before: "Rails.application.routes.draw do"
-
-  content = <<~RUBY
-              authenticate :user, lambda { |u| u.admin? } do
-                mount Sidekiq::Web => '/sidekiq'
-
-                namespace :admin do
-                end
-              end
-            RUBY
-  insert_into_file "config/routes.rb", "#{content}\n", after: "Rails.application.routes.draw do\n"
 end
 
 def add_api_namespace
@@ -170,6 +151,8 @@ def copy_templates
   copy_file "lib/tasks/auto_annotate_models.rake"
 
   copy_file "gitignore", ".gitignore", force: true
+
+  copy_file "config/routes.rb", force: true
 
   directory "app", force: true
 end
@@ -206,7 +189,6 @@ after_bundle do
   add_webpack
   add_javascript
   add_sidekiq
-  add_api_namespace
 
   copy_templates
   add_whenever
