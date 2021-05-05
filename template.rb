@@ -157,6 +157,7 @@ def copy_templates
   template "README.md.tt", force: true
 
   directory "app", force: true
+  directory ".github", force: true
 end
 
 def add_whenever
