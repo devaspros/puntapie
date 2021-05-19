@@ -56,9 +56,6 @@ end
 def add_users
   generate "devise:install"
 
-  # Configure Devise
-  environment "config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }", env: 'development'
-
   # Devise notices are installed via Bootstrap
   generate "devise:views:bootstrapped"
 
@@ -160,6 +157,21 @@ def active_storage_setup
   rails_command "active_storage:install"
 end
 
+def add_action_mailer_development_configs
+  development_smtp_settings = <<~SMTP_SETTINGS
+    config.action_mailer.default_url_options = { host: 'localhost' }
+
+    config.action_mailer.delivery_method = :smtp
+
+    config.action_mailer.smtp_settings = {
+      address: 'localhost',
+      port: 1025
+    }
+  SMTP_SETTINGS
+
+  environment(development_smtp_settings, env: "development")
+end
+
 # Main setup
 add_template_repository_to_source_path
 
@@ -180,6 +192,7 @@ after_bundle do
 
   configure_rspec
   active_storage_setup
+  add_action_mailer_development_configs
 
   # Commit everything to git
   unless ENV["SKIP_GIT"]
