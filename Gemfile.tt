@@ -21,7 +21,7 @@ gem 'font-awesome-sass', '~> 5.13'
 gem 'name_of_person', '~> 1.1'
 gem 'pundit', '~> 2.1'
 gem 'redis', '~> 4.2', '>= 4.2.2'
-gem 'sidekiq', '~> 6.1'
+gem 'sidekiq'
 gem 'whenever', require: false
 
 group :development do
