@@ -186,6 +186,31 @@ def add_action_mailer_configs
   environment(production_smtp_settings, env: "production")
 end
 
+def setup_exception_handler
+  development_exception_handler = <<~CONFIG
+    config.exception_handler = {
+      dev: false,
+      exceptions: {
+        '4xx' => { layout: '4xx' },
+        '5xx' => { layout: '5xx' }
+      }
+    }
+  CONFIG
+
+  environment(development_exception_handler, env: "development")
+
+  production_exception_handler = <<~CONFIG
+    config.exception_handler = {
+      exceptions: {
+        '4xx' => { layout: '4xx' },
+        '5xx' => { layout: '5xx' }
+      }
+    }
+  CONFIG
+
+  environment(production_exception_handler, env: "production")
+end
+
 # Main setup
 add_template_repository_to_source_path
 
@@ -207,6 +232,7 @@ after_bundle do
   configure_rspec
   active_storage_setup
   add_action_mailer_configs
+  setup_exception_handler
 
   # Commit everything to git
   unless ENV["SKIP_GIT"]
