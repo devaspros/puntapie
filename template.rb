@@ -107,6 +107,9 @@ end
 
 def add_sidekiq
   environment "config.active_job.queue_adapter = :sidekiq"
+
+  copy_file "config/sidekiq.yml", force: true
+  copy_file "config/initializers/sidekiq.rb", force: true
 end
 
 def copy_templates
