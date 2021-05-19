@@ -5,14 +5,6 @@ def rails_version
   @rails_version ||= Gem::Version.new(Rails::VERSION::STRING)
 end
 
-def rails_5?
-  Gem::Requirement.new(">= 5.2.0", "< 6.0.0.beta1").satisfied_by? rails_version
-end
-
-def rails_6?
-  Gem::Requirement.new(">= 6.0.0.beta1", "< 7").satisfied_by? rails_version
-end
-
 # Copied from: https://github.com/mattbrictson/rails-template
 # Add this template directory to source_paths so that Thor actions like
 # copy_file and template resolve against our source files. If this file was
@@ -38,29 +30,23 @@ def add_template_repository_to_source_path
 end
 
 def set_application_name
-  # Add Application Name to Config
-  if rails_5?
-    environment "config.application_name = Rails.application.class.parent_name"
-  else
-    environment "config.application_name = Rails.application.class.module_parent_name"
-  end
+  environment "config.application_name = Rails.application.class.module_parent_name"
 
-  # Announce the user where they can change the application name in the future.
   puts "You can change application name inside: ./config/application.rb"
 end
 
 def disable_default_generators
-file 'config/initializers/generators.rb', <<-CODE
-Rails.application.config.generators do |g|
-  g.javascripts false
-  g.jbuilder false
-  g.stylesheets false
-  g.assets false
-  g.helper false
-  g.view_specs false
-  g.helper_specs false
-end
-CODE
+  file 'config/initializers/generators.rb', <<~CODE
+    Rails.application.config.generators do |g|
+      g.javascripts false
+      g.jbuilder false
+      g.stylesheets false
+      g.assets false
+      g.helper false
+      g.view_specs false
+      g.helper_specs false
+    end
+  CODE
 end
 
 def stop_spring
@@ -71,16 +57,12 @@ def add_users
   generate "devise:install"
 
   # Configure Devise
-  environment "config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }",
-              env: 'development'
+  environment "config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }", env: 'development'
 
   # Devise notices are installed via Bootstrap
   generate "devise:views:bootstrapped"
 
-  generate :devise, "User",
-           "first_name",
-           "last_name",
-           "admin:boolean"
+  generate :devise, "User", "first_name", "last_name", "admin:boolean"
 
   in_root do
     migration = Dir.glob("db/migrate/*").max_by{ |f| File.mtime(f) }
@@ -107,18 +89,18 @@ end
 def add_javascript
   run "yarn add expose-loader jquery popper.js bootstrap data-confirm-modal local-time"
 
-  if rails_5?
-    run "yarn add turbolinks @rails/actioncable@pre @rails/actiontext@pre @rails/activestorage@pre @rails/ujs@pre"
-  end
-
-content = <<-JS
-const webpack = require('webpack')
-environment.plugins.append('Provide', new webpack.ProvidePlugin({
-  $: 'jquery',
-  jQuery: 'jquery',
-  Rails: '@rails/ujs'
-}))
-JS
+  content = <<~CODE
+    const webpack = require('webpack')
+    environment.plugins.append('Provide',
+      new webpack.ProvidePlugin(
+        {
+          $: 'jquery',
+          jQuery: 'jquery',
+          Rails: '@rails/ujs'
+        }
+      )
+    )
+  CODE
 
   insert_into_file 'config/webpack/environment.js', content + "\n", before: "module.exports = environment"
 end
