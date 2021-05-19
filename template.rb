@@ -150,6 +150,13 @@ def configure_rspec
   copy_file ".spec"
 end
 
+def active_storage_setup
+  copy_file "config/storage.yml", force: true
+  directory "storage", force: true
+
+  rails_command "active_storage:install"
+end
+
 # Main setup
 add_template_repository_to_source_path
 
@@ -169,6 +176,7 @@ after_bundle do
   add_whenever
 
   configure_rspec
+  active_storage_setup
 
   # Commit everything to git
   unless ENV["SKIP_GIT"]

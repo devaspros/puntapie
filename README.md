@@ -4,11 +4,11 @@ Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 
 ## Requisitos
 
-* Ruby 2.5+
+* Ruby 2.7.1+
 * Redis
-* Bundler - `gem install bundler`
-* Rails - `gem install rails`
-* Yarn - `brew install yarn` o [Install Yarn](https://yarnpkg.com/en/docs/install)
+* Bundler `gem install bundler`
+* Rails `gem install rails`
+* Yarn `brew install yarn` o [Instala Yarn](https://yarnpkg.com/en/docs/install)
 
 ## Modo de uso
 
@@ -27,14 +27,16 @@ rails new /path/to/app -d postgresql -m ~/puntapie/template.rb
 
 ## ¿Qué incluye?
 
+### Configuraciones y Archivos
+
 - Namespace de API
 - .editorconfig
 - Archivos .env
-- Archivos Foreman (Procfile)
+- Archivos Foreman (Procfile) con Release Phase para Heroku
 - Vistas de Devise con Bootstrap
-- RSpec y configuración general
+- RSpec configurado
 
-Gemas:
+### Gemas
 
 - [annotate](https://github.com/ctran/annotate_models)
 - [amazing_print](https://github.com/amazing-print/amazing_print)
