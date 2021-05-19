@@ -157,7 +157,7 @@ def active_storage_setup
   rails_command "active_storage:install"
 end
 
-def add_action_mailer_development_configs
+def add_action_mailer_configs
   development_smtp_settings = <<~SMTP_SETTINGS
     config.action_mailer.default_url_options = { host: 'localhost' }
 
@@ -170,6 +170,20 @@ def add_action_mailer_development_configs
   SMTP_SETTINGS
 
   environment(development_smtp_settings, env: "development")
+
+  production_smtp_settings = <<~SMTP_SETTINGS
+    config.action_mailer.delivery_method = :smtp
+
+    config.action_mailer.smtp_settings = {
+      domain: ENV['MAILGUN_DOMAIN'],
+      address: ENV['MAILGUN_HOST'],
+      user_name: ENV['MAILGUN_USERNAME'],
+      password: ENV['MAILGUN_PASSWORD'],
+      port: 587
+    }
+  SMTP_SETTINGS
+
+  environment(production_smtp_settings, env: "production")
 end
 
 # Main setup
@@ -192,7 +206,7 @@ after_bundle do
 
   configure_rspec
   active_storage_setup
-  add_action_mailer_development_configs
+  add_action_mailer_configs
 
   # Commit everything to git
   unless ENV["SKIP_GIT"]
