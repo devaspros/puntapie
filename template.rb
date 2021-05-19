@@ -127,16 +127,6 @@ def add_sidekiq
   environment "config.active_job.queue_adapter = :sidekiq"
 end
 
-def add_api_namespace
-  content = <<~RUBY
-              namespace 'api', default: { format: 'json' }, path: '/' do
-                namespace :v1 do
-                end
-              end
-            RUBY
-  insert_into_file "config/routes.rb", "#{content}\n", after: "Rails.application.routes.draw do\n"
-end
-
 def copy_templates
   remove_file "config/credentials.yml.enc"
   remove_file "config/master.key"
