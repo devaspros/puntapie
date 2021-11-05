@@ -42,3 +42,5 @@ yarn-debug.log*
 /config/master.key
 /.env.development
 /.env
+
+coverage/*
