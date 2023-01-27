@@ -72,6 +72,7 @@ end
 
 def add_webpack
   rails_command 'webpacker:install'
+  run("yarn add --dev webpack-dev-server@^3")
 end
 
 def add_javascript
