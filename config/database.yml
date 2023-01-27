@@ -1,0 +1,19 @@
+default: &default
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: puntapie_development
+
+test:
+  <<: *default
+  database: puntapie_test
+  username: <%= ENV.fetch("POSTGRES_USER", "") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD", "") %>
+
+production:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>

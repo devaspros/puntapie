@@ -1,14 +1,12 @@
 require "fileutils"
 require "shellwords"
 
-def rails_version
-  @rails_version ||= Gem::Version.new(Rails::VERSION::STRING)
-end
-
 # Copied from: https://github.com/mattbrictson/rails-template
+#
 # Add this template directory to source_paths so that Thor actions like
 # copy_file and template resolve against our source files. If this file was
 # invoked remotely via HTTP, that means the files are not present locally.
+#
 # In that case, use `git clone` to download them to a local temporary dir.
 def add_template_repository_to_source_path
   if __FILE__ =~ %r{\Ahttps?://}
@@ -56,20 +54,13 @@ end
 def add_users
   generate "devise:install"
 
-  # Devise notices are installed via Bootstrap
-  generate "devise:views:bootstrapped"
+  generate "devise:views:bootstrapped" # Devise notices are installed via Bootstrap
 
   generate :devise, "User", "first_name", "last_name", "admin:boolean"
 
   in_root do
     migration = Dir.glob("db/migrate/*").max_by{ |f| File.mtime(f) }
     gsub_file migration, /:admin/, ":admin, default: false"
-  end
-
-  if Gem::Requirement.new("> 5.2").satisfied_by? rails_version
-    gsub_file "config/initializers/devise.rb",
-      /  # config.secret_key = .+/,
-      "  config.secret_key = Rails.application.credentials.secret_key_base"
   end
 
   inject_into_file("app/models/user.rb", " :masqueradable, ", after: "devise")
@@ -125,15 +116,12 @@ def copy_templates
   copy_file "gitignore", ".gitignore", force: true
 
   copy_file "config/routes.rb", force: true
+  copy_file "config/database.yml", force: true
 
   template "README.md.tt", force: true
 
   directory "app", force: true
   directory ".github", force: true
-end
-
-def add_whenever
-  run "wheneverize ."
 end
 
 def configure_rspec
@@ -227,17 +215,16 @@ after_bundle do
   add_sidekiq
 
   copy_templates
-  add_whenever
 
   configure_rspec
   active_storage_setup
   add_action_mailer_configs
   setup_exception_handler
 
-  # Commit everything to git
   unless ENV["SKIP_GIT"]
     git :init
     git add: "."
+
     # git commit will fail if user.email is not configured
     begin
       git commit: %( -m 'Initial commit' )
@@ -252,5 +239,5 @@ after_bundle do
   say "  Update config/database.yml with your database credentials"
   say
   say "  rails db:create db:migrate"
-  say "  foreman start # Run Rails, sidekiq, and webpack-dev-server"
+  say "  foreman start # Runs rails, sidekiq, and webpack-dev-server"
 end
