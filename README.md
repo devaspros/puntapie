@@ -4,7 +4,8 @@ Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 
 ## Requisitos
 
-* Ruby 2.7.1+
+* Rails 7
+* Ruby 3.1.0
 * Redis
 * Bundler `gem install bundler`
 * Rails `gem install rails`
@@ -23,6 +24,8 @@ o desde archivo local:
 
 ```bash
 rails new /path/to/app -d postgresql -m ~/puntapie/template.rb
+
+rails new /path/to/app -d sqlite3 -m ~/puntapie/template.rb
 ```
 
 ## ¿Qué incluye?
@@ -48,6 +51,7 @@ rails new /path/to/app -d postgresql -m ~/puntapie/template.rb
 - [dotenv-rails](https://github.com/bkeepers/dotenv)
 - [factory-bot](https://github.com/thoughtbot/factory_bot/)
 - [foreman](https://github.com/ddollar/foreman)
+- [importmap-rails](https://github.com/rails/importmap-rails)
 - [pundit](https://github.com/varvet/pundit)
 - [puma](https://github.com/puma/puma)
 - [redis](https://github.com/redis/redis-rb)
@@ -55,5 +59,5 @@ rails new /path/to/app -d postgresql -m ~/puntapie/template.rb
 - [shoulda-matchers](https://github.com/thoughtbot/shoulda-matchers)
 - [sidekiq](https://github.com/mperham/sidekiq)
 - [simplecov](https://github.com/simplecov-ruby/simplecov)
-- [turbolinks](https://github.com/turbolinks/turbolinks)
-- [webpacker](https://github.com/rails/webpacker)
+- [stimulus-rails](https://github.com/hotwired/stimulus-rails)
+- [turbo-rails](https://github.com/hotwired/turbo-rails)
