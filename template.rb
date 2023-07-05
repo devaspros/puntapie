@@ -70,30 +70,6 @@ def add_authorization
   generate 'pundit:install'
 end
 
-def add_webpack
-  rails_command 'webpacker:install'
-  run("yarn add --dev webpack-dev-server@^3")
-end
-
-def add_javascript
-  run "yarn add expose-loader jquery popper.js bootstrap data-confirm-modal local-time"
-
-  content = <<~CODE
-    const webpack = require('webpack')
-    environment.plugins.append('Provide',
-      new webpack.ProvidePlugin(
-        {
-          $: 'jquery',
-          jQuery: 'jquery',
-          Rails: '@rails/ujs'
-        }
-      )
-    )
-  CODE
-
-  insert_into_file 'config/webpack/environment.js', content + "\n", before: "module.exports = environment"
-end
-
 def add_sidekiq
   environment "config.active_job.queue_adapter = :sidekiq"
 
@@ -211,8 +187,6 @@ after_bundle do
   stop_spring
   add_users
   add_authorization
-  add_webpack
-  add_javascript
   add_sidekiq
 
   copy_templates
@@ -240,5 +214,5 @@ after_bundle do
   say "  Update config/database.yml with your database credentials"
   say
   say "  rails db:create db:migrate"
-  say "  foreman start # Runs rails, sidekiq, and webpack-dev-server"
+  say "  foreman start # Runs rails, sidekiq"
 end
