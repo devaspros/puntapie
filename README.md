@@ -9,7 +9,6 @@ Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 * Redis
 * Bundler `gem install bundler`
 * Rails `gem install rails`
-* Yarn `brew install yarn` o [Instala Yarn](https://yarnpkg.com/en/docs/install)
 
 ## Modo de uso
 
