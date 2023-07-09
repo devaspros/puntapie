@@ -56,7 +56,7 @@ def add_users
 
   generate "devise:views:bootstrapped" # Devise notices are installed via Bootstrap
 
-  generate :devise, "User", "first_name", "last_name", "admin:boolean"
+  generate :devise, "User", "first_name:string", "last_name:string", "admin:boolean"
 
   in_root do
     migration = Dir.glob("db/migrate/*").max_by{ |f| File.mtime(f) }
