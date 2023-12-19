@@ -6,14 +6,12 @@ default: &default
 
 development:
   <<: *default
-  database: puntapie_development
+  database: db/puntapie_development
 
 test:
   <<: *default
-  database: puntapie_test
-  username: <%= ENV.fetch("POSTGRES_USER", "") %>
-  password: <%= ENV.fetch("POSTGRES_PASSWORD", "") %>
+  database: db/puntapie_test
 
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  database: db/puntapie

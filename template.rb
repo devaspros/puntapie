@@ -196,6 +196,8 @@ after_bundle do
   add_action_mailer_configs
   setup_exception_handler
 
+  run "bundle lock --add-platform x86_64-linux"
+
   unless ENV["SKIP_GIT"]
     git :init
     git add: "."
