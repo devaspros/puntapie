@@ -6,12 +6,12 @@ default: &default
 
 development:
   <<: *default
-  database: db/puntapie_development
+  database: db/puntapie_development.sqlite3
 
 test:
   <<: *default
-  database: db/puntapie_test
+  database: db/puntapie_test.sqlite3
 
 production:
   <<: *default
-  database: db/puntapie
+  database: db/puntapie.sqlite3
