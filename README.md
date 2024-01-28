@@ -22,9 +22,9 @@ rails new /path/to/app -d postgresql \
 o desde archivo local:
 
 ```bash
-rails new /path/to/app -d postgresql -m ~/puntapie/template.rb
+rails _7.0.1_ new ../pietest -d postgresql -m ./template.rb
 
-rails new /path/to/app -d sqlite3 -m ~/puntapie/template.rb
+rails _7.0.1_ new ../pietest -d sqlite3 -m ./template.rb
 ```
 
 ## ¿Qué incluye?
