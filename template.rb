@@ -93,9 +93,18 @@ def copy_templates
   copy_file "config/routes.rb", force: true
   copy_file "config/database.yml", force: true
 
+  # Copy initial importmap with Hotwire libs, Bootstrap and Popper
+  copy_file "config/importmap.rb", force: true
+
+  # This file contains configuration for bootstrap and popper.js
+  copy_file "config/initializers/assets.rb", force: true
+
   template "README.md.tt", force: true
 
+  # Copy everything from app folder to generated rails_app
   directory "app", force: true
+
+  # Copy everything from .github folder to generated rails_app
   directory ".github", force: true
 end
 
