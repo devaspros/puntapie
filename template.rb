@@ -54,8 +54,6 @@ end
 def add_users
   generate "devise:install"
 
-  generate "devise:views:bootstrapped" # Devise notices are installed via Bootstrap
-
   generate :devise, "User", "first_name:string", "last_name:string", "admin:boolean"
 
   in_root do
