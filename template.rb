@@ -60,8 +60,6 @@ def add_users
     migration = Dir.glob("db/migrate/*").max_by{ |f| File.mtime(f) }
     gsub_file migration, /:admin/, ":admin, default: false"
   end
-
-  inject_into_file("app/models/user.rb", " :masqueradable, ", after: "devise")
 end
 
 def add_authorization

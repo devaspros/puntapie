@@ -46,7 +46,6 @@ rails _7.0.1_ new ../pietest -d sqlite3 -m ./template.rb
 - [blueprinter](https://github.com/procore/blueprinter)
 - [database-cleaner](https://github.com/DatabaseCleaner/database_cleaner)
 - [devise](https://github.com/heartcombo/devise)
-- [devise-masquerade](https://github.com/oivoodoo/devise_masquerade)
 - [dotenv-rails](https://github.com/bkeepers/dotenv)
 - [factory-bot](https://github.com/thoughtbot/factory_bot/)
 - [foreman](https://github.com/ddollar/foreman)
