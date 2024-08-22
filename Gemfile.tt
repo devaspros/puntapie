@@ -5,6 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.0'
 
 gem 'bootstrap', '~> 5.2.3'
+gem 'bootsnap', require: false
 gem 'blueprinter'
 gem 'devise', '4.9.3'
 gem 'exception_handler', '~> 0.8.0.0'

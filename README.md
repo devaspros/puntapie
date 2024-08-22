@@ -23,9 +23,9 @@ rails new _7.0.4_ ./pruebapie -d postgresql -m https://raw.githubusercontent.com
 o desde archivo local:
 
 ```bash
-rails _7.0.1_ new ../pietest -d postgresql -m ./template.rb
+rails _7.0.4_ new ./pruebapie01 -d postgresql -m ./template.rb
 
-rails _7.0.1_ new ../pietest -d sqlite3 -m ./template.rb
+rails _7.0.4_ new ./pruebapie01 -d sqlite3 -m ./template.rb
 ```
 
 ## ¿Qué incluye?
@@ -43,6 +43,7 @@ rails _7.0.1_ new ../pietest -d sqlite3 -m ./template.rb
 
 - [annotate](https://github.com/ctran/annotate_models)
 - [amazing_print](https://github.com/amazing-print/amazing_print)
+- [bootsnap](https://github.com/shopify/bootsnap)
 - [bootstrap](https://github.com/twbs/bootstrap-rubygem)
 - [blueprinter](https://github.com/procore/blueprinter)
 - [database-cleaner](https://github.com/DatabaseCleaner/database_cleaner)
