@@ -4,7 +4,7 @@ Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 
 ## Requisitos
 
-* Rails 7.0.8.4
+* Rails 7.1.4
 * Ruby 3.1.0
 * Redis
 * Bundler `gem install bundler`
@@ -15,17 +15,17 @@ Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 Desde el repositorio:
 
 ```bash
-rails new _7.0.8.4_ ./pruebapie -d sqlite3 -m https://raw.githubusercontent.com/devaspros/puntapie/master/template.rb
+rails new _7.1.4_ ./pruebapie -d sqlite3 -m https://raw.githubusercontent.com/devaspros/puntapie/master/template.rb
 
-rails new _7.0.8.4_ ./pruebapie -d postgresql -m https://raw.githubusercontent.com/devaspros/puntapie/master/template.rb
+rails new _7.1.4_ ./pruebapie -d postgresql -m https://raw.githubusercontent.com/devaspros/puntapie/master/template.rb
 ```
 
 o desde archivo local:
 
 ```bash
-rails _7.0.8.4_ new ../pruebapie01 -d postgresql -m ./template.rb
+rails _7.1.4_ new ../pruebapie01 -d postgresql -m ./template.rb
 
-rails _7.0.8.4_ new ../pruebapie01 -d sqlite3 -m ./template.rb
+rails _7.1.4_ new ../pruebapie01 -d sqlite3 -m ./template.rb
 ```
 
 ## ¿Qué incluye?
