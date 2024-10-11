@@ -85,6 +85,7 @@ def copy_templates
   copy_file ".env"
   copy_file ".editorconfig"
   copy_file "lib/tasks/auto_annotate_models.rake"
+  copy_file "lib/tasks/001_create_users.rake"
 
   copy_file "gitignore", ".gitignore", force: true
 
@@ -223,5 +224,6 @@ after_bundle do
   say "  Update config/database.yml with your database credentials"
   say
   say "  rails db:create db:migrate"
+  say "  rails users:create"
   say "  foreman start # Runs rails, sidekiq"
 end
