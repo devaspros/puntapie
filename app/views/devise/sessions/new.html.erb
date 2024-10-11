@@ -1,0 +1,28 @@
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <h1 class="h3 mb-3 fw-normal text-center">
+    Iniciar Sesión
+  </h1>
+
+  <div class="form-floating">
+    <%= f.email_field :email, autofocus: true, placeholder: "Correo", class: "form-control" %>
+    <%= f.label :email, 'Correo' %>
+  </div>
+
+  <div class="form-floating">
+    <%= f.password_field :password, autocomplete: "off", placeholder: "Contraseña", class: "form-control" %>
+    <%= f.label :password, 'Contraseña' %>
+  </div>
+
+  <% if devise_mapping.rememberable? %>
+    <div class="form-check text-start my-3">
+      <label class="form-check-label">
+        <%= f.check_box :remember_me, class: "form-check-input" %>
+        Recuerdame
+      </label>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.submit "Iniciar sesión", class: "btn btn-primary w-100 py-2" %>
+  </div>
+<% end %>

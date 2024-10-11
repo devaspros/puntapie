@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render "shared/head" %>
+    <%= stylesheet_link_tag "login", media: "all" %>
+  </head>
+
+  <body class="d-flex align-items-center py-4 bg-body-tertiary">
+    <main class="form-signin w-100 m-auto">
+      <%= render "shared/notices" %>
+      <%= yield %>
+    </main>
+  </body>
+</html>
