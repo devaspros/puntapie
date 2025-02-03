@@ -8,7 +8,7 @@ Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 * Ruby 3.1.0
 * Redis
 * Bundler `gem install bundler`
-* Rails `gem install rails`
+* Rails `gem install rails -v 7.1.4`
 
 ## Modo de uso
 
@@ -56,7 +56,6 @@ rails _7.1.4_ new ../pruebapie01 -d sqlite3 -m ./template.rb
 - [puma](https://github.com/puma/puma)
 - [redis](https://github.com/redis/redis-rb)
 - [rspec-rails](https://github.com/rspec/rspec-rails)
-- [shoulda-matchers](https://github.com/thoughtbot/shoulda-matchers)
 - [sidekiq](https://github.com/mperham/sidekiq)
 - [simplecov](https://github.com/simplecov-ruby/simplecov)
 - [stimulus-rails](https://github.com/hotwired/stimulus-rails)
