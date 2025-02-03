@@ -118,6 +118,9 @@ def configure_rspec
   copy_file "spec/rails_helper.rb", force: true
   copy_file "spec/spec_helper.rb", force: true
 
+  directory "spec/requests", force: true
+  directory "spec/factories", force: true
+
   copy_file ".simplecov"
   copy_file ".spec", force: true
 end
