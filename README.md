@@ -15,9 +15,9 @@ Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 Desde el repositorio:
 
 ```bash
-rails new _7.1.4_ ./pruebapie -d sqlite3 -m https://raw.githubusercontent.com/devaspros/puntapie/master/template.rb
+rails _7.1.4_ new ./pruebapie -d sqlite3 -m https://raw.githubusercontent.com/devaspros/puntapie/master/template.rb
 
-rails new _7.1.4_ ./pruebapie -d postgresql -m https://raw.githubusercontent.com/devaspros/puntapie/master/template.rb
+rails _7.1.4_ new ./pruebapie -d postgresql -m https://raw.githubusercontent.com/devaspros/puntapie/master/template.rb
 ```
 
 o desde archivo local:
