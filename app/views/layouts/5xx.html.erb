@@ -1,24 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%= render 'shared/head' %>
+    <%= render "shared/head" %>
   </head>
 
-  <body class="hold-transition register-page">
-    <div class="register-box">
-      <div class="register-logo">
-        Puntapie
-      </div>
-      <!-- Logo -->
+  <body class="">
+    <div class="not-found-page container-fluid mt-5">
+      <h2 class="text-center">
+        Pasó algo que no se supone que pasara.
+      </h2>
 
-      <div class="card">
-        <div class="card-body">
-          <p>
-            Hubo un error. Ya lo detectamos y daremos solución lo más pronto que podamos.
-          </p>
+      <div class="row">
+        <div class="col text-center">
+          <p>Hubo un error. Ya lo detectamos y daremos solución lo más pronto que podamos.</p>
         </div>
       </div>
-      <!-- Card -->
+
+      <div class="row d-flex justify-content-center">
+        <%= image_tag("not_found.jpg", class: "img-fluid w-25") %>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col text-center">
+          <p>Aquí tienes unos enlaces útiles:</p>
+
+          <ul class="list-unstyled">
+            <li>
+              <a href="https://www.sanarcancer.org/" target="_blank" rel="noopener noreferrer">Fundación Sanar</a>
+            </li>
+
+            <li>
+              <a href="https://www.fundaciontepa.org/" target="_blank" rel="noopener noreferrer">Fundación Tepa</a>
+            </li>
+
+            <li>
+              <a href="https://hemolifeamerica.org/" target="_blank" rel="noopener noreferrer">Fundación Nacional Banco de Sangre</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
     </div>
   </body>
 </html>
