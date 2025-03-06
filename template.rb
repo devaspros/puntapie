@@ -98,6 +98,8 @@ def copy_templates
   # This file contains configuration for bootstrap and popper.js
   copy_file "config/initializers/assets.rb", force: true
 
+  copy_file "config/initializers/sentry.rb", force: true
+
   template "README.md.tt", force: true
 
   # Copy everything from app folder to generated rails_app
