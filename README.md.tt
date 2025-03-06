@@ -6,7 +6,7 @@
 
 Install on your computer:
 
-- Ruby 3.1.0
+- Ruby 3.2.5
 - Bundler gem: `gem install bundler`
 - PostgreSQL
 - NodeJS(required JavaScript runtime environment)

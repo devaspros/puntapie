@@ -5,7 +5,7 @@ Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 # Requisitos
 
 * Rails 7.1.4
-* Ruby 3.1.0
+* Ruby 3.2.5
 * Redis
 * Bundler `gem install bundler`
 * Rails `gem install rails -v 7.1.4`

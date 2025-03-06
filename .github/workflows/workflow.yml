@@ -8,7 +8,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.1.0
+          ruby-version: 3.2.5
           bundler-cache: true
       - name: Prepare database
         run: bundler exec rails db:prepare RAILS_ENV=test
