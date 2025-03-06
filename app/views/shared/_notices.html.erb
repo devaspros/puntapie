@@ -1,9 +1,20 @@
 <% flash.each do |msg_type, message| %>
-  <% alert_class = msg_type == 'alert' ? 'alert-warning' : 'alert-success' %>
+  <% color = msg_type == "alert" ? "warning" : "success" %>
 
-  <div class="alert <%= alert_class %> alert-dismissible fade show" data-controller="alert">
-    <%= message %>
+  <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 2000;">
+    <div
+      id="liveToast"
+      class="toast align-items-center border-0 text-bg-<%= color %>"
+      data-controller="toast"
+      data-bs-delay="2500"
+    >
+      <div class="d-flex">
+        <div class="toast-body">
+          <%= message %>
+        </div>
 
-    <button type="button" class="btn-close" data-bs-dismiss="alert" data-alert-target="close"></button>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
   </div>
 <% end %>
