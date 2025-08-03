@@ -14,3 +14,26 @@
 body > .alert {
   margin-bottom: 0;
 }
+
+/*
+ * Navbar
+ */
+
+// Estos estilos hacen que el topbar no se vea delgadito sino un poco mas grueso.
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  background-color: rgba(0, 0, 0, .25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+// Esto arregla el boton del menu hamburguesa. Sin esto sale blanco.
+.navbar-nav {
+  li {
+    button {
+      background-color: rgb(0,0,0);
+      border-color: black;
+      border-style: none;
+    }
+  }
+}
