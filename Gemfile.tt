@@ -9,7 +9,6 @@ gem "bootsnap", require: false
 gem "blueprinter"
 gem "devise", "4.9.3"
 gem "exception_handler", "~> 0.8.0.0"
-gem "font-awesome-sass", "~> 5.13"
 gem "importmap-rails", "1.2.1"
 gem "jwt", "2.10.1"
 gem "pundit", "~> 2.1"
