@@ -1,0 +1,46 @@
+# symlink to /home/ubuntu/.config/systemd/user/
+
+[Unit]
+Description=sidekiq
+After=syslog.target network.target
+
+[Service]
+# notify can be used only after Sidekiq 6.0.6. If the version is under 6.0.6, use Type=simple
+
+# Hay que usar Type=simple porque el comando de Sidekiq no hace fork del proceso.
+#
+# La prueba está en ejecutar el comando ExecStart desde la consola. Al hacerlo se queda "pegado".
+#
+# En esos caso se debe usar Type=simple para que systemd sepa que es un proceso que no forkea.
+#
+# Por ende se desactiva WatchDogSec=
+#
+# WatchdogSec=10
+
+Type=simple
+
+WorkingDirectory=/home/ubuntu/PUNTAPIE/app
+
+# Greatly reduce Ruby memory fragmentation and heap usage
+# https://www.mikeperham.com/2018/04/25/taming-rails-memory-bloat/
+Environment=MALLOC_ARENA_MAX=2
+
+EnvironmentFile=/home/ubuntu/.sidekiq_envs
+# ExecStart=/opt/rubies/ruby-3.1.0/bin/bundle exec sidekiq -e production
+ExecStart=/home/ubuntu/.rubies/ruby-3.2.5/bin/bundle exec sidekiq -e production
+
+ExecReload=/usr/bin/kill -TSTP $MAINPID
+
+# if we crash, restart
+RestartSec=1
+Restart=on-failure
+
+# output goes to /var/log/syslog
+StandardOutput=syslog
+StandardError=syslog
+
+# This will default to "bundler" if we don't specify it
+SyslogIdentifier=sidekiq
+
+[Install]
+WantedBy=default.target

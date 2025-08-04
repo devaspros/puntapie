@@ -1,0 +1,9 @@
+/home/ubuntu/PUNTAPIE/app/log/*.log {
+  weekly
+  missingok
+  rotate 7
+  compress
+  delaycompress
+  notifempty
+  copytruncate
+}

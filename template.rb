@@ -112,6 +112,8 @@ def copy_templates
 
   # Copy everything from .github folder to generated rails_app
   directory ".github", force: true
+
+  directory "scripts", force: true
 end
 
 def configure_rspec
