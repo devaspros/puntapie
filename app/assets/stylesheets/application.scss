@@ -1,5 +1,42 @@
 @import "bootstrap";
 
+/*
+Estos son los estilos para hacer que el sidebar y el main se expandan hacia el fin de la pagina aunque haya poco contenido.
+*/
+html,
+body {
+  height: 100%;
+}
+
+.container-fluid {
+  min-height: calc(100vh - 56px); /* Resta la altura del header */
+  padding-top: 0;
+}
+
+.subcontainer {
+  @include media-breakpoint-up(md) {
+    min-height: 100%;
+  }
+}
+
+.sidebar {
+  @include media-breakpoint-up(md) {
+    height: 100%;
+    position: sticky;
+    top: 56px; /* Altura del header */
+    overflow-y: auto;
+  }
+}
+
+main {
+  padding-bottom: 2rem;
+  background-color: #f2f2f2;
+
+  @include media-breakpoint-up(md) {
+    min-height: calc(100vh - 56px);
+  }
+}
+
 // Fixes bootstrap nav-brand container overlap
 @include media-breakpoint-down(xs) {
   .container {
@@ -8,30 +45,38 @@
   }
 }
 
-// Masquerade alert shouldn't have a bottom margin
-body > .alert {
-  margin-bottom: 0;
-}
-
 /*
  * Navbar
  */
 
 // Estos estilos hacen que el topbar no se vea delgadito sino un poco mas grueso.
 .navbar-brand {
-  padding-top: .75rem;
-  padding-bottom: .75rem;
-  background-color: rgba(0, 0, 0, .25);
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  background-color: rgba(0, 0, 0, 0.25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.25);
 }
 
 // Esto arregla el boton del menu hamburguesa. Sin esto sale blanco.
 .navbar-nav {
   li {
     button {
-      background-color: rgb(0,0,0);
+      background-color: rgb(0, 0, 0);
       border-color: black;
       border-style: none;
     }
   }
+}
+
+/*
+Este elemento sirve para mostrar un bloque donde se mostrará
+contenido. Estará centrado y con fondo blanco.
+*/
+.content-container {
+  @include media-breakpoint-up(md) {
+    width: 50%;
+  }
+
+  margin: 0 auto;
+  background-color: #fff;
 }
