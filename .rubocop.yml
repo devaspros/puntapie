@@ -1,0 +1,64 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  TargetRubyVersion: 3.2.5
+  Exclude:
+    - "db/**/*"
+    - "config/**/*"
+    - "app/views/**/*"
+    - "lib/tasks/*"
+    - "spec/spec_helper.rb"
+    - "spec/rails_helper.rb"
+    - test_models.rb
+    - "bin/*"
+    - vendor/**/*
+  NewCops: disable # see https://docs.rubocop.org/rubocop/versioning.html#pending-cops
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/SymbolArray:
+  Exclude:
+    - spec/factories/*
+
+Style/AccessorGrouping:
+  Enabled: false
+
+Style/KeywordParametersOrder:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/HashSyntax:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Layout/LineLength:
+  Max: 130
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false

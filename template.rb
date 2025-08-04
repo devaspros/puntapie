@@ -114,6 +114,8 @@ def copy_templates
   directory ".github", force: true
 
   directory "scripts", force: true
+
+  copy_file ".rubocop.yml", force: true
 end
 
 def configure_rspec
@@ -237,5 +239,5 @@ after_bundle do
   say
   say "  rails db:create db:migrate"
   say "  rails users:create"
-  say "  foreman start # Runs rails, sidekiq"
+  say "  foreman start # Runs rails, sidekiq on port 3005"
 end
