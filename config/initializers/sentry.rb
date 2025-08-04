@@ -1,5 +1,5 @@
 Sentry.init do |config|
-  next unless Rails.env.production?
+  next if Rails.env.local?
 
   config.dsn = ""
   config.breadcrumbs_logger = [:active_support_logger, :http_logger]
