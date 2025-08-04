@@ -29,8 +29,6 @@ end
 
 def set_application_name
   environment "config.application_name = Rails.application.class.module_parent_name"
-
-  puts "You can change application name inside: ./config/application.rb"
 end
 
 def disable_default_generators
@@ -63,7 +61,7 @@ def add_users
 end
 
 def add_authorization
-  generate 'pundit:install'
+  generate "pundit:install"
 end
 
 def add_sidekiq
@@ -71,6 +69,13 @@ def add_sidekiq
 
   copy_file "config/sidekiq.yml", force: true
   copy_file "config/initializers/sidekiq.rb", force: true
+end
+
+def set_locales
+  environment "config.i18n.default_locale = :es"
+
+  copy_file "config/locales/devise.es.yml", force: true
+  copy_file "config/locales/es-CO.yml", force: true
 end
 
 def copy_templates
@@ -110,7 +115,7 @@ def copy_templates
 end
 
 def configure_rspec
-  generate 'rspec:install'
+  generate "rspec:install"
 
   copy_file "spec/support/factory_bot.rb"
   copy_file "spec/support/database_cleaner.rb"
@@ -136,12 +141,12 @@ end
 
 def add_action_mailer_configs
   development_smtp_settings = <<~SMTP_SETTINGS
-    config.action_mailer.default_url_options = { host: 'localhost:3000' }
+    config.action_mailer.default_url_options = { host: "localhost:3000" }
 
     config.action_mailer.delivery_method = :smtp
 
     config.action_mailer.smtp_settings = {
-      address: '127.0.0.1',
+      address: "127.0.0.1",
       port: 1025
     }
   SMTP_SETTINGS
@@ -152,10 +157,10 @@ def add_action_mailer_configs
     config.action_mailer.delivery_method = :smtp
 
     config.action_mailer.smtp_settings = {
-      domain: ENV['MAILGUN_DOMAIN'],
-      address: ENV['MAILGUN_HOST'],
-      user_name: ENV['MAILGUN_USERNAME'],
-      password: ENV['MAILGUN_PASSWORD'],
+      domain: ENV["MAILGUN_DOMAIN"],
+      address: ENV["MAILGUN_HOST"],
+      user_name: ENV["MAILGUN_USERNAME"],
+      password: ENV["MAILGUN_PASSWORD"],
       port: 587
     }
   SMTP_SETTINGS
@@ -168,8 +173,8 @@ def setup_exception_handler
     config.exception_handler = {
       dev: false,
       exceptions: {
-        '4xx' => { layout: '4xx' },
-        '5xx' => { layout: '5xx' }
+        "4xx" => { layout: "4xx" },
+        "5xx" => { layout: "5xx" }
       }
     }
   CONFIG
@@ -179,8 +184,8 @@ def setup_exception_handler
   production_exception_handler = <<~CONFIG
     config.exception_handler = {
       exceptions: {
-        '4xx' => { layout: '4xx' },
-        '5xx' => { layout: '5xx' }
+        "4xx" => { layout: "4xx" },
+        "5xx" => { layout: "5xx" }
       }
     }
   CONFIG
@@ -200,6 +205,7 @@ after_bundle do
   add_users
   add_authorization
   add_sidekiq
+  set_locales
 
   copy_templates
 
