@@ -14,4 +14,4 @@ test:
 
 production:
   <<: *default
-  database: db/puntapie.sqlite3
+  database: /home/ubuntu/puntapie/db/puntapie_production.sqlite
