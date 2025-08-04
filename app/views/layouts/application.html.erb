@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%= render 'shared/head' %>
+    <%= render "shared/head" %>
   </head>
 
   <body class="d-flex flex-column">
@@ -24,7 +24,7 @@
 
     <div class="container-fluid">
       <div class="subcontainer row flex-grow-1">
-        <%= render 'shared/sidebar' %>
+        <%= render "shared/sidebar" %>
 
         <main class="col-sm-12 col-md-9 ms-sm-auto col-lg-10 px-md-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -38,7 +38,7 @@
             </div>
           </div>
 
-          <%= render 'shared/notices' %>
+          <%= render "shared/notices" %>
 
           <%= yield %>
         </main>

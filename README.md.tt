@@ -1,38 +1,53 @@
 # <%= app_name %>
 
-## Getting Started
+## Requisitos
 
-### Requirements
-
-Install on your computer:
+Tener instalado:
 
 - Ruby 3.2.5
 - Bundler gem: `gem install bundler`
 - PostgreSQL
-- NodeJS(required JavaScript runtime environment)
+- NodeJS
 
-After clone project, run:
+Luego instala las gemas:
 
 ```bash
-$ bundle install
-$ rails db:create
-$ rails db:schema:load
+bundle install
 ```
 
-### Run Server
-
-Run server with:
-
+Crea las bases de datos:
 ```bash
-$ foreman start
+rails db:create
 ```
 
-### Tests
+Carga el esquema:
+```bash
+rails db:schema:load
+```
 
-To run test suite use `rspec` command:
+Crea usuario de pruebas:
+```bash
+rails users:create
+```
+
+## Desarrollo
+
+Corre el servidor con:
 
 ```bash
-$ rspec ./spec
+foreman start
+```
+
+Esto ejecuta Sidekiq y el Rails server en `localhost:3005`.
+
+### Pruebas
+
+Con el comando de `rspec`:
+
+```bash
+rspec ./spec
 ```
 
 ## Documentation
+
+_Pendiente_.
