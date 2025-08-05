@@ -308,6 +308,14 @@ def add_membership_migration
   sleep(2)
 end
 
+def copy_organization_models
+  copy_file "app/models/organization.rb"
+  copy_file "app/models/invitation.rb"
+  copy_file "app/models/role.rb"
+  copy_file "app/models/membership.rb"
+  copy_file "app/models/user.rb", force: true
+end
+
 # Main setup
 add_template_repository_to_source_path
 
@@ -334,6 +342,8 @@ after_bundle do
   add_current_organization_to_user
   add_role_migration
   add_membership_migration
+
+  copy_organization_models
 
   run "bundle lock --add-platform x86_64-linux"
 
