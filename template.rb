@@ -90,7 +90,6 @@ def copy_templates
   copy_file ".env"
   copy_file ".editorconfig"
   copy_file "lib/tasks/auto_annotate_models.rake"
-  copy_file "lib/tasks/001_create_users.rake"
 
   copy_file "gitignore", ".gitignore", force: true
 
@@ -316,6 +315,12 @@ def copy_organization_models
   copy_file "app/models/user.rb", force: true
 end
 
+def copy_organization_rakes
+  copy_file "lib/tasks/000_organizations.rake"
+  copy_file "lib/tasks/001_users.rake"
+  copy_file "lib/tasks/003_create_roles.rake"
+end
+
 # Main setup
 add_template_repository_to_source_path
 
@@ -344,6 +349,7 @@ after_bundle do
   add_membership_migration
 
   copy_organization_models
+  copy_organization_rakes
 
   run "bundle lock --add-platform x86_64-linux"
 
