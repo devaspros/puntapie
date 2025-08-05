@@ -197,6 +197,117 @@ def setup_exception_handler
   environment(production_exception_handler, env: "production")
 end
 
+def add_organization_migration
+  # Necesario para que el siguiente timestamp no sea igual.
+  sleep(1)
+
+  say("Ejecutando add_organization_migration", :yellow)
+
+  timestamp = Time.now.utc.strftime("%Y%m%d%H%M%S")
+
+  create_file "db/migrate/#{timestamp}_create_organizations.rb", <<~RUBY
+    class CreateOrganizations < ActiveRecord::Migration[7.1]
+      def change
+        create_table :organizations do |t|
+          t.string :name, null: false
+          t.string :slug, null: false
+
+          t.timestamps
+        end
+      end
+    end
+  RUBY
+
+  # Necesario para que el siguiente timestamp no sea igual.
+  sleep(2)
+end
+
+def add_invitation_migration
+  say("Ejecutando add_invitation_migration", :yellow)
+
+  timestamp = Time.now.utc.strftime("%Y%m%d%H%M%S")
+
+  create_file "db/migrate/#{timestamp}_create_invitations.rb", <<~RUBY
+    class CreateInvitations < ActiveRecord::Migration[7.1]
+      def change
+        create_table :invitations do |t|
+          t.string :email
+          t.string :uuid
+          t.integer :from_membership_id
+          t.references :organization, null: false, foreign_key: true
+
+          t.timestamps
+        end
+      end
+    end
+  RUBY
+
+  # Necesario para que el siguiente timestamp no sea igual.
+  sleep(2)
+end
+
+def add_current_organization_to_user
+  say("Ejecutando add_current_organization_to_user", :yellow)
+
+  timestamp = Time.now.utc.strftime("%Y%m%d%H%M%S")
+
+  create_file "db/migrate/#{timestamp}_add_current_organization_id_to_user.rb", <<~RUBY
+    class AddCurrentOrganizationIdToUser < ActiveRecord::Migration[7.1]
+      def change
+        add_column :users, :current_organization_id, :integer
+      end
+    end
+  RUBY
+
+  # Necesario para que el siguiente timestamp no sea igual.
+  sleep(2)
+end
+
+def add_role_migration
+  say("Ejecutando add_role_migration", :yellow)
+
+  timestamp = Time.now.utc.strftime("%Y%m%d%H%M%S")
+
+  create_file "db/migrate/#{timestamp}_create_roles.rb", <<~RUBY
+    class CreateRoles < ActiveRecord::Migration[7.1]
+      def change
+        create_table :roles do |t|
+          t.string :name, null: false
+
+          t.timestamps
+        end
+      end
+    end
+  RUBY
+
+  # Necesario para que el siguiente timestamp no sea igual.
+  sleep(2)
+end
+
+def add_membership_migration
+  say("Ejecutando add_membership_migration", :yellow)
+
+  timestamp = Time.now.utc.strftime("%Y%m%d%H%M%S")
+
+  create_file "db/migrate/#{timestamp}_create_memberships.rb", <<~RUBY
+    class CreateMemberships < ActiveRecord::Migration[7.1]
+      def change
+        create_table :memberships do |t|
+          t.references :organization, null: false, foreign_key: true
+          t.references :user, null: false, foreign_key: true
+          t.references :invitation, foreign_key: true
+          t.references :role, null: false, foreign_key: true
+
+          t.timestamps
+        end
+      end
+    end
+  RUBY
+
+  # Necesario para que el siguiente timestamp no sea igual.
+  sleep(2)
+end
+
 # Main setup
 add_template_repository_to_source_path
 
@@ -217,6 +328,12 @@ after_bundle do
   active_storage_setup
   add_action_mailer_configs
   setup_exception_handler
+
+  add_organization_migration
+  add_invitation_migration
+  add_current_organization_to_user
+  add_role_migration
+  add_membership_migration
 
   run "bundle lock --add-platform x86_64-linux"
 
