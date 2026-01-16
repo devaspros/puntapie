@@ -316,9 +316,20 @@ def copy_organization_models
 end
 
 def copy_organization_rakes
-  copy_file "lib/tasks/000_organizations.rake"
-  copy_file "lib/tasks/001_users.rake"
-  copy_file "lib/tasks/003_create_roles.rake"
+  copy_file "lib/tasks/000_execute_all_tasks.rake"
+  copy_file "lib/tasks/001_organizations.rake"
+  copy_file "lib/tasks/003_users.rake"
+  copy_file "lib/tasks/002_create_roles.rake"
+end
+
+def disable_sqlite_in_production_warning
+  sqlite_in_prod_setting = <<~SQLITE_WARNING
+    # Turn off warning about SQLite not for production
+    config.active_record.sqlite3_production_warning = false
+
+  SQLITE_WARNING
+
+  environment(sqlite_in_prod_setting, env: "production")
 end
 
 # Main setup
@@ -350,6 +361,8 @@ after_bundle do
 
   copy_organization_models
   copy_organization_rakes
+
+  disable_sqlite_in_production_warning
 
   run "bundle lock --add-platform x86_64-linux"
 

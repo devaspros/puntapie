@@ -4,11 +4,11 @@ Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 
 # Requisitos
 
-* Rails 7.1.4
+* Rails 7.1.5.2
 * Ruby 3.2.5
 * Redis
 * Bundler `gem install bundler`
-* Rails `gem install rails -v 7.1.4`
+* Rails `gem install rails -v 7.1.5.2`
 
 # ¿Cómo uso Puntapie?
 
@@ -17,7 +17,7 @@ Usando la plantilla desde el repositorio en GitHub.
 Con base de datos SQLite3:
 
 ```bash
-rails _7.1.4_ new ./pruebapie01 \
+rails _7.1.5.2_ new ./pruebapie01 \
   -d sqlite3 \
   -m https://raw.githubusercontent.com/devaspros/puntapie/master/template.rb \
   --skip-test
@@ -26,7 +26,7 @@ rails _7.1.4_ new ./pruebapie01 \
 O base de datos PostgreSQL:
 
 ```bash
-rails _7.1.4_ new ./pruebapie01 \
+rails _7.1.5.2_ new ./pruebapie01 \
   -d postgresql \
   -m https://raw.githubusercontent.com/devaspros/puntapie/master/template.rb \
   --skip-test
@@ -37,7 +37,7 @@ También se puede clonar el repo y leer la plantilla desde el archivo local.
 Para una BD SQLite3:
 
 ```bash
-rails _7.1.4_ new ../pruebapie01 \
+rails _7.1.5.2_ new ../pruebapie01 \
   -d sqlite3 \
   -m ./template.rb \
   --skip-test
@@ -46,7 +46,7 @@ rails _7.1.4_ new ../pruebapie01 \
 Para una BD en PostgreSQL:
 
 ```bash
-rails _7.1.4_ new ../pruebapie01 \
+rails _7.1.5.2_ new ../pruebapie01 \
   -d postgresql \
   -m ./template.rb \
   --skip-test
