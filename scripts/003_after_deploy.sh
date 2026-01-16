@@ -23,12 +23,12 @@ bundle install --deployment \
 # CHECK or CREATE app/vendor
 #
 echo "$(date '+%F %T') create vendor/bundle" >> /home/ubuntu/PUNTAPIE/deployment_logs/003_bundle_symlink.log 2>&1
-[ -d /home/ubuntu/PUNTAPIE/app/vendor ] || mkdir -p /home/ubuntu/PUNTAPIE/app/vendor >> /home/ubuntu/PUNTAPIE//003_bundle_symlink.log 2>&1
+[ -d /home/ubuntu/PUNTAPIE/app/vendor ] || mkdir -p /home/ubuntu/PUNTAPIE/app/vendor >> /home/ubuntu/PUNTAPIE/deployment_logs/003_bundle_symlink.log 2>&1
 
 # SYMLINK api-gems to app/vendor/bundle
 #
 echo "$(date '+%F %T') Symlink api-gems to vendor/bundle" >> /home/ubuntu/PUNTAPIE/deployment_logs/003_bundle_symlink.log 2>&1
-ln -fsv /home/ubuntu/PUNTAPIE/deployments/api-gems/bundle /home/ubuntu/PUNTAPIE/app/vendor/ >> /home/ubuntu/PUNTAPIE//003_bundle_symlink.log 2>&1
+ln -fsv /home/ubuntu/PUNTAPIE/deployments/api-gems/bundle /home/ubuntu/PUNTAPIE/app/vendor/ >> /home/ubuntu/PUNTAPIE/deployment_logs/003_bundle_symlink.log 2>&1
 
 # SYMLINK NVM node to /usr/local/bin/node
 #

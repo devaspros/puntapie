@@ -38,4 +38,4 @@ fi
 # Change ownership of process files
 #
 echo "$(date '+%F %T') Changing ownership to ubuntu" >> /home/ubuntu/PUNTAPIE/deployment_logs/010_chowning.log 2>&1
-sudo chown -Rv ubuntu:ubuntu log tmp vendor >> /home/ubuntu/PUNTAPIE/deployment_logs/010_chowning.log 2>&1
+cat ~/.clave | sudo chown -Rv ubuntu:ubuntu log tmp vendor >> /home/ubuntu/PUNTAPIE/deployment_logs/010_chowning.log 2>&1
