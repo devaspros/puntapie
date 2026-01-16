@@ -332,7 +332,20 @@ def disable_sqlite_in_production_warning
   environment(sqlite_in_prod_setting, env: "production")
 end
 
-# Main setup
+def setup_log_rotate
+  gsub_file(
+    "config/environments/production.rb",
+    "Log to STDOUT by default",
+    "Log to production.log and rotate"
+  )
+  gsub_file(
+    "config/environments/production.rb",
+    "config.logger = ActiveSupport::Logger.new(STDOUT)",
+    'config.logger = ActiveSupport::Logger.new("log/production.log", "daily")'
+  )
+end
+
+# Setup starts from here
 add_template_repository_to_source_path
 
 template "Gemfile.tt", force: true
@@ -363,6 +376,7 @@ after_bundle do
   copy_organization_rakes
 
   disable_sqlite_in_production_warning
+  setup_log_rotate
 
   run "bundle lock --add-platform x86_64-linux"
 
