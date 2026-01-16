@@ -17,17 +17,17 @@ bundle install
 
 Crea las bases de datos:
 ```bash
-rails db:create
+bundle exec rails db:create
 ```
 
 Carga el esquema:
 ```bash
-rails db:schema:load
+bundle exec rails db:schema:load
 ```
 
-Crea usuario de pruebas:
+Corre todas las rakes necesarias para empezar:
 ```bash
-rails users:create
+bundle exec rails all_tasks:execute_all
 ```
 
 ## Desarrollo
