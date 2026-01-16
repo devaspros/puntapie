@@ -28,4 +28,4 @@ jobs:
           END
       - name: Log in server and run script
         run: |
-          ssh puntapie_cloud 'bash ~/puntapie/deployments/api-release/scripts/deploy_api.sh'
+          ssh puntapie_cloud 'bash ~/puntapie/deployments/api-release/scripts/001_deploy_api.sh'

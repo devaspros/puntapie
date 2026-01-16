@@ -41,7 +41,7 @@ git clone git@gh:cesc1989/PUNTAPIE.git .
 
 To start the deployment, from the `api-release` folder, run the `deploy_api.sh` script. This script will take care of running the rest.
 
-1. deploy_api.sh
-2. pull_repo.sh
-3. after_deploy.sh
-4. application_start.sh
+1. 001_deploy_api.sh
+2. 002_pull_repo.sh
+3. 003_after_deploy.sh
+4. 004_application_start.sh
