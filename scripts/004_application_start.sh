@@ -1,33 +1,35 @@
 #!/bin/bash -xe
 
+APP_DIR="puntapie"
+
 # PUNTAPIE
 # ├── app
 # └── deployments
 #     ├── api-gems
 #     └── api-release
 
-cd /home/ubuntu/PUNTAPIE/app/
+cd /home/ubuntu/$APP_DIR/app/
 
 . /home/ubuntu/.profile
 
 # RSYNC: from api-release/ to app/
 #
-echo "$(date '+%F %T') rsyncing release folder with app folder" >> /home/ubuntu/PUNTAPIE/deployment_logs/008_rsync_files.log 2>&1
+echo "$(date '+%F %T') rsyncing release folder with app folder" >> /home/ubuntu/$APP_DIR/deployment_logs/008_rsync_files.log 2>&1
 rsync -arv --delete-after \
   --exclude "vendor/" \
-  /home/ubuntu/PUNTAPIE/deployments/api-release/ \
-  /home/ubuntu/PUNTAPIE/app/ \
-  >> /home/ubuntu/PUNTAPIE/deployment_logs/008_rsync_files.log 2>&1
+  /home/ubuntu/$APP_DIR/deployments/api-release/ \
+  /home/ubuntu/$APP_DIR/app/ \
+  >> /home/ubuntu/$APP_DIR/deployment_logs/008_rsync_files.log 2>&1
 
 # RESTART nginx
 # nginx comes bundled with phussion passenger
 #
-# echo "$(date '+%F %T') Restarting nginx" >> /home/ubuntu/PUNTAPIE/deployment_logs/009_nginx_restart.log 2>&1
-# cat ~/.clave | sudo -S service nginx restart >> /home/ubuntu/PUNTAPIE/deployment_logs/009_nginx_restart.log 2>&1
+# echo "$(date '+%F %T') Restarting nginx" >> /home/ubuntu/$APP_DIR/deployment_logs/009_nginx_restart.log 2>&1
+# cat ~/.clave | sudo -S service nginx restart >> /home/ubuntu/$APP_DIR/deployment_logs/009_nginx_restart.log 2>&1
 
 # RESTART aplicación (sin reiniciar Nginx)
-echo "$(date '+%F %T') Reiniciando aplicación (touch tmp/restart.txt)" >> /home/ubuntu/PUNTAPIE/deployment_logs/009_nginx_restart.log 2>&1
-touch ./tmp/restart.txt >> /home/ubuntu/PUNTAPIE/deployment_logs/009_nginx_restart.log 2>&1
+echo "$(date '+%F %T') Reiniciando aplicación (touch tmp/restart.txt)" >> /home/ubuntu/$APP_DIR/deployment_logs/009_nginx_restart.log 2>&1
+touch ./tmp/restart.txt >> /home/ubuntu/$APP_DIR/deployment_logs/009_nginx_restart.log 2>&1
 
 # truncate -s 0 log/$RAILS_ENV.log
 if [ -f "log/$RAILS_ENV.log" ]; then
@@ -37,5 +39,5 @@ fi
 # CHOWN log, tmp, vendor folders
 # Change ownership of process files
 #
-echo "$(date '+%F %T') Changing ownership to ubuntu" >> /home/ubuntu/PUNTAPIE/deployment_logs/010_chowning.log 2>&1
-cat ~/.clave | sudo chown -Rv ubuntu:ubuntu log tmp vendor >> /home/ubuntu/PUNTAPIE/deployment_logs/010_chowning.log 2>&1
+echo "$(date '+%F %T') Changing ownership to ubuntu" >> /home/ubuntu/$APP_DIR/deployment_logs/010_chowning.log 2>&1
+cat ~/.clave | sudo chown -Rv ubuntu:ubuntu log tmp vendor >> /home/ubuntu/$APP_DIR/deployment_logs/010_chowning.log 2>&1
