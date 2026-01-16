@@ -95,6 +95,7 @@ def copy_templates
 
   copy_file "config/routes.rb", force: true
   copy_file "config/database.yml", force: true
+  copy_file "config/nginx.puntapie.production.conf", force: true
 
   # Copy initial importmap with Hotwire libs, Bootstrap and Popper
   copy_file "config/importmap.rb", force: true
