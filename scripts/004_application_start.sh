@@ -22,8 +22,12 @@ rsync -arv --delete-after \
 # RESTART nginx
 # nginx comes bundled with phussion passenger
 #
-echo "$(date '+%F %T') Restarting nginx" >> /home/ubuntu/PUNTAPIE/deployment_logs/009_nginx_restart.log 2>&1
-cat ~/.clave | sudo -S service nginx restart >> /home/ubuntu/PUNTAPIE/deployment_logs/009_nginx_restart.log 2>&1
+# echo "$(date '+%F %T') Restarting nginx" >> /home/ubuntu/PUNTAPIE/deployment_logs/009_nginx_restart.log 2>&1
+# cat ~/.clave | sudo -S service nginx restart >> /home/ubuntu/PUNTAPIE/deployment_logs/009_nginx_restart.log 2>&1
+
+# RESTART aplicación (sin reiniciar Nginx)
+echo "$(date '+%F %T') Reiniciando aplicación (touch tmp/restart.txt)" >> /home/ubuntu/PUNTAPIE/deployment_logs/009_nginx_restart.log 2>&1
+touch ./tmp/restart.txt >> /home/ubuntu/PUNTAPIE/deployment_logs/009_nginx_restart.log 2>&1
 
 # truncate -s 0 log/$RAILS_ENV.log
 if [ -f "log/$RAILS_ENV.log" ]; then
