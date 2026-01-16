@@ -26,6 +26,24 @@ jobs:
               IdentityFile ~/.ssh/deploy.key
               StrictHostKeyChecking no
           END
+
       - name: Log in server and run script
         run: |
           ssh puntapie_cloud 'bash ~/puntapie/deployments/api-release/scripts/001_deploy_api.sh'
+
+      - name: Notify success via NTFY
+        if: success()
+        run: |
+          curl -H "Title: 🚀 Despliegue Exitoso - ${{ github.repository }}" \
+               -H "Tags: rocket, white_check_mark" \
+               -d "El commit en la rama '${{ github.ref }}' se desplegó correctamente. Ver workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+               https://ntfy.sh/${{ secrets.NTFY_TOPIC }}
+
+      - name: Notify failure via NTFY
+        if: failure()
+        run: |
+          curl -H "Title: ❌ Despliegue Fallido - ${{ github.repository }}" \
+               -H "Tags: warning, skull" \
+               -d "El despliegue falló para el commit en '${{ github.ref }}'. Ver logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+               -H "Priority: high" \
+               https://ntfy.sh/${{ secrets.NTFY_TOPIC }}
