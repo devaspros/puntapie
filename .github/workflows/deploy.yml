@@ -23,6 +23,7 @@ jobs:
             Host puntapie_cloud
               HostName $SSH_HOST
               User $SSH_USER
+              Port 54321
               IdentityFile ~/.ssh/deploy.key
               StrictHostKeyChecking no
           END
