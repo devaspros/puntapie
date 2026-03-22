@@ -10,6 +10,7 @@ APP_DIR="puntapie"
 #     └── logs
 
 . /home/ubuntu/.profile
+chruby ruby-3.4.8
 
 # DEPLOY in release folder
 #
