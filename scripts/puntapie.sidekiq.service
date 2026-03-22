@@ -26,7 +26,9 @@ WorkingDirectory=/home/ubuntu/PUNTAPIE/app
 Environment=MALLOC_ARENA_MAX=2
 
 EnvironmentFile=/home/ubuntu/.sidekiq_envs
-ExecStart=/home/ubuntu/.rubies/ruby-3.4.8/bin/bundle exec sidekiq -e production
+ExecStart=/home/ubuntu/.rubies/ruby-3.4.8/bin/bundle exec sidekiq \
+  -e production \
+  -C /home/ubuntu/puntapie/app/config/sidekiq.yml
 
 ExecReload=/usr/bin/kill -TSTP $MAINPID
 
@@ -35,6 +37,9 @@ RestartSec=1
 Restart=on-failure
 
 # output goes to /var/log/syslog
+# Sidekiq wiki does not recommend pushing logs to a file. Instead we should let systemd handle this.
+# See: https://github.com/sidekiq/sidekiq/wiki/Logging#logger
+#
 StandardOutput=syslog
 StandardError=syslog
 

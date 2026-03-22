@@ -59,3 +59,13 @@ RAILS_ENV=$RAILS_ENV SECRET_KEY_BASE=$SECRET_KEY_BASE bundle exec rake db:migrat
 #
 echo "$(date '+%F %T') Symlinking nginx configuration file" >> /home/ubuntu/$APP_DIR/deployments/logs/007_nginx_symlink.log 2>&1
 sudo ln -fs /home/ubuntu/$APP_DIR/app/config/nginx.$APP_DIR.$RAILS_ENV.conf /etc/nginx/sites-enabled/
+
+# SYMLINK sidekiq.service to user folder at /home/ubuntu/.config/systemd/user/puntapie.sidekiq.service
+#
+echo "$(date '+%F %T') Symlinking puntapie.sidekiq.service configuration file" >> /home/ubuntu/$APP_DIR/deployments/logs/201_sidekiq_service_symlink.log 2>&1
+sudo ln -fs /home/ubuntu/$APP_DIR/app/scripts/puntapie.sidekiq.service /home/ubuntu/.config/systemd/user/
+systemctl --user daemon-reload >> /home/ubuntu/$APP_DIR/deployments/logs/201_sidekiq_service_symlink.log 2>&1
+
+# Ensure Sidekiq service is enabled (starts on boot)
+echo "$(date '+%F %T') Enabling puntapie.sidekiq.service" >> /home/ubuntu/$APP_DIR/deployments/logs/201_sidekiq_service_symlink.log 2>&1
+systemctl --user enable puntapie.sidekiq.service >> /home/ubuntu/$APP_DIR/deployments/logs/201_sidekiq_service_symlink.log 2>&1
