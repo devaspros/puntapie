@@ -4,7 +4,7 @@
 
 Tener instalado:
 
-- Ruby 3.2.5
+- Ruby 3.4.8
 - Bundler gem: `gem install bundler`
 - PostgreSQL
 - NodeJS

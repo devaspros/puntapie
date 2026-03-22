@@ -399,6 +399,6 @@ after_bundle do
   say "  Update config/database.yml with your database credentials"
   say
   say "  rails db:create db:migrate"
-  say "  rails users:create"
+  say "  rails all_tasks:execute_all"
   say "  foreman start # Runs rails, sidekiq on port 3005"
 end

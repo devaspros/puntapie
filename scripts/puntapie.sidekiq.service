@@ -26,8 +26,7 @@ WorkingDirectory=/home/ubuntu/PUNTAPIE/app
 Environment=MALLOC_ARENA_MAX=2
 
 EnvironmentFile=/home/ubuntu/.sidekiq_envs
-# ExecStart=/opt/rubies/ruby-3.1.0/bin/bundle exec sidekiq -e production
-ExecStart=/home/ubuntu/.rubies/ruby-3.2.5/bin/bundle exec sidekiq -e production
+ExecStart=/home/ubuntu/.rubies/ruby-3.4.8/bin/bundle exec sidekiq -e production
 
 ExecReload=/usr/bin/kill -TSTP $MAINPID
 
