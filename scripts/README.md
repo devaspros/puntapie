@@ -13,10 +13,10 @@ The scripts assume the following folder structure:
 ```bash
 ~/PUNTAPIE # Main folder to hold Rails app and related ones.
 ├── app # This is the folder that contains the Rails app.
-├── deployment_logs # All logs for every deployment step.
 └── deployments # The deployment have to happen in a separate place that is synched afterwards.
     ├── api-gems # Install gems here and symlink them to the defined folder.
     └── api-release # Pull latest changes here and sync them to the app/ folder using RSync.
+    └── logs
 ├── backups # Holds all database backups.
 ├── db # holds the SQLite database file.
 ```
@@ -24,7 +24,7 @@ The scripts assume the following folder structure:
 The whole folder structure can be created with this script:
 
 ```bash
-mkdir -p ~/PUNTAPIE/{app,deployment_logs,deployments/{api-gems,api-release},backups,db}
+mkdir -p ~/PUNTAPIE/{app,deployments/{api-gems,api-release,logs},backups,db}
 ```
 
 ## Scripts
