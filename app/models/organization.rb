@@ -1,4 +1,6 @@
 class Organization < ApplicationRecord
+  belongs_to :owner, class_name: "User", optional: true
+
   has_many :invitations
   has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
@@ -8,14 +10,6 @@ class Organization < ApplicationRecord
            class_name: "Membership"
 
   has_many :admin_users, through: :admin_memberships, source: :user
-
-  # First admin user is considered the owner
-  def owner
-    admin_users.joins(:memberships)
-              .where(memberships: { organization: self })
-              .order("memberships.created_at ASC")
-              .first
-  end
 
   def owner?(user)
     owner == user
@@ -43,6 +37,15 @@ end
 #  id         :integer          not null, primary key
 #  name       :string           not null
 #  slug       :string           not null
+#  owner_id   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_organizations_on_owner_id  (owner_id)
+#
+# Foreign Keys
+#
+#  owner_id  (owner_id => users.id)
 #

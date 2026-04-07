@@ -308,6 +308,45 @@ def add_membership_migration
   sleep(2)
 end
 
+def add_owner_to_organizations
+  say("Ejecutando add_owner_to_organizations", :yellow)
+
+  timestamp = Time.now.utc.strftime("%Y%m%d%H%M%S")
+
+  create_file "db/migrate/#{timestamp}_add_owner_to_organizations.rb", <<~RUBY
+    class AddOwnerToOrganizations < ActiveRecord::Migration[7.1]
+      def change
+        add_reference :organizations, :owner, foreign_key: { to_table: :users }, null: true
+      end
+    end
+  RUBY
+
+  # Necesario para que el siguiente timestamp no sea igual.
+  sleep(2)
+end
+
+def add_confirmable_to_users
+  say("Ejecutando add_confirmable_to_users", :yellow)
+
+  timestamp = Time.now.utc.strftime("%Y%m%d%H%M%S")
+
+  create_file "db/migrate/#{timestamp}_add_confirmable_to_users.rb", <<~RUBY
+    class AddConfirmableToUsers < ActiveRecord::Migration[7.1]
+      def change
+        add_column :users, :confirmation_token, :string
+        add_column :users, :confirmed_at, :datetime
+        add_column :users, :confirmation_sent_at, :datetime
+        add_column :users, :unconfirmed_email, :string
+
+        add_index :users, :confirmation_token, unique: true
+      end
+    end
+  RUBY
+
+  # Necesario para que el siguiente timestamp no sea igual.
+  sleep(2)
+end
+
 def copy_organization_models
   copy_file "app/models/organization.rb"
   copy_file "app/models/invitation.rb"
@@ -317,10 +356,7 @@ def copy_organization_models
 end
 
 def copy_organization_rakes
-  copy_file "lib/tasks/000_execute_all_tasks.rake"
-  copy_file "lib/tasks/001_organizations.rake"
-  copy_file "lib/tasks/003_users.rake"
-  copy_file "lib/tasks/002_create_roles.rake"
+  copy_file "lib/tasks/initial_setup.rake"
 end
 
 def disable_sqlite_in_production_warning
@@ -372,6 +408,8 @@ after_bundle do
   add_current_organization_to_user
   add_role_migration
   add_membership_migration
+  add_owner_to_organizations
+  add_confirmable_to_users
 
   copy_organization_models
   copy_organization_rakes

@@ -15,6 +15,8 @@ class User < ApplicationRecord
          :registerable,
          :confirmable
 
+  after_create_commit :create_and_attach_default_organization
+
   def current_membership
     return nil unless current_organization
 
@@ -41,6 +43,18 @@ class User < ApplicationRecord
 
   def can_manage_organization?(organization)
     admin_of?(organization)
+  end
+
+  private
+
+  def create_and_attach_default_organization
+    org = Organization.create!(
+      name: "#{first_name} Org",
+      slug: "#{first_name.parameterize}-#{id}",
+      owner: self
+    )
+
+    self.update(current_organization: org)
   end
 end
 
