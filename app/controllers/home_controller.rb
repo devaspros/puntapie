@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   layout "landing"
 
   def index
-    # redirect_to dashboard_path if current_user.present?
+    redirect_to dashboard_path if current_user.present?
   end
 
   def privacy; end

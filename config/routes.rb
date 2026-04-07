@@ -2,6 +2,8 @@ require "sidekiq/web"
 
 Rails.application.routes.draw do
   root to: "home#index"
+
+  get "/dashboard", to: "dashboard#index", as: :dashboard
   get "/privacy-policy", to: "home#privacy", as: :privacy_policy
   get "/tos", to: "home#tos", as: :tos
 

@@ -10,9 +10,10 @@ namespace :setup do
     user = User.find_or_create_by(email: "frajaquico@aol.com") do |u|
       u.first_name = "Francisco"
       u.last_name = "Quintero"
-      u.password = "clavesegura2024"
+      u.password = "clave-de-puntapie-2026"
       u.admin = true
       u.current_organization_id = org.id
+      u.confirmed_at = Time.now
     end
 
     Membership.create(
