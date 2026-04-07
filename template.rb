@@ -398,8 +398,8 @@ after_bundle do
   say
   say "  Update config/database.yml with your database credentials"
   say
-  say "  rails db:create db:migrate"
-  say "  rails all_tasks:execute_all"
+  say "  bundle exec rails db:create db:migrate"
+  say "  bundle exec rails setup:run"
   say
   say "  Customize Procfile.dev and then run"
   say "  foreman start"
