@@ -1,0 +1,20 @@
+<p style="margin: 0 0 16px 0; font-size: 15px; color: #18181b;">
+  Gracias por registrarte en <%= Rails.application.class.module_parent_name %>.
+</p>
+
+<p style="margin: 0 0 32px 0; font-size: 15px; color: #3f3f46;">
+  Por favor confirma tu dirección de correo electrónico haciendo clic en el siguiente enlace:
+</p>
+
+<p style="margin: 0 0 32px 0; text-align: center;">
+  <%= link_to "Confirmar mi cuenta", confirmation_url(@resource, confirmation_token: @token),
+        style: "display: inline-block; background-color: #2563eb; color: #ffffff; font-size: 15px; font-weight: 600; text-decoration: none; padding: 12px 28px; border-radius: 8px;" %>
+</p>
+
+<p style="margin: 0 0 8px 0; font-size: 13px; color: #71717a;">
+  O copia y pega este enlace en tu navegador:
+</p>
+
+<p style="margin: 0; font-size: 12px; color: #2563eb; word-break: break-all;">
+  <%= confirmation_url(@resource, confirmation_token: @token) %>
+</p>

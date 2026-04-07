@@ -1,0 +1,45 @@
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+  <h1 class="h3 mb-3 fw-normal text-center">Crear nueva contraseña</h1>
+
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <%= f.hidden_field :reset_password_token %>
+
+  <div class="form-floating mb-3 position-relative">
+    <%= f.password_field :password,
+        autofocus: true,
+        autocomplete: "new-password",
+        class: "form-control",
+        placeholder: "Nueva contraseña",
+        style: "padding-right: 2.5rem;" %>
+    <%= f.label :password, "Nueva contraseña" %>
+    <button type="button"
+            class="btn position-absolute end-0 top-50 translate-middle-y me-2 border-0 bg-transparent p-0"
+            onclick="var i=this.closest('.form-floating').querySelector('input');i.type=i.type==='password'?'text':'password';this.querySelector('i').className=i.type==='password'?'bi bi-eye':'bi bi-eye-slash'">
+      <i class="bi bi-eye"></i>
+    </button>
+    <small class="text-muted ms-1">Mínimo 10 caracteres</small>
+  </div>
+
+  <div class="form-floating mb-3 position-relative">
+    <%= f.password_field :password_confirmation,
+        autocomplete: "new-password",
+        class: "form-control",
+        placeholder: "Confirmar contraseña",
+        style: "padding-right: 2.5rem;" %>
+    <%= f.label :password_confirmation, "Confirmar contraseña" %>
+    <button type="button"
+            class="btn position-absolute end-0 top-50 translate-middle-y me-2 border-0 bg-transparent p-0"
+            onclick="var i=this.closest('.form-floating').querySelector('input');i.type=i.type==='password'?'text':'password';this.querySelector('i').className=i.type==='password'?'bi bi-eye':'bi bi-eye-slash'">
+      <i class="bi bi-eye"></i>
+    </button>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Guardar nueva contraseña", class: "btn btn-primary w-100 py-2" %>
+  </div>
+
+  <p class="text-center mt-3">
+    <%= link_to "Volver a iniciar sesión", new_user_session_path, class: "text-muted small" %>
+  </p>
+<% end %>

@@ -1,0 +1,23 @@
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+  <h1 class="h3 mb-1 fw-normal text-center">¿Olvidaste tu contraseña?</h1>
+  <p class="text-center text-muted small mb-4">Te enviaremos un correo con las instrucciones para restablecerla.</p>
+
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="form-floating mb-3">
+    <%= f.email_field :email,
+        autofocus: true,
+        autocomplete: "email",
+        class: "form-control",
+        placeholder: "Correo" %>
+    <%= f.label :email, "Correo" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Enviar instrucciones", class: "btn btn-primary w-100 py-2" %>
+  </div>
+
+  <p class="text-center mt-3">
+    <%= link_to "Volver a iniciar sesión", new_user_session_path, class: "text-muted small" %>
+  </p>
+<% end %>
