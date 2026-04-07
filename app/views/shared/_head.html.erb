@@ -13,7 +13,7 @@ Esta locura lo puse para cargar solo los estilos de login.scss cuando se está e
 
 No termina de funcionar del todo. Al cerrar sesión sigue cargando application.
 -->
-<% if current_page?(new_user_session_path) %>
+<% if current_page?(new_user_session_path) || current_page?(new_user_registration_path) %>
   <%= stylesheet_link_tag "login", media: "all" %>
 <% else %>
   <%= stylesheet_link_tag "application", media: "all" %>
