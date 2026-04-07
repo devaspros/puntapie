@@ -400,5 +400,7 @@ after_bundle do
   say
   say "  rails db:create db:migrate"
   say "  rails all_tasks:execute_all"
-  say "  foreman start # Runs rails, sidekiq on port 3005"
+  say
+  say "  Customize Procfile.dev and then run"
+  say "  foreman start"
 end
