@@ -1,1 +1,182 @@
-<h1>Hola</h1>
+<% app_name = Rails.application.class.module_parent_name %>
+
+<!-- Navigation Header -->
+<nav class="navbar navbar-light py-3 landing-navbar">
+  <div class="container">
+    <div class="d-flex align-items-center">
+      <span class="navbar-brand mb-0 h4 me-2 text-white fw-bold">
+        <%= link_to app_name, root_path, class: "text-decoration-none text-white" %>
+      </span>
+    </div>
+
+    <div class="d-flex gap-2">
+      <%= link_to "Iniciar sesión", new_user_session_path, class: "btn btn-outline-light btn-sm" %>
+      <%= link_to "Registrate", new_user_registration_path, class: "btn btn-light btn-sm" %>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main class="landing-main">
+  <!-- Hero Section -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+          <h1 class="display-3 fw-bold mb-3 hero-title">El título principal de tu app</h1>
+
+          <p class="fs-5 mb-4 hero-subtitle">Una descripción corta y clara de lo que hace tu aplicación y el valor que ofrece.</p>
+
+          <div class="d-flex justify-content-center gap-3 mt-4">
+            <%= link_to "Crear cuenta gratis", new_user_registration_path, class: "btn btn-lg px-5 btn-primary-custom" %>
+          </div>
+          <p class="text-muted small mt-2">Sin tarjeta de crédito · Cancela cuando quieras</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-4">
+    <div class="container">
+      <h2 class="text-center mb-4">Todo lo que necesitas</h2>
+
+      <div class="row g-4 justify-content-center">
+        <!-- Feature 1 -->
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card h-100 text-center p-4 border-0 shadow-sm feature-card">
+            <div class="card-body">
+              <div class="mb-4">
+                <div class="d-inline-flex align-items-center justify-content-center rounded-circle feature-icon-circle">
+                  <%= render partial: "home/icon_link" %>
+                </div>
+              </div>
+              <h5 class="card-title mb-3 fw-bold feature-title">Característica uno</h5>
+              <p class="card-text feature-text">Describe brevemente el primer beneficio o funcionalidad clave de tu app.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card h-100 text-center p-4 border-0 shadow-sm feature-card">
+            <div class="card-body">
+              <div class="mb-4">
+                <div class="d-inline-flex align-items-center justify-content-center rounded-circle feature-icon-circle">
+                  <%= render partial: "home/icon_pencil" %>
+                </div>
+              </div>
+              <h5 class="card-title mb-3 fw-bold feature-title">Característica dos</h5>
+              <p class="card-text feature-text">Describe brevemente el segundo beneficio o funcionalidad clave de tu app.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card h-100 text-center p-4 border-0 shadow-sm feature-card">
+            <div class="card-body">
+              <div class="mb-4">
+                <div class="d-inline-flex align-items-center justify-content-center rounded-circle feature-icon-circle">
+                  <%= render partial: "home/icon_chart" %>
+                </div>
+              </div>
+              <h5 class="card-title mb-3 fw-bold feature-title">Característica tres</h5>
+              <p class="card-text feature-text">Describe brevemente el tercer beneficio o funcionalidad clave de tu app.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card h-100 text-center p-4 border-0 shadow-sm feature-card">
+            <div class="card-body">
+              <div class="mb-4">
+                <div class="d-inline-flex align-items-center justify-content-center rounded-circle feature-icon-circle">
+                  <%= render partial: "home/icon_tag" %>
+                </div>
+              </div>
+              <h5 class="card-title mb-3 fw-bold feature-title">Característica cuatro</h5>
+              <p class="card-text feature-text">Describe brevemente el cuarto beneficio o funcionalidad clave de tu app.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Elige tu plan</h2>
+
+      <div class="row justify-content-center">
+        <!-- Free Plan -->
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <div class="card border-0 shadow-sm pricing-card">
+            <div class="card-body text-center p-5">
+              <p class="text-uppercase fw-bold text-muted small mb-1">Gratis</p>
+              <h2 class="display-4 fw-bold mb-2 pricing-amount">$0</h2>
+              <p class="fs-5 mb-4 pricing-period">al mes</p>
+              <ul class="list-unstyled text-start mb-4 mx-auto" style="max-width: 220px;">
+                <li>✓ Beneficio uno</li>
+                <li>✓ Beneficio dos</li>
+                <li>✓ Beneficio tres</li>
+              </ul>
+              <%= link_to "Empezar gratis", new_user_registration_path, class: "btn btn-lg px-5 btn-primary-custom" %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pro Plan -->
+        <div class="col-lg-6">
+          <div class="card shadow-sm pricing-card" style="border: 2px solid #0d6efd !important;">
+            <div class="card-body text-center p-5">
+              <span class="badge bg-primary mb-3">Más popular</span>
+              <p class="text-uppercase fw-bold text-muted small mb-1">Pro</p>
+              <h2 class="display-4 fw-bold mb-2 pricing-amount">
+                $X USD
+              </h2>
+              <p class="fs-5 mb-4 pricing-period">al mes</p>
+              <ul class="list-unstyled text-start mb-4 mx-auto" style="max-width: 220px;">
+                <li>✓ <strong>Beneficio uno ilimitado</strong></li>
+                <li>✓ Beneficio dos</li>
+                <li>✓ Beneficio tres</li>
+              </ul>
+              <%= link_to "Empezar con Pro", new_user_registration_path, class: "btn btn-lg px-5 btn-primary-custom" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-7">
+          <h2 class="text-center mb-4">Preguntas frecuentes</h2>
+
+          <details class="faq-item mb-2">
+            <summary class="faq-question">¿Pregunta frecuente uno?</summary>
+            <p class="faq-answer">Respuesta a la primera pregunta frecuente de tu aplicación.</p>
+          </details>
+
+          <details class="faq-item mb-2">
+            <summary class="faq-question">¿Pregunta frecuente dos?</summary>
+            <p class="faq-answer">Respuesta a la segunda pregunta frecuente de tu aplicación.</p>
+          </details>
+
+          <details class="faq-item mb-2">
+            <summary class="faq-question">¿Pregunta frecuente tres?</summary>
+            <p class="faq-answer">Respuesta a la tercera pregunta frecuente de tu aplicación.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<%= render partial: "shared/footer" %>

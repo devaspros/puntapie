@@ -11,7 +11,9 @@ class User < ApplicationRecord
   devise :database_authenticatable,
          :recoverable,
          :rememberable,
-         :validatable
+         :validatable,
+         :registerable,
+         :confirmable
 
   def current_membership
     return nil unless current_organization

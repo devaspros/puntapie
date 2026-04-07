@@ -2,8 +2,15 @@ require "sidekiq/web"
 
 Rails.application.routes.draw do
   root to: "home#index"
+  get "/privacy-policy", to: "home#privacy", as: :privacy_policy
+  get "/tos", to: "home#tos", as: :tos
 
-  devise_for :users
+  devise_for(
+    :users,
+    controllers: {
+      registrations: "users/registrations"
+    }
+  )
 
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web => "/sidekiq"

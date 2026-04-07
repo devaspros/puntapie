@@ -1,5 +1,19 @@
-<footer class="footer text-muted bg-light">
+<footer class="py-5 landing-footer">
   <div class="container">
-    <span>© <%= Date.today.year %> Your Company</span>
+    <div class="text-center footer-text mt-4">
+      <%= link_to "Términos de Servicio", tos_path, class: "text-decoration-none me-3 footer-link" %>
+
+      <span class="me-3">|</span>
+
+      <%= link_to "Política de Privacidad", privacy_policy_path, class: "text-decoration-none footer-link" %>
+    </div>
+
+    <div class="text-center footer-text mt-4">
+      <small>Hecho con ❤️ en Colombia 🇨🇴</small>
+    </div>
+
+    <div class="text-center footer-text mt-3">
+      <small>© <%= Time.now.year %> <%= Rails.application.class.module_parent_name %></small>
+    </div>
   </div>
 </footer>

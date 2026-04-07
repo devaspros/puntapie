@@ -1,0 +1,98 @@
+<% app_name = Rails.application.class.module_parent_name %>
+
+<div class="container tos">
+  <h1>Términos de Servicio</h1>
+  <div class="fecha">Última actualización: [fecha]</div>
+
+  <p><strong>Bienvenido/a a <%= app_name %>.</strong> Al acceder o utilizar nuestro servicio, aceptas estos Términos de Servicio. Si no estás de acuerdo, no utilices el servicio.</p>
+
+  <!-- 1. DESCRIPCIÓN DEL SERVICIO -->
+  <h2>1. Descripción del servicio</h2>
+  <p><%= app_name %> es un servicio que permite a los usuarios registrar una cuenta y [describir qué hace tu app]. El servicio incluye:</p>
+  <ul>
+    <li>[Funcionalidad principal uno]</li>
+    <li>[Funcionalidad principal dos]</li>
+    <li>[Funcionalidad principal tres]</li>
+  </ul>
+  <p>El servicio se proporciona "tal cual" y "según disponibilidad". Nos reservamos el derecho a modificar, suspender o interrumpir temporalmente el servicio sin previo aviso por tareas de mantenimiento, mejoras o causas ajenas a nuestra voluntad.</p>
+
+  <!-- 2. REGISTRO Y CUENTA -->
+  <h2>2. Registro y cuenta</h2>
+  <p>Para utilizar el servicio es necesario crear una cuenta. Al hacerlo, aceptas que:</p>
+  <ul>
+    <li>Proporcionarás información veraz, exacta y actualizada.</li>
+    <li>Eres responsable de mantener la confidencialidad de tu contraseña y de todas las actividades que ocurran en tu cuenta.</li>
+    <li>Debes ser mayor de 14 años.</li>
+    <li>Nos notificarás inmediatamente cualquier uso no autorizado de tu cuenta.</li>
+  </ul>
+
+  <!-- 3. USO ACEPTABLE -->
+  <h2>3. Uso aceptable</h2>
+  <p>Al utilizar <%= app_name %> te comprometes a <strong>no</strong> utilizar el servicio para:</p>
+  <ul>
+    <li><strong>Actividades ilegales</strong> según la legislación colombiana o internacional.</li>
+    <li><strong>Spam</strong> o sistemas automatizados abusivos.</li>
+    <li><strong>Phishing y suplantación</strong> de identidad.</li>
+    <li><strong>Malware o software dañino.</strong></li>
+    <li><strong>Contenido violento, discriminatorio o pornográfico.</strong></li>
+    <li><strong>Manipulación del servicio:</strong> vulnerar la seguridad, sobrecargar los servidores o extraer datos masivamente.</li>
+  </ul>
+  <div class="highlight">
+    <p><strong>Incumplir estas normas puede conllevar la suspensión o cancelación definitiva de la cuenta sin previo aviso.</strong></p>
+  </div>
+
+  <!-- 4. PROPIEDAD DEL CONTENIDO -->
+  <h2>4. Propiedad del contenido</h2>
+  <p><strong>Tú mantienes la propiedad</strong> del contenido que generas en el servicio. Al usarlo, nos otorgas una licencia limitada, no exclusiva y revocable para almacenar y mostrar dicho contenido con el único fin de prestarte el servicio.</p>
+
+  <!-- 5. LIMITACIÓN DE RESPONSABILIDAD -->
+  <h2>5. Limitación de responsabilidad</h2>
+  <div class="highlight">
+    <p><strong>Lee atentamente esta sección.</strong></p>
+  </div>
+  <p>En la máxima medida permitida por la ley, no seremos responsables por:</p>
+  <ul>
+    <li>La interrupción o fallo del servicio, retrasos, pérdida de datos o cualquier daño indirecto.</li>
+    <li>El uso que terceros hagan del servicio.</li>
+  </ul>
+  <p>Nuestra responsabilidad total agregada no superará el importe que nos hayas pagado durante los 12 meses anteriores al hecho que originó la reclamación.</p>
+
+  <!-- 6. PAGOS -->
+  <h2>6. Pagos y planes</h2>
+  <p><%= app_name %> ofrece un plan gratuito y un plan de pago. Si decides adquirir el plan de pago:</p>
+  <ul>
+    <li><strong>Modelo de pago:</strong> [Describe si es pago único, suscripción mensual, etc.]</li>
+    <li><strong>Procesador de pagos:</strong> Los pagos son procesados por [nombre del procesador]. No almacenamos datos de tarjetas bancarias ni información financiera.</li>
+    <li><strong>Reembolsos:</strong> Para cualquier consulta relacionada con un pago, contáctanos en <a href="mailto:correo@tudominio.com">correo@tudominio.com</a> y evaluaremos cada caso.</li>
+  </ul>
+
+  <!-- 7. CANCELACIÓN -->
+  <h2>7. Cancelación y cierre de cuenta</h2>
+  <h3>Por tu parte:</h3>
+  <p>Puedes cancelar tu cuenta en cualquier momento enviando un correo a <a href="mailto:correo@tudominio.com">correo@tudominio.com</a>. Tus datos personales se eliminarán en un plazo máximo de 30 días.</p>
+
+  <h3>Por nuestra parte:</h3>
+  <p>Podemos suspender o cancelar tu cuenta de forma inmediata si incumples estos Términos, si detectamos actividad fraudulenta o si recibimos un requerimiento legal.</p>
+
+  <!-- 8. MODIFICACIONES -->
+  <h2>8. Modificaciones de los Términos</h2>
+  <p>Podemos actualizar estos Términos periódicamente. Notificaremos los cambios sustanciales mediante un aviso en la web o por correo electrónico. El uso continuado del servicio constituye tu aceptación de los nuevos términos.</p>
+
+  <!-- 9. LEY APLICABLE -->
+  <h2>9. Ley aplicable y jurisdicción</h2>
+  <p>Estos Términos se rigen por la <strong>legislación colombiana</strong>. Para cualquier controversia, las partes se someten a los jueces y tribunales competentes de Colombia.</p>
+
+  <!-- 10. ENLACES A TERCEROS -->
+  <h2>10. Enlaces a terceros</h2>
+  <p>El servicio puede contener enlaces a sitios web de terceros. No somos responsables del contenido ni de las políticas de privacidad de dichos sitios.</p>
+
+  <!-- 11. CONTACTO -->
+  <h2>11. Contacto</h2>
+  <p>Si tienes dudas sobre estos Términos, puedes escribirnos a:</p>
+  <p><strong>Correo electrónico:</strong> <a href="mailto:correo@tudominio.com">correo@tudominio.com</a></p>
+
+  <hr>
+  <div class="footer-note">
+    <%= app_name %>
+  </div>
+</div>

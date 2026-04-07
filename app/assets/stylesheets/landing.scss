@@ -1,0 +1,242 @@
+@import "bootstrap";
+
+// Color variables
+$primary-blue: #0d5ba8;
+$bg-gray: #f2f2f2;
+$text-dark: #111827;
+$text-gray: #6b7280;
+$text-medium: #374151;
+$border-gray: #e5e7eb;
+
+// Navigation
+.landing-navbar {
+  background-color: $primary-blue;
+}
+
+// Main content
+.landing-main {
+  background-color: $bg-gray;
+  min-height: calc(100vh - 100px);
+}
+
+// Hero section
+.hero-title {
+  color: $text-dark;
+}
+
+.hero-subtitle {
+  color: $text-gray;
+}
+
+// Feature cards
+.feature-card {
+  background-color: #fff;
+}
+
+.feature-icon-circle {
+  width: 80px;
+  height: 80px;
+  background-color: rgba(13, 91, 168, 0.1);
+}
+
+.feature-title {
+  color: $text-medium;
+}
+
+.feature-text {
+  color: $text-gray;
+}
+
+// Pricing section
+.pricing-card {
+  background-color: #fff;
+}
+
+.pricing-amount {
+  color: $primary-blue;
+}
+
+.pricing-period {
+  color: $text-gray;
+}
+
+.pricing-description {
+  color: $text-medium;
+}
+
+.btn-primary-custom {
+  background-color: $primary-blue;
+  color: white;
+
+  &:hover {
+    background-color: darken($primary-blue, 10%);
+    color: white;
+  }
+}
+
+// FAQ
+.faq-item {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.faq-question {
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  color: $text-medium;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &::-webkit-details-marker { display: none; }
+
+  &::after {
+    content: "+";
+    font-size: 1.25rem;
+    color: $primary-blue;
+    flex-shrink: 0;
+    margin-left: 1rem;
+  }
+}
+
+details[open] .faq-question::after {
+  content: "−";
+}
+
+.faq-answer {
+  padding: 0 1.25rem 1rem;
+  color: $text-gray;
+  margin: 0;
+}
+
+// Footer
+.landing-footer {
+  background-color: #fff;
+  border-top: 1px solid $border-gray;
+}
+
+.footer-text {
+  color: $text-gray;
+}
+
+.footer-link {
+  color: $text-gray;
+
+  &:hover {
+    color: darken($text-gray, 15%);
+  }
+}
+
+// Privacy Policy && Terms of Service
+.container.privacy-policy, .container.tos {
+  max-width: 850px;
+  margin: 0 auto;
+  background: white;
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+  border: 1px solid #eaeef5;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 0.25rem;
+    color: #0a1e3c;
+    border-bottom: 3px solid #e2e8f0;
+    padding-bottom: 0.75rem;
+  }
+
+  .fecha {
+    font-size: 0.95rem;
+    color: #5a6a7a;
+    margin-bottom: 2rem;
+    font-weight: 400;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    color: #0f2b4b;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid #eaeef2;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #1e3a5f;
+  }
+
+  p {
+    margin: 0.75rem 0;
+    color: #2d3a4f;
+  }
+
+  ul, ol {
+    margin: 0.75rem 0 1.25rem 1.5rem;
+    padding-left: 0.5rem;
+  }
+
+  li {
+    margin-bottom: 0.4rem;
+    color: #2d3a4f;
+  }
+
+  strong {
+    color: #0a1e3c;
+  }
+
+  .highlight {
+    background-color: #f0f4fa;
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    border-left: 5px solid #2563eb;
+    margin: 1.75rem 0;
+  }
+
+  .highlight p:last-child {
+    margin-bottom: 0;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #dce3eb;
+    margin: 2rem 0 1rem;
+  }
+
+  .footer-note {
+    font-size: 0.9rem;
+    color: #5e6f7e;
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eaeef2;
+  }
+
+  a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 600px) {
+    padding: 1.5rem;
+
+    h1 {
+      font-size: 1.75rem;
+    }
+  }
+}
