@@ -56,6 +56,10 @@ def add_users
             "# config.confirm_within = 3.days",
             "config.confirm_within = 24.hours"
 
+  gsub_file "config/initializers/devise.rb",
+            "config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'",
+            'config.mailer_sender = "CHANGE-ME"'
+
   generate :devise, "User", "first_name:string", "last_name:string", "admin:boolean"
 
   in_root do
@@ -151,7 +155,7 @@ end
 
 def add_action_mailer_configs
   development_smtp_settings = <<~SMTP_SETTINGS
-    config.action_mailer.default_url_options = { host: "localhost:3000" }
+    config.action_mailer.default_url_options = { host: "localhost:3009" }
 
     config.action_mailer.delivery_method = :smtp
 
