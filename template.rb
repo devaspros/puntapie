@@ -105,6 +105,7 @@ def copy_templates
   copy_file "config/initializers/assets.rb", force: true
 
   copy_file "config/initializers/sentry.rb", force: true
+  copy_file "config/initializers/resend.rb", force: true
 
   template "README.md.tt", force: true
 
@@ -160,15 +161,7 @@ def add_action_mailer_configs
 
   production_smtp_settings = <<~SMTP_SETTINGS
     config.action_mailer.default_url_options = { host: "CHANGE-ME" }
-    config.action_mailer.delivery_method = :smtp
-
-    config.action_mailer.smtp_settings = {
-      domain: ENV["MAILGUN_DOMAIN"],
-      address: ENV["MAILGUN_HOST"],
-      user_name: ENV["MAILGUN_USERNAME"],
-      password: ENV["MAILGUN_PASSWORD"],
-      port: 587
-    }
+    config.action_mailer.delivery_method = :resend
   SMTP_SETTINGS
 
   environment(production_smtp_settings, env: "production")
