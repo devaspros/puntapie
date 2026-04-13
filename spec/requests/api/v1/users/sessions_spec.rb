@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "Sessions API", type: :request do
-  let!(:user) { create(:user, email: "test@example.com", password: "password123") }
+  let!(:user) { create(:user, :confirmed, email: "test@example.com", password: "password123") }
 
   describe "POST /api/v1/users/sign_in" do
     context "when credentials are valid" do
