@@ -52,6 +52,10 @@ end
 def add_users
   generate "devise:install"
 
+  gsub_file "config/initializers/devise.rb",
+            "# config.confirm_within = 3.days",
+            "config.confirm_within = 24.hours"
+
   generate :devise, "User", "first_name:string", "last_name:string", "admin:boolean"
 
   in_root do
