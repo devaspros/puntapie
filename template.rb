@@ -60,6 +60,10 @@ def add_users
             "config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'",
             'config.mailer_sender = "CHANGE-ME"'
 
+  gsub_file "config/initializers/devise.rb",
+            "# config.mailer = 'Devise::Mailer'",
+            'config.mailer = "AppMailer"'
+
   generate :devise, "User", "first_name:string", "last_name:string", "admin:boolean"
 
   in_root do
@@ -141,6 +145,7 @@ def configure_rspec
 
   directory "spec/requests", force: true
   directory "spec/factories", force: true
+  directory "spec/mailers", force: true
 
   copy_file ".simplecov"
   copy_file ".spec", force: true
@@ -163,6 +168,8 @@ def add_action_mailer_configs
       address: "127.0.0.1",
       port: 1025
     }
+
+    config.action_mailer.preview_path = Rails.root.join("spec/mailers/previews")
   SMTP_SETTINGS
 
   environment(development_smtp_settings, env: "development")

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= Rails.application.class.module_parent_name %></title>
+  </head>
+
+  <body style="margin: 0; padding: 0; background-color: #f4f4f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f5; padding: 40px 20px;">
+      <tr>
+        <td align="center">
+
+          <!-- Logo -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 520px;">
+            <tr>
+              <td align="center" style="padding-bottom: 24px;">
+                <span style="font-size: 22px; font-weight: 700; color: #18181b; letter-spacing: -0.5px;"><%= Rails.application.class.module_parent_name %></span>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Card -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 520px; background-color: #ffffff; border-radius: 12px; border: 1px solid #e4e4e7;">
+            <tr>
+              <td style="padding: 40px 48px;">
+                <%= yield %>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Footer -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 520px;">
+            <tr>
+              <td align="center" style="padding-top: 28px;">
+                <p style="margin: 0; font-size: 13px; color: #a1a1aa;">© <%= Time.current.year %> <%= Rails.application.class.module_parent_name %>. Todos los derechos reservados.</p>
+              </td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
