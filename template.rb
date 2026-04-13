@@ -158,6 +158,7 @@ def add_action_mailer_configs
   environment(development_smtp_settings, env: "development")
 
   production_smtp_settings = <<~SMTP_SETTINGS
+    config.action_mailer.default_url_options = { host: "CHANGE-ME" }
     config.action_mailer.delivery_method = :smtp
 
     config.action_mailer.smtp_settings = {
@@ -170,6 +171,12 @@ def add_action_mailer_configs
   SMTP_SETTINGS
 
   environment(production_smtp_settings, env: "production")
+
+  test_mailer_settings = <<~MAILER_SETTINGS
+    config.action_mailer.default_url_options = { host: "localhost:3000" }
+  MAILER_SETTINGS
+
+  environment(test_mailer_settings, env: "test")
 end
 
 def setup_exception_handler
