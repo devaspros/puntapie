@@ -9,9 +9,9 @@ APP_DIR="puntapie"
 #     └── api-release
 #     └── logs
 
-cd /home/ubuntu/$APP_DIR/app/
+. /home/ubuntu/.PUNTAPIE.envs
 
-. /home/ubuntu/.profile
+cd /home/ubuntu/$APP_DIR/app/
 
 # RSYNC: from api-release/ to app/
 #

@@ -9,7 +9,7 @@ APP_DIR="puntapie"
 #     └── api-release
 #     └── logs
 
-. /home/ubuntu/.profile
+. /home/ubuntu/.PUNTAPIE.envs
 
 cd /home/ubuntu/$APP_DIR/deployments/api-release
 

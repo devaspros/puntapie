@@ -1,27 +1,27 @@
-# Custom Deployment Scripts
+# Scripts de Despliegue a VPS
 
-Ideally, you want to deploy your application to Heroku. It's the simplest way to release a Ruby on Rails application.
+Idealmente, querrás desplegar tu aplicación en Heroku. Es la forma más sencilla de lanzar una aplicación Ruby on Rails.
 
-However, when you need something more customized or your app is hosted in a VPS, then you're going to need to code some scripts to deploy your app.
+Sin embargo, cuando necesites algo más personalizado o tu aplicación esté alojada en un VPS, entonces vas a necesitar codificar algunos scripts para desplegar tu aplicación.
 
-The scripts in this section are useful to have a Capistrano-like deployment. These scripts work best if you configure them to be run by a CI server after merging changes to a set branch.
+Los scripts de esta sección son útiles para tener un despliegue similar a Capistrano. Estos scripts funcionan mejor si los configuras para que sean ejecutados por un servidor CI después de fusionar los cambios en una rama establecida.
 
-## Folder Structure
+## Estructura de Carpetas
 
-The scripts assume the following folder structure:
+Se asume la siguiente estructura:
 
 ```bash
-~/PUNTAPIE # Main folder to hold Rails app and related ones.
-├── app # This is the folder that contains the Rails app.
-└── deployments # The deployment have to happen in a separate place that is synched afterwards.
-    ├── api-gems # Install gems here and symlink them to the defined folder.
-    └── api-release # Pull latest changes here and sync them to the app/ folder using RSync.
-    └── logs
-├── backups # Holds all database backups.
-├── db # holds the SQLite database file.
+~/PUNTAPIE # Carpeta principal de tu aplicación Ruby on Rails.
+├── app # Carpeta del código Ruby on Rails.
+└── deployments # Los despliegues pasan en una carpeta aparte que luego es sincronizada.
+    ├── api-gems # Carpeta para instalar gemas. De aquí luego se hace un symlink.
+    └── api-release # Baja los cambios más recientes del repo y sincroniza a la carpeta app/ usando RSync.
+    └── logs # Para todos los logs que se generan durante un despliegue.
+├── backups # Para todos los backups de la base de datos.
+├── db # La base de datos SQL debe vivir en una carpeta independiente de todo el proceso para evitar perdida.
 ```
 
-The whole folder structure can be created with this script:
+Puedes crear toda la estructura con este comando:
 
 ```bash
 mkdir -p ~/PUNTAPIE/{app,deployments/{api-gems,api-release,logs},backups,db}
@@ -29,17 +29,16 @@ mkdir -p ~/PUNTAPIE/{app,deployments/{api-gems,api-release,logs},backups,db}
 
 ## Scripts
 
-First make a manual `git clone` to the repo from the `~/PUNTAPIE/deployments/api-release` folder.
+El primero paso es hacer un `git clone` manual desde la carpeta `~/PUNTAPIE/deployments/api-release` en el VPS.
 
-
-For example:
+Ejemplo:
 ```
 cd PUNTAPIE/deployments/api-release
 
 git clone git@gh:cesc1989/PUNTAPIE.git .
 ```
 
-To start the deployment, from the `api-release` folder, run the `deploy_api.sh` script. This script will take care of running the rest.
+Luego, para iniciar el despliegue, desde la carpeta `api-release`, corre el script `deploy_api.sh`. Este es un entrypoint que ejecutará los demás scripts.
 
 1. 001_deploy_api.sh
 2. 002_pull_repo.sh

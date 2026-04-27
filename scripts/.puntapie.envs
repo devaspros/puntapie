@@ -1,0 +1,17 @@
+# Archivo base de ENVs para cambiar en el VPS. Solo será leído por los servicios de PUNTAPIE:
+#
+#  - Rails
+#  - Sidekiq
+#
+# Debe crearse en la carpeta del usuario de sistema (ubuntu): touch ~/.[PUNTAPIE].envs
+#
+# No puede llevar export porque sino la instrucción EnvironmentFile de systemd para Sidekiq
+# no lee los contenidos.
+
+SECRET_KEY_BASE="CHANGEME"
+
+PUNTAPIE_REDIS_URL="redis://127.0.0.1:6379/1"
+PUNTAPIE_RESEND_API_KEY="CHANGEME"
+
+PUNTAPIE_BOLD_API_KEY="CHANGEME"
+PUNTAPIE_APP_HOST="CHANGEME"

@@ -1,5 +1,5 @@
 SIDEKIQ_REDIS_CONFIGURATION = {
-  url: ENV["REDIS_URL"],
+  url: ENV["PUNTAPIE_REDIS_URL"],
   ssl_params: { verify_mode: OpenSSL::SSL::VERIFY_NONE },
 }
 
