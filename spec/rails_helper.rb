@@ -26,6 +26,12 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
 
+  config.before(:suite) do
+    Role.create(name: "admin")
+    Role.create(name: "member")
+    Role.create(name: "viewer")
+  end
+
   # Custom Helpers requests specs
   config.include RequestSpecHelper, type: :request
   config.include RequestSpecHelper::JsonHelper, type: :request
