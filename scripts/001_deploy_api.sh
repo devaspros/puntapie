@@ -7,12 +7,9 @@ APP_DIR="puntapie"
 # └── deployments
 #     ├── api-gems
 #     └── api-release
+#     └── logs
 
 set -e
-
-# CLEAN CURRENT APP
-#
-# This step is covered by using RSync. It only replaces modified files.
 
 # PULL Repo from GitHub
 #
