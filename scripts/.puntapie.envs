@@ -7,6 +7,18 @@
 #
 # No puede llevar export porque sino la instrucción EnvironmentFile de systemd para Sidekiq
 # no lee los contenidos.
+#
+# Para poder usarlo en los scripts de despliegue debe estar entre líneas que desactiven
+# y activen set -a. Así:
+#
+#    set +a
+#    . /home/ubuntu/.PUNTAPIE.envs
+#    set -a
+#
+# IMPORTANTE:
+#
+#    Este archivo es de guía. No pongas valores reales aquí. Crea el archivo en el VPS
+#    con los valores aquí descritos.
 
 SECRET_KEY_BASE="CHANGEME"
 

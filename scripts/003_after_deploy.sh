@@ -9,7 +9,9 @@ APP_DIR="puntapie"
 #     └── api-release
 #     └── logs
 
+set -a
 . /home/ubuntu/.PUNTAPIE.envs
+set +a
 
 # Toca cargar chruby directamente porque ya no se carga desde ~/.profile
 source /usr/local/share/chruby/chruby.sh
