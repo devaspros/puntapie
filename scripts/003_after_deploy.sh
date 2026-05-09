@@ -2,6 +2,11 @@
 
 APP_DIR="puntapie"
 
+BASE_DIR="/home/ubuntu/$APP_DIR"
+DEPLOY_DIR="$BASE_DIR/deployments/api-release"
+LOG_DIR="$BASE_DIR/deployments/logs"
+APP_DIR_PATH="$BASE_DIR/app"
+
 # PUNTAPIE
 # ├── app
 # └── deployments
@@ -13,65 +18,41 @@ set -a
 . /home/ubuntu/.PUNTAPIE.envs
 set +a
 
-# Toca cargar chruby directamente porque ya no se carga desde ~/.profile
 source /usr/local/share/chruby/chruby.sh
 chruby ruby-3.4.8
 
-# DEPLOY in release folder
-#
-cd /home/ubuntu/$APP_DIR/deployments/api-release
+cd $DEPLOY_DIR
 
-# INSTALL gems
-#
-echo "$(date '+%F %T') Installing deployment gems" >> /home/ubuntu/$APP_DIR/deployments/logs/002_bundle_install.log 2>&1
+echo "$(date '+%F %T') Installing deployment gems" >> $LOG_DIR/002_bundle_install.log 2>&1
 bundle install --deployment \
   --without development test \
-  --path /home/ubuntu/$APP_DIR/deployments/api-gems/bundle \
-  >> /home/ubuntu/$APP_DIR/deployments/logs/002_bundle_install.log 2>&1
+  --path $BASE_DIR/deployments/api-gems/bundle \
+  >> $LOG_DIR/002_bundle_install.log 2>&1
 
-# CHECK or CREATE app/vendor
-#
-echo "$(date '+%F %T') create vendor/bundle" >> /home/ubuntu/$APP_DIR/deployments/logs/003_bundle_symlink.log 2>&1
-[ -d /home/ubuntu/$APP_DIR/app/vendor ] || mkdir -p /home/ubuntu/$APP_DIR/app/vendor >> /home/ubuntu/$APP_DIR/deployments/logs/003_bundle_symlink.log 2>&1
+echo "$(date '+%F %T') create vendor/bundle" >> $LOG_DIR/003_bundle_symlink.log 2>&1
+[ -d $APP_DIR_PATH/vendor ] || mkdir -p $APP_DIR_PATH/vendor >> $LOG_DIR/003_bundle_symlink.log 2>&1
 
-# SYMLINK api-gems to app/vendor/bundle
-#
-echo "$(date '+%F %T') Symlink api-gems to vendor/bundle" >> /home/ubuntu/$APP_DIR/deployments/logs/003_bundle_symlink.log 2>&1
-ln -fsv /home/ubuntu/$APP_DIR/deployments/api-gems/bundle /home/ubuntu/$APP_DIR/app/vendor/ >> /home/ubuntu/$APP_DIR/deployments/logs/003_bundle_symlink.log 2>&1
+echo "$(date '+%F %T') Symlink api-gems to vendor/bundle" >> $LOG_DIR/003_bundle_symlink.log 2>&1
+ln -fsv $BASE_DIR/deployments/api-gems/bundle $APP_DIR_PATH/vendor/ >> $LOG_DIR/003_bundle_symlink.log 2>&1
 
-# SYMLINK NVM node to /usr/local/bin/node
-#
-# ~./clave is a file holding server user password so that the command can be run by an agent like Github Actions.
-#
-echo "$(date '+%F %T') Symlink NVM node to /usr/local/bin/node" >> /home/ubuntu/$APP_DIR/deployments/logs/004_node_symlink.log 2>&1
-cat ~/.clave | sudo -S ln -sfv /home/ubuntu/.nvm/versions/node/v18.16.1/bin/node /usr/local/bin/node >> /home/ubuntu/$APP_DIR/deployments/logs/004_node_symlink.log 2>&1
+echo "$(date '+%F %T') Symlink NVM node to /usr/local/bin/node" >> $LOG_DIR/004_node_symlink.log 2>&1
+cat ~/.clave | sudo -S ln -sfv /home/ubuntu/.nvm/versions/node/v18.16.1/bin/node /usr/local/bin/node >> $LOG_DIR/004_node_symlink.log 2>&1
 
-# CLEAN old assets
-#
-echo "$(date '+%F %T') Clobber assets" >> /home/ubuntu/$APP_DIR/deployments/logs/011_clobber_assets.log 2>&1
-RAILS_ENV=$RAILS_ENV SECRET_KEY_BASE=$SECRET_KEY_BASE bundle exec rake assets:clobber >> /home/ubuntu/$APP_DIR/deployments/logs/011_clobber_assets.log 2>&1
+echo "$(date '+%F %T') Clobber assets" >> $LOG_DIR/011_clobber_assets.log 2>&1
+RAILS_ENV=$RAILS_ENV SECRET_KEY_BASE=$SECRET_KEY_BASE bundle exec rake assets:clobber >> $LOG_DIR/011_clobber_assets.log 2>&1
 
-# COMPILE assets
-#
-echo "$(date '+%F %T') Compiling assets" >> /home/ubuntu/$APP_DIR/deployments/logs/005_assets_precompile.log 2>&1
-RAILS_ENV=$RAILS_ENV SECRET_KEY_BASE=$SECRET_KEY_BASE bundle exec rake assets:precompile >> /home/ubuntu/$APP_DIR/deployments/logs/005_assets_precompile.log 2>&1
+echo "$(date '+%F %T') Compiling assets" >> $LOG_DIR/005_assets_precompile.log 2>&1
+RAILS_ENV=$RAILS_ENV SECRET_KEY_BASE=$SECRET_KEY_BASE bundle exec rake assets:precompile >> $LOG_DIR/005_assets_precompile.log 2>&1
 
-# Run migrations
-#
-echo "$(date '+%F %T') Running migrations" >> /home/ubuntu/$APP_DIR/deployments/logs/006_migration.log 2>&1
-RAILS_ENV=$RAILS_ENV SECRET_KEY_BASE=$SECRET_KEY_BASE bundle exec rake db:migrate RAILS_ENV=$RAILS_ENV >> /home/ubuntu/$APP_DIR/deployments/logs/006_migration.log 2>&1
+echo "$(date '+%F %T') Running migrations" >> $LOG_DIR/006_migration.log 2>&1
+RAILS_ENV=$RAILS_ENV SECRET_KEY_BASE=$SECRET_KEY_BASE bundle exec rake db:migrate RAILS_ENV=$RAILS_ENV >> $LOG_DIR/006_migration.log 2>&1
 
-# SYMLINK nginx configuration file to /etc/nginx/sites-enabled
-#
-echo "$(date '+%F %T') Symlinking nginx configuration file" >> /home/ubuntu/$APP_DIR/deployments/logs/007_nginx_symlink.log 2>&1
-sudo ln -fs /home/ubuntu/$APP_DIR/app/config/nginx.$APP_DIR.$RAILS_ENV.conf /etc/nginx/sites-enabled/
+echo "$(date '+%F %T') Symlinking nginx configuration file" >> $LOG_DIR/007_nginx_symlink.log 2>&1
+sudo ln -fs $APP_DIR_PATH/config/nginx.$APP_DIR.$RAILS_ENV.conf /etc/nginx/sites-enabled/
 
-# SYMLINK puntapie.sidekiq.service to user folder at /home/ubuntu/.config/systemd/user/puntapie.sidekiq.service
-#
-echo "$(date '+%F %T') Symlinking puntapie.sidekiq.service configuration file" >> /home/ubuntu/$APP_DIR/deployments/logs/201_sidekiq_service_symlink.log 2>&1
-sudo ln -fs /home/ubuntu/$APP_DIR/app/scripts/puntapie.sidekiq.service /home/ubuntu/.config/systemd/user/
-systemctl --user daemon-reload >> /home/ubuntu/$APP_DIR/deployments/logs/201_sidekiq_service_symlink.log 2>&1
+echo "$(date '+%F %T') Symlinking puntapie.sidekiq.service configuration file" >> $LOG_DIR/201_sidekiq_service_symlink.log 2>&1
+sudo ln -fs $APP_DIR_PATH/scripts/puntapie.sidekiq.service /home/ubuntu/.config/systemd/user/
+systemctl --user daemon-reload >> $LOG_DIR/201_sidekiq_service_symlink.log 2>&1
 
-# Ensure Sidekiq service is enabled (starts on boot)
-echo "$(date '+%F %T') Enabling puntapie.sidekiq.service" >> /home/ubuntu/$APP_DIR/deployments/logs/201_sidekiq_service_symlink.log 2>&1
-systemctl --user enable puntapie.sidekiq.service >> /home/ubuntu/$APP_DIR/deployments/logs/201_sidekiq_service_symlink.log 2>&1
+echo "$(date '+%F %T') Enabling puntapie.sidekiq.service" >> $LOG_DIR/201_sidekiq_service_symlink.log 2>&1
+systemctl --user enable puntapie.sidekiq.service >> $LOG_DIR/201_sidekiq_service_symlink.log 2>&1
