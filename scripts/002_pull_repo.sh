@@ -2,7 +2,6 @@
 set -eo pipefail
 
 APP_DIR="puntapie"
-
 BASE_DIR="/home/ubuntu/$APP_DIR"
 DEPLOY_DIR="$BASE_DIR/deployments/api-release"
 LOG_DIR="$BASE_DIR/deployments/logs"
