@@ -1,4 +1,4 @@
-#!/bin/bash -xe
+#!/bin/bash
 
 APP_DIR="puntapie"
 
@@ -20,6 +20,8 @@ set +a
 
 source /usr/local/share/chruby/chruby.sh
 chruby ruby-3.4.8
+
+set -eo pipefail
 
 cd $DEPLOY_DIR
 

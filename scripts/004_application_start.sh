@@ -1,4 +1,5 @@
-#!/bin/bash -xe
+#!/bin/bash
+set -eo pipefail
 
 APP_DIR="puntapie"
 
