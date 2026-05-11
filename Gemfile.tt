@@ -38,7 +38,7 @@ end
 
 group :development, :test do
   gem "amazing_print", "1.2.2"
-  gem "byebug", platforms: %i[mri mingw x64_mingw]
+  gem "byebug", platforms: %i[mri windows]
   gem "dotenv-rails"
   gem "factory_bot_rails", "6.5.0"
   gem "rspec-rails", "6.1.0"
