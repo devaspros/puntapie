@@ -130,6 +130,8 @@ def copy_templates
   directory "scripts", force: true
 
   copy_file ".rubocop.yml", force: true
+
+  copy_file "bin/setup-project-name.tt", "bin/setup-project-name", force: true
 end
 
 def configure_rspec
@@ -460,4 +462,7 @@ after_bundle do
   say
   say "Usa el script en scripts/set_repo_secrets.sh para guardar los secrets"
   say "necesarios para el despliegue mediante Github Actions."
+  say
+  say "Personaliza el nombre del proyecto:", :green
+  say "  bash bin/setup-project-name", :cyan
 end

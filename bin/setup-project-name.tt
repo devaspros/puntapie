@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+BOLD='\033[1m'
+GREEN='\033[0;32m'
+CYAN='\033[0;36m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+echo ""
+echo -e "${BOLD}╔══════════════════════════════════════════╗${NC}"
+echo -e "${BOLD}║   Personalización del Proyecto           ║${NC}"
+echo -e "${BOLD}╚══════════════════════════════════════════╝${NC}"
+echo ""
+
+read -p "$(echo -e "${YELLOW}Nombre del proyecto (Title Case, ej: Super Menu): ${NC}")" PROJECT_TITLE
+
+if [ -z "$PROJECT_TITLE" ]; then
+  echo -e "${RED}Error: Debes ingresar un nombre.${NC}"
+  exit 1
+fi
+
+PROJECT_LOWER=$(echo "$PROJECT_TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '_')
+PROJECT_UPPER=$(echo "$PROJECT_TITLE" | tr '[:lower:]' '[:upper:]' | tr ' ' '_')
+
+echo ""
+echo -e "${CYAN}Derivando nombres...${NC}"
+echo -e "  Title Case:  ${BOLD}$PROJECT_TITLE${NC}"
+echo -e "  Lower snake: ${BOLD}$PROJECT_LOWER${NC}"
+echo -e "  Upper snake: ${BOLD}$PROJECT_UPPER${NC}"
+echo ""
+
+echo -e "${YELLOW}Reemplazando referencias en contenidos y nombres de archivo...${NC}"
+echo ""
+
+# ─────────────────────────────────────────
+# 1. RENOMBRAR ARCHIVOS
+# ─────────────────────────────────────────
+rename_file() {
+  local old="$1"
+  local new="$2"
+  if [ -f "$old" ]; then
+    mv "$old" "$new"
+    echo -e "  ${GREEN}✓${NC} Renombrado: $old → $new"
+  fi
+}
+
+rename_file "config/nginx.puntapie.production.conf" "config/nginx.${PROJECT_LOWER}.production.conf"
+rename_file "scripts/puntapie.sidekiq.service" "scripts/${PROJECT_LOWER}.sidekiq.service"
+rename_file "scripts/puntapie_logrotate" "scripts/${PROJECT_LOWER}_logrotate"
+rename_file "scripts/.puntapie.envs" "scripts/.${PROJECT_LOWER}.envs"
+
+# ─────────────────────────────────────────
+# 2. REEMPLAZAR MASIVAMENTE EN CONTENIDOS
+# ─────────────────────────────────────────
+
+# Se excluye a sí mismo y la carpeta .git
+EXCLUDE_PATTERN="(bin/setup-project-name|.git/)"
+
+find_files() {
+  local pattern="$1"
+  grep -rls "$pattern" . --include="*" 2>/dev/null | grep -vE "$EXCLUDE_PATTERN" || true
+}
+
+apply_sed() {
+  local from="$1"
+  local to="$2"
+  local files="$3"
+  if [ -n "$files" ]; then
+    while IFS= read -r file; do
+      LC_ALL=C sed -i "" "s|$from|$to|g" "$file"
+    done <<< "$files"
+    local count
+    count=$(echo "$files" | grep -c . || true)
+    echo -e "  ${GREEN}✓${NC} $from → $to  ($count archivos)"
+  fi
+}
+
+echo ""
+echo -e "${CYAN}PUNTAPIE → ${PROJECT_UPPER}...${NC}"
+FILES_UPPER=$(find_files "PUNTAPIE")
+apply_sed "PUNTAPIE" "$PROJECT_UPPER" "$FILES_UPPER"
+
+echo ""
+echo -e "${CYAN}puntapie → ${PROJECT_LOWER}...${NC}"
+FILES_LOWER=$(find_files "puntapie")
+apply_sed "puntapie" "$PROJECT_LOWER" "$FILES_LOWER"
+
+echo ""
+echo -e "${CYAN}Puntapie → ${PROJECT_TITLE}...${NC}"
+FILES_TITLE=$(find_files "Puntapie")
+apply_sed "Puntapie" "$PROJECT_TITLE" "$FILES_TITLE"
+
+# ─────────────────────────────────────────
+# 3. RENOMBRAR NUEVAMENTE POR SI HAY ARCHIVOS
+#    QUE AÚN TENGAN "puntapie" EN EL NOMBRE
+# ─────────────────────────────────────────
+echo ""
+echo -e "${CYAN}Renombrando archivos pendientes...${NC}"
+
+find . -name "*puntapie*" ! -path "./.git/*" ! -name "bin/setup-project-name" -print0 2>/dev/null | while IFS= read -r -d '' old; do
+  dir=$(dirname "$old")
+  base=$(basename "$old")
+  new_base="${base//puntapie/$PROJECT_LOWER}"
+  new="$dir/$new_base"
+  if [ "$old" != "$new" ]; then
+    mv "$old" "$new"
+    echo -e "  ${GREEN}✓${NC} Renombrado: $old → $new"
+  fi
+done
+
+echo ""
+echo -e "${GREEN}${BOLD}╔══════════════════════════════════════════╗${NC}"
+echo -e "${GREEN}${BOLD}║   Personalización completada             ║${NC}"
+echo -e "${GREEN}${BOLD}╚══════════════════════════════════════════╝${NC}"
+echo ""
+echo -e "${YELLOW}Verifica que no haya residuos:${NC}"
+echo ""
+echo -e "  ${BOLD}grep -rn \"PUNTAPIE\\|puntapie\" . --include=\"*\" 2>/dev/null | grep -v \"^.git/\\|bin/setup-project-name\" | head -20${NC}"
+echo ""
+echo -e "${GREEN}Si no hay resultados, todo está limpio.${NC}"
+echo ""
+echo -e "${CYAN}Próximos pasos recomendados:${NC}"
+echo -e "  - Revisa ${BOLD}config/nginx.${PROJECT_LOWER}.production.conf${NC} y actualiza el dominio"
+echo -e "  - Revisa ${BOLD}scripts/.${PROJECT_LOWER}.envs${NC} y configura los valores reales"
+echo -e "  - Revisa ${BOLD}.github/workflows/deploy.yml${NC} y ajusta el host SSH"
