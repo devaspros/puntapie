@@ -72,6 +72,25 @@ bash bin/setup-project-name
 Esto renombrará archivos y actualizará todas las ocurrencias (ENV vars, vistas, scripts de
 despliegue, configuraciones, etc.) por el nombre que ingreses.
 
+## Despliegue
+
+### Secrets de GitHub Actions
+
+Para configurar los secrets necesarios para el despliegue automatizado via GitHub Actions,
+ejecuta el script interactivo:
+
+```bash
+bash scripts/set_repo_secrets.sh
+```
+
+El script te pedirá los siguientes valores:
+
+- **TARGET_HOST**: IP o dominio del servidor
+- **TARGET_USER**: Usuario SSH (ej: `ubuntu`)
+- **KNOWN_HOSTS**: Huella del servidor (`ssh-keyscan <host>`)
+- **PRIVATE_KEY**: Llave privada SSH para acceso al servidor
+- **NTFY_TOPIC**: Topic de ntfy.sh para notificaciones
+
 ## Documentation
 
 _Pendiente_.

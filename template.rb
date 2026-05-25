@@ -452,17 +452,17 @@ after_bundle do
   say "To get started with your new app:", :green
   say "  cd #{app_name}"
   say
-  say "Update config/database.yml with your database credentials"
+  say "Update config/database.yml with your database credentials", :yellow
   say
-  say "  bundle exec rails db:create db:migrate"
-  say "  bundle exec rails setup:run"
+  say "  bundle exec rails db:create db:migrate", :cyan
+  say "  bundle exec rails setup:run", :cyan
   say
-  say "Customize Procfile.dev and then run"
-  say "  foreman start"
-  say
-  say "Usa el script en scripts/set_repo_secrets.sh para guardar los secrets"
-  say "necesarios para el despliegue mediante Github Actions."
+  say "Customize Procfile.dev and then run", :yellow
+  say "  foreman start", :cyan
   say
   say "Personaliza el nombre del proyecto:", :green
   say "  bash bin/setup-project-name", :cyan
+  say
+  say "Configura los secrets para el despliegue con GitHub Actions:", :yellow
+  say "  bash scripts/set_repo_secrets.sh", :cyan
 end
