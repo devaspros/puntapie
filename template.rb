@@ -148,6 +148,7 @@ def configure_rspec
   directory "spec/requests", force: true
   directory "spec/factories", force: true
   directory "spec/mailers", force: true
+  directory "spec/models", force: true
 
   copy_file ".simplecov"
   copy_file ".spec", force: true
@@ -163,14 +164,11 @@ end
 def add_action_mailer_configs
   development_smtp_settings = <<~SMTP_SETTINGS
     config.action_mailer.default_url_options = { host: "localhost:3009" }
-
     config.action_mailer.delivery_method = :smtp
-
     config.action_mailer.smtp_settings = {
       address: "127.0.0.1",
       port: 1025
     }
-
     config.action_mailer.preview_path = Rails.root.join("spec/mailers/previews")
   SMTP_SETTINGS
 

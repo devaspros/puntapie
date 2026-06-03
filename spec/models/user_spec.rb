@@ -17,6 +17,7 @@ describe User, type: :model do
         memberships = user.memberships
 
         expect(memberships).to include(membership)
+        expect(memberships.count).to eq(1)
       end
     end
 
@@ -35,6 +36,7 @@ describe User, type: :model do
         organizations = user.organizations
 
         expect(organizations).to include(organization)
+        expect(organizations.count).to eq(1)
       end
     end
 
