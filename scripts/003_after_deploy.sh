@@ -26,15 +26,26 @@ set -eo pipefail
 #
 cd $DEPLOY_DIR
 
+# CONFIGURACIÓN de bundle
+#
+echo "$(date '+%F %T') Configuración de bundle" >> $LOG_DIR/002_bundle_install.log 2>&1
+bundle config set --local deployment true
+bundle config set --local path '/home/ubuntu/puntapie/deployments/api-gems/bundle'
+bundle config set --local without 'development test'
+
 # INSTALL gems
 #
 echo "$(date '+%F %T') Installing deployment gems" >> $LOG_DIR/002_bundle_install.log 2>&1
 bundle install >> $LOG_DIR/002_bundle_install.log 2>&1
 
-echo "$(date '+%F %T') Installing npm packages" >> $LOG_DIR/003_npm_install.log 2>&1
+# CARGA nvm
+#
+echo "$(date '+%F %T') Load NVM" >> $LOG_DIR/003_npm_install.log 2>&1
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
+# CREA carpeta vendor/bundle
+#
 echo "$(date '+%F %T') create vendor/bundle" >> $LOG_DIR/004_create_vendor.log 2>&1
 [ -d $APP_DIR_PATH/vendor ] || mkdir -p $APP_DIR_PATH/vendor >> $LOG_DIR/004_create_vendor.log 2>&1
 
@@ -89,5 +100,6 @@ sudo ln -fs $APP_DIR_PATH/scripts/puntapie.sidekiq.service /home/ubuntu/.config/
 systemctl --user daemon-reload >> $LOG_DIR/201_sidekiq_service_symlink.log 2>&1
 
 # Ensure Sidekiq service is enabled (starts on boot)
+#
 echo "$(date '+%F %T') Enabling puntapie.sidekiq.service" >> $LOG_DIR/201_sidekiq_service_symlink.log 2>&1
 systemctl --user enable puntapie.sidekiq.service >> $LOG_DIR/201_sidekiq_service_symlink.log 2>&1

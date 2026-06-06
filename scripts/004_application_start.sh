@@ -29,10 +29,12 @@ rsync -arv --delete-after \
   >> $LOG_DIR/012_rsync_files.log 2>&1
 
 # RESTART aplicación (sin reiniciar Nginx)
+#
 echo "$(date '+%F %T') Reiniciando aplicación (touch tmp/restart.txt)" >> $LOG_DIR/013_restart_app.log 2>&1
 touch ./tmp/restart.txt >> $LOG_DIR/013_restart_app.log 2>&1
 
 # truncate -s 0 log/$RAILS_ENV.log
+#
 if [ -f "log/$RAILS_ENV.log" ]; then
   chmod 664 "log/$RAILS_ENV.log"
 fi
