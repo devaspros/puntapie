@@ -41,7 +41,7 @@ fi
 # Change ownership of process files
 #
 echo "$(date '+%F %T') Changing ownership to ubuntu" >> $LOG_DIR/014_chown_folders.log 2>&1
-cat ~/.clave | sudo chown -Rv ubuntu:ubuntu log tmp vendor >> $LOG_DIR/014_chown_folders.log 2>&1
+cat ~/.clave | sudo -S chown -Rv ubuntu:ubuntu log tmp vendor >> $LOG_DIR/014_chown_folders.log 2>&1
 
 # Restart Sidekiq to ensure it runs with new code
 #
