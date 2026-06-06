@@ -29,10 +29,7 @@ cd $DEPLOY_DIR
 # INSTALL gems
 #
 echo "$(date '+%F %T') Installing deployment gems" >> $LOG_DIR/002_bundle_install.log 2>&1
-bundle install --deployment \
-  --without development test \
-  --path $BASE_DIR/deployments/api-gems/bundle \
-  >> $LOG_DIR/002_bundle_install.log 2>&1
+bundle install >> $LOG_DIR/002_bundle_install.log 2>&1
 
 echo "$(date '+%F %T') Installing npm packages" >> $LOG_DIR/003_npm_install.log 2>&1
 export NVM_DIR="$HOME/.nvm"
