@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get "/dashboard", to: "dashboard#index", as: :dashboard
   get "/privacy-policy", to: "home#privacy", as: :privacy_policy
   get "/tos", to: "home#tos", as: :tos
+  get "ping", to: "api/health#show"
 
   devise_for(
     :users,
