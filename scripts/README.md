@@ -29,6 +29,9 @@ mkdir -p ~/PUNTAPIE/{app,deployments/{api-gems,api-release,logs},backups,db}
 
 ## Scripts
 
+> [!Important]
+> Nota que el url es `git@gh`. Eso es intencional. En el VPS se configura el acceso a github.com como alias `gh`
+
 El primero paso es hacer un `git clone` manual desde la carpeta `~/PUNTAPIE/deployments/api-release` en el VPS.
 
 Ejemplo:

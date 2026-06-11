@@ -1,0 +1,29 @@
+[Unit]
+Description=puntapie (puma)
+After=network.target
+
+[Service]
+Type=simple
+
+WorkingDirectory=/home/ubuntu/puntapie/app
+
+# Igual que Sidekiq: memoria más estable en Ruby
+Environment=MALLOC_ARENA_MAX=2
+
+# Si tienes variables globales (DB, secrets, etc)
+EnvironmentFile=/home/ubuntu/.puntapie.envs
+
+ExecStart=/home/ubuntu/.rubies/ruby-3.4.8/bin/bundle exec puma -C config/puma.rb
+
+ExecReload=/bin/kill -USR2 $MAINPID
+
+Restart=on-failure
+RestartSec=3
+
+# Logs igual que Sidekiq (consistencia del VPS)
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=puntapie_puma
+
+[Install]
+WantedBy=multi-user.target
