@@ -170,7 +170,7 @@ def add_action_mailer_configs
       address: "127.0.0.1",
       port: 1025
     }
-    config.action_mailer.preview_path = Rails.root.join("spec/mailers/previews")
+    config.action_mailer.preview_paths << Rails.root.join("spec/mailers/previews")
   SMTP_SETTINGS
 
   environment(development_smtp_settings, env: "development")
