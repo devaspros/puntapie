@@ -89,3 +89,9 @@ Desarrollo y Pruebas:
 - [foreman](https://github.com/ddollar/foreman)
 - [rspec-rails](https://github.com/rspec/rspec-rails)
 - [simplecov](https://github.com/simplecov-ruby/simplecov)
+
+# Comparación con Solidus
+
+Se analizó la compatibilidad de Puntapie con [Solidus](https://solidus.io/) (e-commerce framework para Rails). La conclusión es que **Puntapie no es compatible con Solidus sin modificaciones significativas** debido a conflictos estructurales en autenticación, framework CSS, autorización y archivos core.
+
+El análisis completo está en [`solidus-puntapie/`](solidus-puntapie/).
