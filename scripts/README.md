@@ -47,3 +47,27 @@ Luego, para iniciar el despliegue, desde la carpeta `api-release`, corre el scri
 2. 002_pull_repo.sh
 3. 003_after_deploy.sh
 4. 004_application_start.sh
+
+## Ver logs de un deploy
+
+Cada paso del deploy escribe en su propio archivo dentro de `deployments/logs/NNN_paso.log` (ej. `001_pull_remote.log`, `002_bundle_install.log`). El nombre alfabético de estos archivos no coincide con el orden real de ejecución, así que revisarlos uno por uno con `tail` obliga a comparar timestamps a mano entre archivos.
+
+En vez de eso, usa [lnav](https://lnav.org/) para ver todos los logs de deploy fusionados en una sola línea de tiempo real:
+
+1. Instala `lnav` una sola vez en el servidor: `sudo apt install lnav`.
+2. Corre el wrapper desde la carpeta `app` (o vía SSH: `ssh ubuntu@host 'bash ~/puntapie/app/scripts/deploy_logs.sh'`):
+   ```
+   bash scripts/deploy_logs.sh
+   ```
+
+El script instala automáticamente el formato custom (`scripts/lnav/puntapie_deploy_log.json`) la primera vez que corre, y abre `lnav` apuntando solo a los logs de deploy. Se excluye a propósito `100_cron.log` (backups de DB/logs), que tiene su propio monitor.
+
+Atajos útiles dentro de `lnav`:
+- `/` para buscar (ej. `/error|Error|FATAL`).
+- `g` / `G` para ir al inicio / final.
+- Si el último archivo sigue creciendo, `lnav` sigue el tail en vivo automáticamente.
+
+Puedes apuntar el script a otra carpeta de logs (por ejemplo para probar con datos de prueba) definiendo `LOG_DIR`:
+```
+LOG_DIR=/ruta/a/otros/logs bash scripts/deploy_logs.sh
+```

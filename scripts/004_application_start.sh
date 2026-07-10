@@ -22,7 +22,7 @@ cd $BASE_DIR/app/
 # RSYNC: from api-release/ to app/
 #
 echo "$(date '+%F %T') rsyncing release folder with app folder" >> $LOG_DIR/012_rsync_files.log 2>&1
-rsync -arv --delete-after \
+rsync -ar --delete-after \
   --exclude "vendor/" \
   --exclude "tmp/" \
   $DEPLOY_DIR/ \
@@ -39,7 +39,7 @@ fi
 # Change ownership of process files
 #
 echo "$(date '+%F %T') Changing ownership to ubuntu" >> $LOG_DIR/014_chown_folders.log 2>&1
-cat ~/.clave | sudo -S chown -Rv ubuntu:ubuntu log tmp vendor >> $LOG_DIR/014_chown_folders.log 2>&1
+cat ~/.clave | sudo -S chown -R ubuntu:ubuntu log tmp vendor >> $LOG_DIR/014_chown_folders.log 2>&1
 
 # Restart Sidekiq to ensure it runs with new code
 #
