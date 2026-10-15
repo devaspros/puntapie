@@ -82,11 +82,26 @@ def add_authorization
   generate "pundit:install"
 end
 
-def add_sidekiq
-  add_app_config "config.active_job.queue_adapter = :sidekiq"
+def add_solid_trifecta
+  # Los generadores crean queue.yml, recurring.yml, bin/jobs y los *_schema.rb,
+  # y configuran queue_adapter, connects_to y cache_store en production.rb.
+  generate "solid_queue:install"
+  generate "solid_cache:install"
+  generate "solid_cable:install"
 
-  copy_file "config/sidekiq.yml", force: true
-  copy_file "config/initializers/sidekiq.rb", force: true
+  copy_file "config/cache.yml", force: true
+  copy_file "config/cable.yml", force: true
+
+  development_solid_queue = <<~CONFIG
+    config.active_job.queue_adapter = :solid_queue
+    config.solid_queue.connects_to = { database: { writing: :queue } }
+    config.solid_queue.logger = ActiveSupport::Logger.new(STDOUT)
+  CONFIG
+
+  environment(development_solid_queue, env: "development")
+
+  # Mission Control usa la autenticación de Devise definida en routes.rb.
+  add_app_config "config.mission_control.jobs.http_basic_auth_enabled = false"
 end
 
 def set_locales
@@ -408,7 +423,7 @@ after_bundle do
   stop_spring
   add_users
   add_authorization
-  add_sidekiq
+  add_solid_trifecta
   set_locales
 
   copy_templates
