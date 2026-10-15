@@ -74,6 +74,17 @@ La app generada trae valores de ejemplo que hay que reemplazar antes de producci
 | `.github/workflows/deploy.yml` | puerto SSH del servidor (`54321`) |
 | `scripts/.puntapie.envs` | los valores `CHANGEME` (este archivo es una guía; el real se crea en el servidor) |
 
+## Datos iniciales
+
+`bundle exec rails setup:run` (en `lib/tasks/initial_setup.rake`) crea:
+
+- Los roles `admin`, `member` y `viewer`
+- La organización "DevAsPros" con slug `dap`
+- Un usuario admin confirmado, con email y contraseña escritos en la misma tarea
+
+> [!Warning]
+> Cambia el email y la contraseña de ese usuario en `lib/tasks/initial_setup.rake` antes de correr la tarea en producción.
+
 # ¿Qué incluye Puntapie?
 
 ## Usuarios y organizaciones
