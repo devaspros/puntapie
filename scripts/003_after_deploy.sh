@@ -38,12 +38,6 @@ bundle config set --local without 'development test'
 echo "$(date '+%F %T') Installing deployment gems" >> $LOG_DIR/002_bundle_install.log 2>&1
 bundle install >> $LOG_DIR/002_bundle_install.log 2>&1
 
-# CARGA nvm
-#
-echo "$(date '+%F %T') Load NVM" >> $LOG_DIR/003_npm_install.log 2>&1
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
 # CREA carpeta vendor/bundle
 #
 echo "$(date '+%F %T') create vendor/bundle" >> $LOG_DIR/004_create_vendor.log 2>&1
