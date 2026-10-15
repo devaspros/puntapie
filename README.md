@@ -53,29 +53,53 @@ rails _7.2.3.1_ new ../pruebapie01 \
 
 ## Gemas
 
+Agrupadas igual que en [`Gemfile.tt`](Gemfile.tt), que es la referencia para las versiones exactas.
+
 Producción:
 
+- [blueprinter](https://github.com/procore-oss/blueprinter)
 - [bootsnap](https://github.com/shopify/bootsnap)
 - [bootstrap](https://github.com/twbs/bootstrap-rubygem)
-- [blueprinter](https://github.com/procore/blueprinter)
 - [devise](https://github.com/heartcombo/devise)
+- [exception_handler](https://github.com/richpeck/exception_handler)
 - [importmap-rails](https://github.com/rails/importmap-rails)
-- [pundit](https://github.com/varvet/pundit)
+- [jwt](https://github.com/jwt/ruby-jwt)
+- [meta-tags](https://github.com/kpumuk/meta-tags)
 - [puma](https://github.com/puma/puma)
+- [pundit](https://github.com/varvet/pundit)
+- [rack-attack](https://github.com/rack/rack-attack)
 - [redis](https://github.com/redis/redis-rb)
-- [sidekiq](https://github.com/mperham/sidekiq)
+- [resend](https://github.com/resend/resend-ruby)
+- [sass-rails](https://github.com/rails/sass-rails)
+- [sentry-rails y sentry-ruby](https://github.com/getsentry/sentry-ruby)
+- [sidekiq](https://github.com/sidekiq/sidekiq)
+- [sqlite3](https://github.com/sparklemotion/sqlite3-ruby)
 - [stimulus-rails](https://github.com/hotwired/stimulus-rails)
 - [turbo-rails](https://github.com/hotwired/turbo-rails)
 
-Desarrollo y Pruebas:
+Desarrollo:
 
 - [annotate](https://github.com/ctran/annotate_models)
-- [amazing_print](https://github.com/amazing-print/amazing_print)
-- [database-cleaner](https://github.com/DatabaseCleaner/database_cleaner)
-- [dotenv-rails](https://github.com/bkeepers/dotenv)
-- [factory-bot](https://github.com/thoughtbot/factory_bot/)
 - [foreman](https://github.com/ddollar/foreman)
+- [rubocop](https://github.com/rubocop/rubocop)
+- [solargraph](https://github.com/castwide/solargraph)
+- [solargraph-rails](https://github.com/iftheshoefritz/solargraph-rails)
+- [spring](https://github.com/rails/spring)
+- [web-console](https://github.com/rails/web-console)
+
+Desarrollo y Pruebas:
+
+- [amazing_print](https://github.com/amazing-print/amazing_print)
+- [byebug](https://github.com/deivid-rodriguez/byebug)
+- [dotenv-rails](https://github.com/bkeepers/dotenv)
+- [factory_bot_rails](https://github.com/thoughtbot/factory_bot_rails)
 - [rspec-rails](https://github.com/rspec/rspec-rails)
+
+Pruebas:
+
+- [capybara](https://github.com/teamcapybara/capybara)
+- [database_cleaner](https://github.com/DatabaseCleaner/database_cleaner)
+- [selenium-webdriver](https://github.com/SeleniumHQ/selenium/tree/trunk/rb)
 - [simplecov](https://github.com/simplecov-ruby/simplecov)
 
 # Comparación con Solidus
