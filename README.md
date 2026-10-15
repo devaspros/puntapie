@@ -44,7 +44,8 @@ rails _7.2.3.1_ new ../pruebapie01 \
 - Namespace de API
 - .editorconfig
 - Archivos .env
-- Archivos Foreman (Procfile) con Release Phase para Heroku
+- Archivos Foreman (`Procfile` y `Procfile.dev`)
+- Despliegue a VPS por SSH con GitHub Actions (ver [`scripts/README.md`](scripts/README.md))
 - Vistas de Devise con Bootstrap
 - RSpec configurado
 
