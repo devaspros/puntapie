@@ -10,6 +10,8 @@ gem "blueprinter"
 gem "devise", "5.0.3"
 gem "exception_handler", "~> 0.8.0.0"
 gem "importmap-rails", "2.2.3"
+# json 3.x rompe Rails 7.2: JSON.generate da "unknown keyword: quirks_mode" al renderizar vistas.
+gem "json", "~> 2.13"
 gem "jwt", "2.10.1"
 gem "meta-tags"
 gem "mission_control-jobs", "1.1.0"
@@ -31,7 +33,7 @@ gem "turbo-rails", "2.0.23"
 group :development do
   gem "annotate", "~> 3"
   gem "foreman"
-  gem "rubocop", "1.38", require: false
+  gem "rubocop", "~> 1.92", require: false
   gem "solargraph"
   gem "solargraph-rails"
   gem "spring"
