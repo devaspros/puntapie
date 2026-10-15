@@ -58,6 +58,22 @@ bash bin/setup-project-name
 bash scripts/set_repo_secrets.sh
 ```
 
+## Valores que debes cambiar
+
+La app generada trae valores de ejemplo que hay que reemplazar antes de producción:
+
+| Archivo | Valor |
+|---|---|
+| `config/initializers/devise.rb` | `config.mailer_sender = "CHANGE-ME"` |
+| `app/mailers/app_mailer.rb` | `default from: "CHANGE-ME"` |
+| `config/environments/production.rb` | `default_url_options = { host: "CHANGE-ME" }` |
+| `app/lib/json_web_token.rb` | `ISSUER = "CHANGE-ME"` |
+| `config/initializers/sentry.rb` | `config.dsn = ""` |
+| `config/nginx.puntapie.production.conf` | `server_name` |
+| `config/database.yml` | ruta de la base de datos de producción |
+| `.github/workflows/deploy.yml` | puerto SSH del servidor (`54321`) |
+| `scripts/.puntapie.envs` | los valores `CHANGEME` (este archivo es una guía; el real se crea en el servidor) |
+
 # ¿Qué incluye Puntapie?
 
 ## Usuarios y organizaciones
