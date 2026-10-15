@@ -464,7 +464,7 @@ after_bundle do
   say
   say "Update config/database.yml with your database credentials", :yellow
   say
-  say "  bundle exec rails db:create db:migrate", :cyan
+  say "  bundle exec rails db:prepare", :cyan
   say "  bundle exec rails setup:run", :cyan
   say
   say "Customize Procfile.dev and then run", :yellow
