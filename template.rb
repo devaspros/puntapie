@@ -169,8 +169,13 @@ def active_storage_setup
 end
 
 def add_action_mailer_configs
+  # La plantilla de Rails ya define default_url_options en development: solo se cambia
+  # el puerto al de Procfile.dev para no duplicar la línea.
+  gsub_file "config/environments/development.rb",
+            'config.action_mailer.default_url_options = { host: "localhost", port: 3000 }',
+            'config.action_mailer.default_url_options = { host: "localhost", port: 3009 }'
+
   development_smtp_settings = <<~SMTP_SETTINGS
-    config.action_mailer.default_url_options = { host: "localhost:3009" }
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
       address: "127.0.0.1",
