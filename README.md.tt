@@ -18,8 +18,8 @@ Tener instalado:
 
 - Ruby 3.4.8
 - Bundler gem: `gem install bundler`
-- PostgreSQL
-- NodeJS
+- SQLite3
+- NodeJS en el servidor de producción, en `/usr/local/bin/node`
 
 Luego instala las gemas:
 
@@ -32,14 +32,14 @@ Crea las bases de datos:
 bundle exec rails db:create
 ```
 
-Carga el esquema:
+Corre las migraciones:
 ```bash
-bundle exec rails db:schema:load
+bundle exec rails db:migrate
 ```
 
 Corre todas las rakes necesarias para empezar:
 ```bash
-bundle exec rails all_tasks:execute_all
+bundle exec rails setup:run
 ```
 
 ## Desarrollo
@@ -50,7 +50,7 @@ Corre el servidor con:
 foreman start
 ```
 
-Esto ejecuta Sidekiq y el Rails server en `localhost:3005`.
+Esto ejecuta Sidekiq y el Rails server en `localhost:3009`.
 
 ### Pruebas
 
@@ -79,6 +79,6 @@ El script te pedirá los siguientes valores:
 - **PRIVATE_KEY**: Llave privada SSH para acceso al servidor
 - **NTFY_TOPIC**: Topic de ntfy.sh para notificaciones
 
-## Documentation
+## Documentación
 
 _Pendiente_.
