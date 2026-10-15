@@ -126,6 +126,9 @@ def copy_templates
   copy_file "config/initializers/sentry.rb", force: true
   copy_file "config/initializers/resend.rb", force: true
 
+  # Backport de Rails 8 para esperar el lock de SQLite sin bloquear el GVL (usa timeout de database.yml)
+  copy_file "config/initializers/sqlite3_busy_handler_timeout.rb", force: true
+
   template "README.md.tt", force: true
 
   # Copy everything from app folder to generated rails_app
