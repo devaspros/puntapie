@@ -7,7 +7,6 @@ Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 * Rails 7.2.3.1
 * Ruby 3.4.8
 * SQLite3
-* Redis
 * Bundler `gem install bundler`
 * Rails `gem install rails -v 7.2.3.1`
 * Un servidor SMTP local en el puerto 1025 para ver los correos en desarrollo, como [Mailpit](https://mailpit.axllent.org/) o [MailCatcher](https://mailcatcher.me/)
@@ -44,12 +43,12 @@ rails _7.2.3.1_ new ../pruebapie01 \
 Desde la carpeta de la app:
 
 ```bash
-bundle exec rails db:create db:migrate
+bundle exec rails db:prepare
 bundle exec rails setup:run
 foreman start
 ```
 
-`foreman start` usa `Procfile.dev` y levanta el servidor en `localhost:3009`.
+`db:prepare` crea la base principal y las de Solid Queue y Solid Cable con sus schemas. `foreman start` usa `Procfile.dev` y levanta el servidor en `localhost:3009` y los jobs con `bin/jobs`.
 
 Luego personaliza el nombre del proyecto y configura los secrets del despliegue:
 
@@ -94,6 +93,7 @@ La app generada trae valores de ejemplo que hay que reemplazar antes de producci
 | `PUNTAPIE_RESEND_API_KEY` | API key de Resend para enviar correos en producción |
 | `RAILS_MAX_THREADS` | Hilos de Puma y tamaño del pool de la base de datos (3 en Puma y 5 en el pool si no se define) |
 | `PORT` | Puerto de Puma (3000 si no se define) |
+| `JOB_CONCURRENCY` | Procesos de workers de Solid Queue (1 si no se define) |
 
 En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.envs` (ver `scripts/.puntapie.envs`).
 
@@ -133,8 +133,14 @@ En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.e
 
 ### Trabajos en segundo plano
 
-- Sidekiq con Redis como adaptador de Active Job, con las colas `default` y `mailers`
-- Sidekiq Web en `/sidekiq`, solo para usuarios admin
+- Solid Queue como adaptador de Active Job, en su propia base de datos. Se ejecuta con `bin/jobs`
+- `config/recurring.yml` con la tarea que limpia cada hora los jobs terminados
+- [Mission Control](https://github.com/rails/mission_control-jobs) en `/jobs`, solo para usuarios admin
+
+### Caché y tiempo real
+
+- Solid Cache como `cache_store` en producción, en su propia base de datos. En desarrollo se usa `memory_store` con `rails dev:cache`
+- Solid Cable como adaptador de Action Cable en desarrollo y producción, en su propia base de datos
 
 ### Correo
 
@@ -150,6 +156,7 @@ En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.e
 ### Base de datos
 
 - SQLite en modo WAL, con pragmas para producción y `timeout` para esperar el lock de escritura
+- Bases separadas para Solid Queue y Solid Cable en desarrollo, y para Solid Queue, Solid Cache y Solid Cable en producción
 - Backport de Rails 8 (`config/initializers/sqlite3_busy_handler_timeout.rb`) para esperar el lock sin bloquear los demás hilos de Puma. Se borra al actualizar a Rails 8
 - Active Storage instalado
 
@@ -166,7 +173,8 @@ En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.e
 
 - Despliegue a VPS por SSH con GitHub Actions: corre RSpec, despliega desde `main` y avisa por [ntfy.sh](https://ntfy.sh/) (ver [`scripts/README.md`](scripts/README.md))
 - `scripts/set_repo_secrets.sh` para configurar los secrets del repo
-- Configuración de nginx, servicios de systemd para Puma y Sidekiq, y logrotate
+- Configuración de nginx, servicios de systemd para Puma y los jobs, y logrotate
+- El deploy corre `db:prepare`, que migra las bases existentes y crea las nuevas desde su schema
 - Scripts para respaldar la base de datos y los logs
 - Logs de producción en `log/production.log` con rotación diaria
 - Dependabot para las gemas
@@ -177,7 +185,7 @@ En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.e
 - RSpec con FactoryBot, DatabaseCleaner, Capybara, helpers de Devise y SimpleCov
 - RuboCop configurado
 - Generadores de Rails sin assets, helpers, jbuilder ni specs de vistas y helpers
-- `.editorconfig`, archivos `.env` y Foreman (`Procfile` y `Procfile.dev`)
+- `.editorconfig`, archivos `.env` y Foreman con `Procfile.dev`
 
 ### Gemas
 
@@ -193,14 +201,16 @@ Producción:
 - [importmap-rails](https://github.com/rails/importmap-rails)
 - [jwt](https://github.com/jwt/ruby-jwt)
 - [meta-tags](https://github.com/kpumuk/meta-tags)
+- [mission_control-jobs](https://github.com/rails/mission_control-jobs)
 - [puma](https://github.com/puma/puma)
 - [pundit](https://github.com/varvet/pundit)
 - [rack-attack](https://github.com/rack/rack-attack)
-- [redis](https://github.com/redis/redis-rb)
 - [resend](https://github.com/resend/resend-ruby)
 - [sass-rails](https://github.com/rails/sass-rails)
 - [sentry-rails y sentry-ruby](https://github.com/getsentry/sentry-ruby)
-- [sidekiq](https://github.com/sidekiq/sidekiq)
+- [solid_cable](https://github.com/rails/solid_cable)
+- [solid_cache](https://github.com/rails/solid_cache)
+- [solid_queue](https://github.com/rails/solid_queue)
 - [sqlite3](https://github.com/sparklemotion/sqlite3-ruby)
 - [stimulus-rails](https://github.com/hotwired/stimulus-rails)
 - [turbo-rails](https://github.com/hotwired/turbo-rails)
@@ -242,7 +252,7 @@ Pruebas:
 
    ```bash
    cd ../pruebapie01
-   bundle exec rails db:create db:migrate setup:run
+   bundle exec rails db:prepare setup:run
    bundle exec rspec
    ```
 
