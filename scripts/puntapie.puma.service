@@ -7,7 +7,7 @@ Type=simple
 
 WorkingDirectory=/home/ubuntu/puntapie/app
 
-# Igual que Sidekiq: memoria más estable en Ruby
+# Igual que Jobs: memoria más estable en Ruby
 Environment=MALLOC_ARENA_MAX=2
 
 # Si tienes variables globales (DB, secrets, etc)
@@ -20,7 +20,7 @@ ExecReload=/bin/kill -USR2 $MAINPID
 Restart=on-failure
 RestartSec=3
 
-# Logs igual que Sidekiq (consistencia del VPS)
+# Logs igual que Jobs (consistencia del VPS)
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=puntapie_puma
