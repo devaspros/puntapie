@@ -85,6 +85,18 @@ La app generada trae valores de ejemplo que hay que reemplazar antes de producci
 > [!Warning]
 > Cambia el email y la contraseña de ese usuario en `lib/tasks/initial_setup.rake` antes de correr la tarea en producción.
 
+## Variables de entorno
+
+| Variable | Uso |
+|---|---|
+| `SECRET_KEY_BASE` | Llave de Rails. También firma los JWT si no se define `JWT_SECRET` |
+| `JWT_SECRET` | Opcional. Llave para firmar los JWT de la API |
+| `PUNTAPIE_RESEND_API_KEY` | API key de Resend para enviar correos en producción |
+| `RAILS_MAX_THREADS` | Hilos de Puma y tamaño del pool de la base de datos (3 en Puma y 5 en el pool si no se define) |
+| `PORT` | Puerto de Puma (3000 si no se define) |
+
+En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.envs` (ver `scripts/.puntapie.envs`).
+
 # ¿Qué incluye Puntapie?
 
 ## Usuarios y organizaciones
