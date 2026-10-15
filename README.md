@@ -2,7 +2,7 @@
 
 Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 
-# Requisitos
+## Requisitos
 
 * Rails 7.2.3.1
 * Ruby 3.4.8
@@ -13,7 +13,7 @@ Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 * Un servidor SMTP local en el puerto 1025 para ver los correos en desarrollo, como [Mailpit](https://mailpit.axllent.org/) o [MailCatcher](https://mailcatcher.me/)
 * En el servidor de producción: Node 22.14.0 (ver `.nvmrc`) disponible en `/usr/local/bin/node`. El script de despliegue verifica que exista
 
-# ¿Cómo uso Puntapie?
+## ¿Cómo uso Puntapie?
 
 Usando la plantilla desde el repositorio en GitHub:
 
@@ -39,7 +39,7 @@ rails _7.2.3.1_ new ../pruebapie01 \
 > [!Important]
 > Puntapie solo soporta SQLite3. La plantilla reemplaza `config/database.yml` con una configuración de SQLite y el `Gemfile` solo incluye la gema `sqlite3`, así que usar `-d postgresql` no genera una app con PostgreSQL.
 
-## Después de generar la app
+### Después de generar la app
 
 Desde la carpeta de la app:
 
@@ -58,7 +58,7 @@ bash bin/setup-project-name
 bash scripts/set_repo_secrets.sh
 ```
 
-## Valores que debes cambiar
+### Valores que debes cambiar
 
 La app generada trae valores de ejemplo que hay que reemplazar antes de producción:
 
@@ -74,7 +74,7 @@ La app generada trae valores de ejemplo que hay que reemplazar antes de producci
 | `.github/workflows/deploy.yml` | puerto SSH del servidor (`54321`) |
 | `scripts/.puntapie.envs` | los valores `CHANGEME` (este archivo es una guía; el real se crea en el servidor) |
 
-## Datos iniciales
+### Datos iniciales
 
 `bundle exec rails setup:run` (en `lib/tasks/initial_setup.rake`) crea:
 
@@ -85,7 +85,7 @@ La app generada trae valores de ejemplo que hay que reemplazar antes de producci
 > [!Warning]
 > Cambia el email y la contraseña de ese usuario en `lib/tasks/initial_setup.rake` antes de correr la tarea en producción.
 
-## Variables de entorno
+### Variables de entorno
 
 | Variable | Uso |
 |---|---|
@@ -97,7 +97,7 @@ La app generada trae valores de ejemplo que hay que reemplazar antes de producci
 
 En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.envs` (ver `scripts/.puntapie.envs`).
 
-## Opciones avanzadas
+### Opciones avanzadas
 
 - `--skip-test` es necesario porque la plantilla usa RSpec en vez de Minitest.
 - Para no crear el repo de git ni el commit inicial, define `SKIP_GIT=1`:
@@ -115,9 +115,9 @@ En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.e
     --skip-test
   ```
 
-# ¿Qué incluye Puntapie?
+## ¿Qué incluye Puntapie?
 
-## Usuarios y organizaciones
+### Usuarios y organizaciones
 
 - Devise con `confirmable` (la confirmación vence en 24 horas), registro con nombre y apellido, y `AppMailer` como mailer
 - Vistas de Devise con Bootstrap y en español
@@ -125,35 +125,35 @@ En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.e
 - Roles `admin`, `member` y `viewer`, creados con `rails setup:run`
 - Autorización con Pundit
 
-## API
+### API
 
 - Namespace `/api/v1` con login por JWT (`POST /api/v1/users/sign_in`, el token vence en 7 días)
 - `Api::BaseApiController` valida el token y maneja los errores con el concern `ApiExceptionHandler`
 - Health check en `GET /ping`
 
-## Trabajos en segundo plano
+### Trabajos en segundo plano
 
 - Sidekiq con Redis como adaptador de Active Job, con las colas `default` y `mailers`
 - Sidekiq Web en `/sidekiq`, solo para usuarios admin
 
-## Correo
+### Correo
 
 - En desarrollo, SMTP en `127.0.0.1:1025` y previews en `spec/mailers/previews`
 - En producción, envío con Resend
 
-## Seguridad y errores
+### Seguridad y errores
 
 - Rack::Attack limita los registros por IP (5 por minuto) y por email (3 por hora)
 - Sentry reporta errores fuera de los entornos locales
 - Páginas propias para errores 4xx y 5xx con `exception_handler`
 
-## Base de datos
+### Base de datos
 
 - SQLite en modo WAL, con pragmas para producción y `timeout` para esperar el lock de escritura
 - Backport de Rails 8 (`config/initializers/sqlite3_busy_handler_timeout.rb`) para esperar el lock sin bloquear los demás hilos de Puma. Se borra al actualizar a Rails 8
 - Active Storage instalado
 
-## Interfaz
+### Interfaz
 
 - Hotwire (Turbo y Stimulus) y Bootstrap con importmap, sin bundler de JavaScript
 - Layouts para landing, login, aplicación y errores; navbar, sidebar y footer
@@ -162,7 +162,7 @@ En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.e
 - Meta tags con `meta-tags`
 - Español (`es`) como idioma por defecto, con `es-CO.yml` y `devise.es.yml`
 
-## Despliegue
+### Despliegue
 
 - Despliegue a VPS por SSH con GitHub Actions: corre RSpec, despliega desde `main` y avisa por [ntfy.sh](https://ntfy.sh/) (ver [`scripts/README.md`](scripts/README.md))
 - `scripts/set_repo_secrets.sh` para configurar los secrets del repo
@@ -171,7 +171,7 @@ En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.e
 - Logs de producción en `log/production.log` con rotación diaria
 - Dependabot para las gemas
 
-## Desarrollo
+### Desarrollo
 
 - `bin/setup-project-name` para reemplazar `Puntapie` por el nombre del proyecto
 - RSpec con FactoryBot, DatabaseCleaner, Capybara, helpers de Devise y SimpleCov
@@ -179,7 +179,7 @@ En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.e
 - Generadores de Rails sin assets, helpers, jbuilder ni specs de vistas y helpers
 - `.editorconfig`, archivos `.env` y Foreman (`Procfile` y `Procfile.dev`)
 
-## Gemas
+### Gemas
 
 Agrupadas igual que en [`Gemfile.tt`](Gemfile.tt), que es la referencia para las versiones exactas.
 
@@ -230,7 +230,7 @@ Pruebas:
 - [selenium-webdriver](https://github.com/SeleniumHQ/selenium/tree/trunk/rb)
 - [simplecov](https://github.com/simplecov-ruby/simplecov)
 
-# Probar cambios a la plantilla
+## Probar cambios a la plantilla
 
 1. Genera una app desde el archivo local en una carpeta de pruebas fuera del repo:
 
@@ -248,7 +248,7 @@ Pruebas:
 
 3. Borra la carpeta cuando termines: `rm -rf ../pruebapie01`.
 
-# Comparación con Solidus
+## Comparación con Solidus
 
 Se analizó la compatibilidad de Puntapie con [Solidus](https://solidus.io/) (e-commerce framework para Rails). La conclusión es que **Puntapie no es compatible con Solidus sin modificaciones significativas** debido a conflictos estructurales en autenticación, framework CSS, autorización y archivos core.
 
