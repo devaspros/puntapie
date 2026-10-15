@@ -32,6 +32,9 @@ rails _7.2.3.1_ new ../pruebapie01 \
 ```
 
 > [!Important]
+> El workflow de GitHub Actions de la app generada corre las pruebas en cualquier rama, pero solo despliega desde `main`. Si git creó el repo con `master`, renombra la rama con `git branch -M main` antes del primer push.
+
+> [!Important]
 > Puntapie solo soporta SQLite3. La plantilla reemplaza `config/database.yml` con una configuración de SQLite y el `Gemfile` solo incluye la gema `sqlite3`, así que usar `-d postgresql` no genera una app con PostgreSQL.
 
 # ¿Qué incluye Puntapie?
