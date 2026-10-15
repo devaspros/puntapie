@@ -447,6 +447,10 @@ after_bundle do
 
   run "bundle lock --add-platform x86_64-linux"
 
+  # .rubocop.yml hereda de .rubocop_todo.yml; se genera para que la app nazca sin offenses
+  create_file ".rubocop_todo.yml", "", force: true
+  run "bundle exec rubocop --auto-gen-config --no-exclude-limit"
+
   unless ENV["SKIP_GIT"]
     git :init
     git add: "."
