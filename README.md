@@ -41,15 +41,67 @@ rails _7.2.3.1_ new ../pruebapie01 \
 
 # ¿Qué incluye Puntapie?
 
-## Configuraciones y Archivos
+## Usuarios y organizaciones
 
-- Namespace de API
-- .editorconfig
-- Archivos .env
-- Archivos Foreman (`Procfile` y `Procfile.dev`)
-- Despliegue a VPS por SSH con GitHub Actions (ver [`scripts/README.md`](scripts/README.md))
-- Vistas de Devise con Bootstrap
-- RSpec configurado
+- Devise con `confirmable` (la confirmación vence en 24 horas), registro con nombre y apellido, y `AppMailer` como mailer
+- Vistas de Devise con Bootstrap y en español
+- Multi-tenancy con `Organization`, `Membership`, `Role` e `Invitation`. Al registrarse, cada usuario recibe una organización propia y queda como su dueño
+- Roles `admin`, `member` y `viewer`, creados con `rails setup:run`
+- Autorización con Pundit
+
+## API
+
+- Namespace `/api/v1` con login por JWT (`POST /api/v1/users/sign_in`, el token vence en 7 días)
+- `Api::BaseApiController` valida el token y maneja los errores con el concern `ApiExceptionHandler`
+- Health check en `GET /ping`
+
+## Trabajos en segundo plano
+
+- Sidekiq con Redis como adaptador de Active Job, con las colas `default` y `mailers`
+- Sidekiq Web en `/sidekiq`, solo para usuarios admin
+
+## Correo
+
+- En desarrollo, SMTP en `127.0.0.1:1025` y previews en `spec/mailers/previews`
+- En producción, envío con Resend
+
+## Seguridad y errores
+
+- Rack::Attack limita los registros por IP (5 por minuto) y por email (3 por hora)
+- Sentry reporta errores fuera de los entornos locales
+- Páginas propias para errores 4xx y 5xx con `exception_handler`
+
+## Base de datos
+
+- SQLite en modo WAL, con pragmas para producción y `timeout` para esperar el lock de escritura
+- Backport de Rails 8 (`config/initializers/sqlite3_busy_handler_timeout.rb`) para esperar el lock sin bloquear los demás hilos de Puma. Se borra al actualizar a Rails 8
+- Active Storage instalado
+
+## Interfaz
+
+- Hotwire (Turbo y Stimulus) y Bootstrap con importmap, sin bundler de JavaScript
+- Layouts para landing, login, aplicación y errores; navbar, sidebar y footer
+- Páginas de política de privacidad y términos de servicio
+- Controller de Stimulus para mostrar toasts
+- Meta tags con `meta-tags`
+- Español (`es`) como idioma por defecto, con `es-CO.yml` y `devise.es.yml`
+
+## Despliegue
+
+- Despliegue a VPS por SSH con GitHub Actions: corre RSpec, despliega desde `main` y avisa por [ntfy.sh](https://ntfy.sh/) (ver [`scripts/README.md`](scripts/README.md))
+- `scripts/set_repo_secrets.sh` para configurar los secrets del repo
+- Configuración de nginx, servicios de systemd para Puma y Sidekiq, y logrotate
+- Scripts para respaldar la base de datos y los logs
+- Logs de producción en `log/production.log` con rotación diaria
+- Dependabot para las gemas
+
+## Desarrollo
+
+- `bin/setup-project-name` para reemplazar `Puntapie` por el nombre del proyecto
+- RSpec con FactoryBot, DatabaseCleaner, Capybara, helpers de Devise y SimpleCov
+- RuboCop configurado
+- Generadores de Rails sin assets, helpers, jbuilder ni specs de vistas y helpers
+- `.editorconfig`, archivos `.env` y Foreman (`Procfile` y `Procfile.dev`)
 
 ## Gemas
 
