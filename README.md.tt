@@ -60,18 +60,6 @@ Con el comando de `rspec`:
 rspec ./spec
 ```
 
-## Personalización del proyecto
-
-Este proyecto se generó a partir de la plantilla **Puntapie**. Para reemplazar las referencias
-a `Puntapie`/`puntapie`/`PUNTAPIE` por el nombre de tu proyecto, ejecuta:
-
-```bash
-bash bin/setup-project-name
-```
-
-Esto renombrará archivos y actualizará todas las ocurrencias (ENV vars, vistas, scripts de
-despliegue, configuraciones, etc.) por el nombre que ingreses.
-
 ## Despliegue
 
 ### Secrets de GitHub Actions
