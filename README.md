@@ -6,15 +6,14 @@ Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 
 * Rails 7.2.3.1
 * Ruby 3.4.8
+* SQLite3
 * Redis
 * Bundler `gem install bundler`
 * Rails `gem install rails -v 7.2.3.1`
 
 # ¿Cómo uso Puntapie?
 
-Usando la plantilla desde el repositorio en GitHub.
-
-Con base de datos SQLite3:
+Usando la plantilla desde el repositorio en GitHub:
 
 ```bash
 rails _7.2.3.1_ new ./pruebapie01 \
@@ -23,18 +22,7 @@ rails _7.2.3.1_ new ./pruebapie01 \
   --skip-test
 ```
 
-O base de datos PostgreSQL:
-
-```bash
-rails _7.2.3.1_ new ./pruebapie01 \
-  -d postgresql \
-  -m https://raw.githubusercontent.com/devaspros/puntapie/master/template.rb \
-  --skip-test
-```
-
-También se puede clonar el repo y leer la plantilla desde el archivo local.
-
-Para una BD SQLite3:
+También se puede clonar el repo y leer la plantilla desde el archivo local:
 
 ```bash
 rails _7.2.3.1_ new ../pruebapie01 \
@@ -43,14 +31,8 @@ rails _7.2.3.1_ new ../pruebapie01 \
   --skip-test
 ```
 
-Para una BD en PostgreSQL:
-
-```bash
-rails _7.2.3.1_ new ../pruebapie01 \
-  -d postgresql \
-  -m ./template.rb \
-  --skip-test
-```
+> [!Important]
+> Puntapie solo soporta SQLite3. La plantilla reemplaza `config/database.yml` con una configuración de SQLite y el `Gemfile` solo incluye la gema `sqlite3`, así que usar `-d postgresql` no genera una app con PostgreSQL.
 
 # ¿Qué incluye Puntapie?
 
