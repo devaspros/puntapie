@@ -116,7 +116,6 @@ def copy_templates
   remove_file "config/master.key"
   remove_file "app/assets/stylesheets/application.css"
 
-  copy_file "Procfile"
   copy_file "Procfile.dev"
   copy_file ".foreman"
   copy_file ".env.example"
