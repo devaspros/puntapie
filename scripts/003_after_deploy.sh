@@ -54,12 +54,17 @@ echo "$(date '+%F %T') create vendor/bundle" >> $LOG_DIR/004_create_vendor.log 2
 echo "$(date '+%F %T') Symlink api-gems to vendor/bundle" >> $LOG_DIR/005_symlink_gems.log 2>&1
 ln -fsv $BASE_DIR/deployments/api-gems/bundle $APP_DIR_PATH/vendor/ >> $LOG_DIR/005_symlink_gems.log 2>&1
 
-# SYMLINK NVM node to /usr/local/bin/node
+# CHECK node en /usr/local/bin/node
 #
-# ~./clave is a file holding server user password so that the command can be run by an agent like Github Actions.
+# execjs (autoprefixer) lo usa en assets:precompile. El symlink se crea al
+# aprovisionar el servidor (dap_cloud/setup_server.sh), no en el deploy.
 #
-echo "$(date '+%F %T') Symlink NVM node to /usr/local/bin/node" >> $LOG_DIR/006_symlink_node.log 2>&1
-cat ~/.clave | sudo -S ln -sfv /home/ubuntu/.nvm/versions/node/v18.16.1/bin/node /usr/local/bin/node >> $LOG_DIR/006_symlink_node.log 2>&1
+echo "$(date '+%F %T') Check /usr/local/bin/node" >> $LOG_DIR/006_check_node.log 2>&1
+if [ ! -x /usr/local/bin/node ]; then
+  echo "$(date '+%F %T') /usr/local/bin/node no existe o apunta a una versión que no está. Crear el symlink en el servidor." >> $LOG_DIR/006_check_node.log
+  exit 1
+fi
+/usr/local/bin/node --version >> $LOG_DIR/006_check_node.log 2>&1
 
 # CLEAN old assets
 #
@@ -87,6 +92,13 @@ fi
 #
 echo "$(date '+%F %T') Running migrations" >> $LOG_DIR/010_run_migrations.log 2>&1
 RAILS_ENV=$RAILS_ENV SECRET_KEY_BASE=$SECRET_KEY_BASE bundle exec rake db:migrate RAILS_ENV=$RAILS_ENV >> $LOG_DIR/010_run_migrations.log 2>&1
+
+# CACHE sudo credentials
+#
+# ~/.clave tiene la clave del usuario del servidor para que un agente como GitHub Actions pueda usar sudo.
+# `sudo -v` la deja en caché para los `sudo` siguientes de este script y de 004_application_start.sh.
+#
+cat ~/.clave | sudo -S -v
 
 # SYMLINK nginx configuration file to /etc/nginx/sites-enabled
 #
