@@ -20,12 +20,11 @@ rails new my_app -d sqlite3 -m https://raw.githubusercontent.com/.../template.rb
 bundle install
 
 # Database setup
-bundle exec rails db:create
-bundle exec rails db:migrate
+bundle exec rails db:prepare  # Creates primary, queue and cable DBs and loads their schemas
 bundle exec rails setup:run  # Creates default org, roles, users
 
 # Start the app (uses Procfile.dev via .foreman)
-foreman start  # Runs web on port 3009 + Sidekiq
+foreman start  # Runs web on port 3009 + Solid Queue (bin/jobs)
 
 # Run tests
 bundle exec rspec
@@ -57,10 +56,16 @@ The app uses an Organization-based multi-tenant model:
 Pundit policies in `app/policies/`. `ApplicationController` includes Pundit.
 
 ### Background Jobs
-Sidekiq with Redis. Queues: `default` and `mailers`. Redis URL via `ENV["REDIS_URL"]`.
+Solid Queue (no Redis). `template.rb` runs the `solid_queue:install`, `solid_cache:install` and `solid_cable:install` generators, then overrides `config/cache.yml` and `config/cable.yml` with the files in this repo.
+- Jobs run with `bin/jobs --mode async` (`Procfile.dev` locally, `scripts/puntapie.jobs.service` on the VPS)
+- Mission Control at `/jobs`, admins only (`http_basic_auth_enabled = false`, Devise handles auth)
+- Solid Cache is the production `cache_store`; development uses `memory_store` via `rails dev:cache`
+- Solid Cable is the Action Cable adapter in development and production
 
 ### SQLite in Production
 The app intentionally uses SQLite (not PostgreSQL) with WAL mode for concurrency. Configured in `config/database.yml` with pragmas: `journal_mode: WAL`, `synchronous: NORMAL`, `mmap_size: 128MB`, and `timeout: 5000` to wait for the write lock. Rails 7.2 no longer warns about SQLite in production, so no setting is needed.
+
+`config/database.yml` is multi-database: `primary`, `queue` and `cable` in development; `primary`, `cache`, `queue` and `cable` in production; a single DB in test. The solid_* DBs have no migrations, only `db/*_schema.rb`, so use `db:prepare` (the deploy script does) instead of `db:migrate` to create them.
 
 `config/initializers/sqlite3_busy_handler_timeout.rb` backports Rails 8 behavior: it applies `timeout` with `busy_handler_timeout` (releases the GVL) instead of `busy_timeout` (holds it, so other Puma threads freeze while waiting). Delete it when upgrading to Rails 8.
 
