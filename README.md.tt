@@ -27,14 +27,9 @@ Luego instala las gemas:
 bundle install
 ```
 
-Crea las bases de datos:
+Crea las bases de datos (la principal y las de Solid Queue y Solid Cable) y carga sus schemas:
 ```bash
-bundle exec rails db:create
-```
-
-Corre las migraciones:
-```bash
-bundle exec rails db:migrate
+bundle exec rails db:prepare
 ```
 
 Corre todas las rakes necesarias para empezar:
@@ -50,7 +45,9 @@ Corre el servidor con:
 foreman start
 ```
 
-Esto ejecuta Sidekiq y el Rails server en `localhost:3009`.
+Esto ejecuta el servidor de Rails en `localhost:3009` y los jobs de Solid Queue con `bin/jobs`.
+
+Los jobs se pueden revisar en `/jobs` (Mission Control) con un usuario admin.
 
 ### Pruebas
 
