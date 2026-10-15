@@ -60,7 +60,9 @@ Pundit policies in `app/policies/`. `ApplicationController` includes Pundit.
 Sidekiq with Redis. Queues: `default` and `mailers`. Redis URL via `ENV["REDIS_URL"]`.
 
 ### SQLite in Production
-The app intentionally uses SQLite (not PostgreSQL) with WAL mode for concurrency. Configured in `config/database.yml` with pragmas: `journal_mode: WAL`, `synchronous: NORMAL`, `mmap_size: 128MB`. The production warning is suppressed in `config/application.rb`.
+The app intentionally uses SQLite (not PostgreSQL) with WAL mode for concurrency. Configured in `config/database.yml` with pragmas: `journal_mode: WAL`, `synchronous: NORMAL`, `mmap_size: 128MB`, and `timeout: 5000` to wait for the write lock. Rails 7.2 no longer warns about SQLite in production, so no setting is needed.
+
+`config/initializers/sqlite3_busy_handler_timeout.rb` backports Rails 8 behavior: it applies `timeout` with `busy_handler_timeout` (releases the GVL) instead of `busy_timeout` (holds it, so other Puma threads freeze while waiting). Delete it when upgrading to Rails 8.
 
 ### JavaScript
 Uses importmap-rails (no Node/Webpack/Vite). Hotwire stack: Turbo + Stimulus. Bootstrap 5.2 pinned in `config/importmap.rb`.
