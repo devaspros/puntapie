@@ -25,13 +25,35 @@ default: &default
     cache_size: 2000
 
 development:
-  <<: *default
-  database: db/puntapie_development.sqlite3
+  primary:
+    <<: *default
+    database: db/puntapie_development.sqlite3
+  queue:
+    <<: *default
+    database: db/puntapie_development_queue.sqlite3
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *default
+    database: db/puntapie_development_cable.sqlite3
+    migrations_paths: db/cable_migrate
 
 test:
   <<: *default
   database: db/puntapie_test.sqlite3
 
 production:
-  <<: *default
-  database: /home/ubuntu/puntapie/db/puntapie_production.sqlite
+  primary:
+    <<: *default
+    database: /home/ubuntu/puntapie/db/puntapie_production.sqlite
+  cache:
+    <<: *default
+    database: /home/ubuntu/puntapie/db/puntapie_production_cache.sqlite
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *default
+    database: /home/ubuntu/puntapie/db/puntapie_production_queue.sqlite
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *default
+    database: /home/ubuntu/puntapie/db/puntapie_production_cable.sqlite
+    migrations_paths: db/cable_migrate
