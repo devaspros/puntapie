@@ -97,6 +97,24 @@ La app generada trae valores de ejemplo que hay que reemplazar antes de producci
 
 En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.envs` (ver `scripts/.puntapie.envs`).
 
+## Opciones avanzadas
+
+- `--skip-test` es necesario porque la plantilla usa RSpec en vez de Minitest.
+- Para no crear el repo de git ni el commit inicial, define `SKIP_GIT=1`:
+
+  ```bash
+  SKIP_GIT=1 rails _7.2.3.1_ new ./pruebapie01 -d sqlite3 -m ./template.rb --skip-test
+  ```
+
+- Para usar la plantilla de otra rama, cambia `master` por el nombre de la rama en la URL. La plantilla clona el repo y hace checkout de esa rama:
+
+  ```bash
+  rails _7.2.3.1_ new ./pruebapie01 \
+    -d sqlite3 \
+    -m https://raw.githubusercontent.com/devaspros/puntapie/<rama>/template.rb \
+    --skip-test
+  ```
+
 # ¿Qué incluye Puntapie?
 
 ## Usuarios y organizaciones
