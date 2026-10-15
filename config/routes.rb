@@ -1,5 +1,3 @@
-require "sidekiq/web"
-
 Rails.application.routes.draw do
   root to: "home#index"
 
@@ -16,7 +14,7 @@ Rails.application.routes.draw do
   )
 
   authenticate :user, lambda { |u| u.admin? } do
-    mount Sidekiq::Web => "/sidekiq"
+    mount MissionControl::Jobs::Engine, at: "/jobs"
 
     namespace :admin do
     end
