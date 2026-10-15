@@ -21,11 +21,11 @@ bundle install
 
 # Database setup
 bundle exec rails db:create
-bundle exec rails db:schema:load
-bundle exec rails all_tasks:execute_all  # Creates default org, roles, users
+bundle exec rails db:migrate
+bundle exec rails setup:run  # Creates default org, roles, users
 
 # Start the app (uses Procfile.dev via .foreman)
-foreman start  # Runs web on port 3005 + Sidekiq
+foreman start  # Runs web on port 3009 + Sidekiq
 
 # Run tests
 bundle exec rspec
@@ -70,7 +70,7 @@ Uses importmap-rails (no Node/Webpack/Vite). Hotwire stack: Turbo + Stimulus. Bo
 ## Locale
 The app is configured for Colombian Spanish (`es-CO`). Devise views and locale files are in Spanish. Generated READMEs are in Spanish.
 
-## Seeded Data (via `all_tasks:execute_all`)
+## Seeded Data (via `setup:run`)
 - Organization: "DevAsPros" (slug: "dap")
 - Test user: frajaquico@aol.com with admin role
 
