@@ -39,6 +39,25 @@ rails _7.2.3.1_ new ../pruebapie01 \
 > [!Important]
 > Puntapie solo soporta SQLite3. La plantilla reemplaza `config/database.yml` con una configuración de SQLite y el `Gemfile` solo incluye la gema `sqlite3`, así que usar `-d postgresql` no genera una app con PostgreSQL.
 
+## Después de generar la app
+
+Desde la carpeta de la app:
+
+```bash
+bundle exec rails db:create db:migrate
+bundle exec rails setup:run
+foreman start
+```
+
+`foreman start` usa `Procfile.dev` y levanta el servidor en `localhost:3009`.
+
+Luego personaliza el nombre del proyecto y configura los secrets del despliegue:
+
+```bash
+bash bin/setup-project-name
+bash scripts/set_repo_secrets.sh
+```
+
 # ¿Qué incluye Puntapie?
 
 ## Usuarios y organizaciones
