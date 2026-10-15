@@ -376,16 +376,6 @@ def copy_organization_rakes
   copy_file "lib/tasks/initial_setup.rake"
 end
 
-def disable_sqlite_in_production_warning
-  sqlite_in_prod_setting = <<~SQLITE_WARNING
-    # Turn off warning about SQLite not for production
-    config.active_record.sqlite3_production_warning = false
-
-  SQLITE_WARNING
-
-  environment(sqlite_in_prod_setting, env: "production")
-end
-
 def setup_log_rotate
   gsub_file(
     "config/environments/production.rb",
@@ -431,7 +421,6 @@ after_bundle do
   copy_organization_models
   copy_organization_rakes
 
-  disable_sqlite_in_production_warning
   setup_log_rotate
 
   run "bundle lock --add-platform x86_64-linux"
