@@ -47,7 +47,7 @@ rename_file() {
 }
 
 rename_file "config/nginx.puntapie.production.conf" "config/nginx.${PROJECT_LOWER}.production.conf"
-rename_file "scripts/puntapie.sidekiq.service" "scripts/${PROJECT_LOWER}.sidekiq.service"
+rename_file "scripts/puntapie.jobs.service" "scripts/${PROJECT_LOWER}.jobs.service"
 rename_file "scripts/puntapie_logrotate" "scripts/${PROJECT_LOWER}_logrotate"
 rename_file "scripts/.puntapie.envs" "scripts/.${PROJECT_LOWER}.envs"
 

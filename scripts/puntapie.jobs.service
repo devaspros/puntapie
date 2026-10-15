@@ -1,13 +1,12 @@
 # symlink to /home/ubuntu/.config/systemd/user/
 
 [Unit]
-Description=sidekiq
+Description=PUNTAPIE (jobs)
 After=syslog.target network.target
 
 [Service]
-# notify can be used only after Sidekiq 6.0.6. If the version is under 6.0.6, use Type=simple
-
-# Hay que usar Type=simple porque el comando de Sidekiq no hace fork del proceso.
+# bin/jobs en modo async corre workers, dispatcher y scheduler como hilos de
+# un único proceso (sin fork). Por eso Type=simple.
 #
 # La prueba está en ejecutar el comando ExecStart desde la consola. Al hacerlo se queda "pegado".
 #
@@ -25,26 +24,21 @@ WorkingDirectory=/home/ubuntu/PUNTAPIE/app
 # https://www.mikeperham.com/2018/04/25/taming-rails-memory-bloat/
 Environment=MALLOC_ARENA_MAX=2
 
-EnvironmentFile=/home/ubuntu/.PUNTAPIE.envs
-ExecStart=/home/ubuntu/.rubies/ruby-3.4.8/bin/bundle exec sidekiq \
-  -e production \
-  -C /home/ubuntu/PUNTAPIE/app/config/sidekiq.yml
+# bin/jobs no acepta flag de entorno, solo lee RAILS_ENV
+Environment=RAILS_ENV=production
 
-ExecReload=/usr/bin/kill -TSTP $MAINPID
+EnvironmentFile=/home/ubuntu/.PUNTAPIE.envs
+ExecStart=/home/ubuntu/.rubies/ruby-3.4.8/bin/bundle exec bin/jobs start --mode async
 
 # if we crash, restart
 RestartSec=1
 Restart=on-failure
 
 # output goes to /var/log/syslog
-# Sidekiq wiki does not recommend pushing logs to a file. Instead we should let systemd handle this.
-# See: https://github.com/sidekiq/sidekiq/wiki/Logging#logger
-#
 StandardOutput=syslog
 StandardError=syslog
 
-# This will default to "bundler" if we don't specify it
-SyslogIdentifier=sidekiq
+SyslogIdentifier=PUNTAPIE_jobs
 
 [Install]
 WantedBy=default.target
