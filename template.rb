@@ -27,8 +27,14 @@ def add_template_repository_to_source_path
   end
 end
 
+# Inserta la línea al final de la clase Application, después de load_defaults.
+# `environment` la pondría justo después de `class Application`, antes de load_defaults.
+def add_app_config(line)
+  inject_into_file "config/application.rb", "    #{line}\n", before: "  end\nend"
+end
+
 def set_application_name
-  environment "config.application_name = Rails.application.class.module_parent_name"
+  add_app_config "config.application_name = Rails.application.class.module_parent_name"
 end
 
 def disable_default_generators
@@ -77,14 +83,14 @@ def add_authorization
 end
 
 def add_sidekiq
-  environment "config.active_job.queue_adapter = :sidekiq"
+  add_app_config "config.active_job.queue_adapter = :sidekiq"
 
   copy_file "config/sidekiq.yml", force: true
   copy_file "config/initializers/sidekiq.rb", force: true
 end
 
 def set_locales
-  environment "config.i18n.default_locale = :es"
+  add_app_config "config.i18n.default_locale = :es"
 
   copy_file "config/locales/devise.es.yml", force: true
   copy_file "config/locales/es-CO.yml", force: true
