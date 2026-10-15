@@ -230,6 +230,24 @@ Pruebas:
 - [selenium-webdriver](https://github.com/SeleniumHQ/selenium/tree/trunk/rb)
 - [simplecov](https://github.com/simplecov-ruby/simplecov)
 
+# Probar cambios a la plantilla
+
+1. Genera una app desde el archivo local en una carpeta de pruebas fuera del repo:
+
+   ```bash
+   rails _7.2.3.1_ new ../pruebapie01 -d sqlite3 -m ./template.rb --skip-test
+   ```
+
+2. Revisa que la app arranque y que las pruebas pasen:
+
+   ```bash
+   cd ../pruebapie01
+   bundle exec rails db:create db:migrate setup:run
+   bundle exec rspec
+   ```
+
+3. Borra la carpeta cuando termines: `rm -rf ../pruebapie01`.
+
 # Comparación con Solidus
 
 Se analizó la compatibilidad de Puntapie con [Solidus](https://solidus.io/) (e-commerce framework para Rails). La conclusión es que **Puntapie no es compatible con Solidus sin modificaciones significativas** debido a conflictos estructurales en autenticación, framework CSS, autorización y archivos core.
