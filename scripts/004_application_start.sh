@@ -41,13 +41,13 @@ fi
 echo "$(date '+%F %T') Changing ownership to ubuntu" >> $LOG_DIR/014_chown_folders.log 2>&1
 cat ~/.clave | sudo -S chown -R ubuntu:ubuntu log tmp vendor >> $LOG_DIR/014_chown_folders.log 2>&1
 
-# Restart Sidekiq to ensure it runs with new code
+# Restart jobs to ensure it runs with new code
 #
-echo "$(date '+%F %T') Reloading systemd daemon for sidekiq" >> $LOG_DIR/202_restart_sidekiq_service.log 2>&1
-systemctl --user daemon-reload >> $LOG_DIR/202_restart_sidekiq_service.log 2>&1
+echo "$(date '+%F %T') Reloading systemd daemon for jobs" >> $LOG_DIR/202_restart_jobs_service.log 2>&1
+systemctl --user daemon-reload >> $LOG_DIR/202_restart_jobs_service.log 2>&1
 
-echo "$(date '+%F %T') Restarting enlacito.sidekiq.service" >> $LOG_DIR/202_restart_sidekiq_service.log 2>&1
-systemctl --user restart enlacito.sidekiq.service >> $LOG_DIR/202_restart_sidekiq_service.log 2>&1
+echo "$(date '+%F %T') Restarting puntapie.jobs.service" >> $LOG_DIR/202_restart_jobs_service.log 2>&1
+systemctl --user restart puntapie.jobs.service >> $LOG_DIR/202_restart_jobs_service.log 2>&1
 
 # =========================================================
 # SYSTEMD (PRODUCTION - SYSTEM LEVEL)
