@@ -15,7 +15,9 @@ class User < ApplicationRecord
          :registerable,
          :confirmable
 
-  after_create_commit :create_and_attach_default_organization
+  # Corre dentro de la transacción que crea al usuario: si falla la organización o la membresía,
+  # el usuario tampoco se guarda y nunca queda una cuenta sin organización.
+  after_create :create_and_attach_default_organization
 
   def current_membership
     return nil unless current_organization
@@ -54,7 +56,8 @@ class User < ApplicationRecord
       owner: self
     )
 
-    self.update(current_organization: org)
+    memberships.create!(organization: org, role: Role.find_by!(name: Role::ADMIN))
+    update_column(:current_organization_id, org.id)
   end
 end
 
