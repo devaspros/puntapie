@@ -1,0 +1,25 @@
+es:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              too_short: es demasiado corta (mínimo %{count} caracteres)
+            current_password:
+              invalid: no es correcta
+
+    models:
+      user:
+        one: Usuario
+        other: Usuarios
+
+    attributes:
+      user:
+        first_name: Nombre
+        last_name: Apellido
+        email: Correo
+        password: Contraseña
+        password_confirmation: Confirmar contraseña
+        current_password: Contraseña actual
+        remember_me: Recuérdame

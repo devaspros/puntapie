@@ -127,5 +127,23 @@ describe User, type: :model do
         expect(user.errors[:email]).to include("es inválido")
       end
     end
+
+    describe "password" do
+      it "is invalid with less than 10 characters" do
+        user = build(:user, password: "123456789")
+
+        user.valid?
+
+        expect(user.errors[:password]).to include("es demasiado corta (mínimo 10 caracteres)")
+      end
+    end
+  end
+
+  describe "translations" do
+    it "translates the authentication attributes" do
+      label = User.human_attribute_name(:current_password)
+
+      expect(label).to eq("Contraseña actual")
+    end
   end
 end

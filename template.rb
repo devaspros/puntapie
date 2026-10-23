@@ -69,6 +69,10 @@ def add_users
             "config.confirm_within = 24.hours"
 
   gsub_file "config/initializers/devise.rb",
+            "config.password_length = 6..128",
+            "config.password_length = 10..128"
+
+  gsub_file "config/initializers/devise.rb",
             "config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'",
             'config.mailer_sender = "CHANGE-ME"'
 
@@ -115,6 +119,8 @@ def set_locales
 
   copy_file "config/locales/devise.es.yml", force: true
   copy_file "config/locales/es-CO.yml", force: true
+  copy_file "config/locales/models.es.yml", force: true
+  copy_file "config/locales/views.es.yml", force: true
 end
 
 def copy_templates

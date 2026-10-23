@@ -1,0 +1,24 @@
+es:
+  shared:
+    brand: Puntapie
+
+    password_visibility:
+      toggle: Mostrar u ocultar la contraseña
+
+    password_hint: "Mínimo %{count} caracteres"
+
+  devise:
+    passwords:
+      new:
+        title: ¿Olvidaste tu contraseña?
+        subtitle: Te enviaremos un correo con las instrucciones para restablecerla.
+        email: Correo
+        submit: Enviar instrucciones
+        back_to_sign_in: Volver a iniciar sesión
+
+      edit:
+        title: Crear nueva contraseña
+        password: Nueva contraseña
+        password_confirmation: Confirmar contraseña
+        submit: Guardar nueva contraseña
+        back_to_sign_in: Volver a iniciar sesión
