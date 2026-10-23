@@ -182,6 +182,7 @@ def configure_rspec
   directory "spec/mailers", force: true
   directory "spec/models", force: true
   directory "spec/assets", force: true
+  directory "spec/config", force: true
 
   copy_file ".simplecov"
   copy_file ".spec", force: true

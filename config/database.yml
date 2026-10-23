@@ -1,7 +1,5 @@
 default: &default
-  host: localhost
   adapter: sqlite3
-  encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   # Milisegundos que una conexión espera el lock de escritura antes de fallar.
   # (retries reintenta sin esperar en Rails 7.2 y se agota en ~0 ms)
