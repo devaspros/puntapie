@@ -8,9 +8,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 To use the template:
 ```bash
-rails new my_app -d sqlite3 --no-action-mailbox --no-action-text -m template.rb
+rails new my_app -d sqlite3 --skip-test --skip-active-storage --skip-action-mailbox --skip-action-text -m template.rb
 # or from GitHub:
-rails new my_app -d sqlite3 -m https://raw.githubusercontent.com/.../template.rb
+rails new my_app -d sqlite3 --skip-test --skip-active-storage --skip-action-mailbox --skip-action-text -m https://raw.githubusercontent.com/.../template.rb
 ```
 
 ## Development Commands

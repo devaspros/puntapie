@@ -19,7 +19,10 @@ Usando la plantilla desde el repositorio en GitHub:
 rails _7.2.3.1_ new ./pruebapie01 \
   -d sqlite3 \
   -m https://raw.githubusercontent.com/devaspros/puntapie/master/template.rb \
-  --skip-test
+  --skip-test \
+  --skip-active-storage \
+  --skip-action-mailbox \
+  --skip-action-text
 ```
 
 También se puede clonar el repo y leer la plantilla desde el archivo local:
@@ -28,7 +31,10 @@ También se puede clonar el repo y leer la plantilla desde el archivo local:
 rails _7.2.3.1_ new ../pruebapie01 \
   -d sqlite3 \
   -m ./template.rb \
-  --skip-test
+  --skip-test \
+  --skip-active-storage \
+  --skip-action-mailbox \
+  --skip-action-text
 ```
 
 > [!Important]
@@ -66,7 +72,6 @@ La app generada trae valores de ejemplo que hay que reemplazar antes de producci
 | `app/mailers/app_mailer.rb` | `default from: "CHANGE-ME"` |
 | `config/environments/production.rb` | `default_url_options = { host: "CHANGE-ME" }` |
 | `app/lib/json_web_token.rb` | `ISSUER = "CHANGE-ME"` |
-| `config/initializers/sentry.rb` | `config.dsn = ""` |
 | `config/nginx.puntapie.production.conf` | `server_name` |
 | `config/database.yml` | ruta de la base de datos de producción |
 | `.github/workflows/deploy.yml` | puerto SSH del servidor (`54321`) |
@@ -93,16 +98,18 @@ La app generada trae valores de ejemplo que hay que reemplazar antes de producci
 | `RAILS_MAX_THREADS` | Hilos de Puma y tamaño del pool de la base de datos (3 en Puma y 5 en el pool si no se define) |
 | `PORT` | Puerto de Puma (3000 si no se define) |
 | `JOB_CONCURRENCY` | Procesos de workers de Solid Queue (1 si no se define) |
+| `SENTRY_DSN` | DSN de Sentry. Sin él, Sentry no envía nada |
 
 En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.envs` (ver `scripts/.puntapie.envs`).
 
 ### Opciones avanzadas
 
 - `--skip-test` es necesario porque la plantilla usa RSpec en vez de Minitest.
+- `--skip-active-storage`, `--skip-action-mailbox` y `--skip-action-text` dejan fuera esos frameworks. Si Active Storage queda cargado, sus rutas (`/rails/active_storage/direct_uploads`) aceptan subidas sin autenticación; el spec `spec/routing/rails_frameworks_routes_spec.rb` de la app generada falla en ese caso. Una app que necesite Active Storage lo instala y exige sesión en esas rutas.
 - Para no crear el repo de git ni el commit inicial, define `SKIP_GIT=1`:
 
   ```bash
-  SKIP_GIT=1 rails _7.2.3.1_ new ./pruebapie01 -d sqlite3 -m ./template.rb --skip-test
+  SKIP_GIT=1 rails _7.2.3.1_ new ./pruebapie01 -d sqlite3 -m ./template.rb --skip-test --skip-active-storage --skip-action-mailbox --skip-action-text
   ```
 
 - Para usar la plantilla de otra rama, cambia `master` por el nombre de la rama en la URL. La plantilla clona el repo y hace checkout de esa rama:
@@ -111,7 +118,10 @@ En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.e
   rails _7.2.3.1_ new ./pruebapie01 \
     -d sqlite3 \
     -m https://raw.githubusercontent.com/devaspros/puntapie/<rama>/template.rb \
-    --skip-test
+    --skip-test \
+    --skip-active-storage \
+    --skip-action-mailbox \
+    --skip-action-text
   ```
 
 ## ¿Qué incluye Puntapie?
@@ -157,7 +167,7 @@ En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.e
 - SQLite en modo WAL, con pragmas para producción y `timeout` para esperar el lock de escritura
 - Bases separadas para Solid Queue y Solid Cable en desarrollo, y para Solid Queue, Solid Cache y Solid Cable en producción
 - Backport de Rails 8 (`config/initializers/sqlite3_busy_handler_timeout.rb`) para esperar el lock sin bloquear los demás hilos de Puma. Se borra al actualizar a Rails 8
-- Active Storage instalado
+- Sin Active Storage, Action Mailbox ni Action Text (ver las opciones de `rails new`)
 
 ### Interfaz
 
@@ -244,7 +254,7 @@ Pruebas:
 1. Genera una app desde el archivo local en una carpeta de pruebas fuera del repo:
 
    ```bash
-   rails _7.2.3.1_ new ../pruebapie01 -d sqlite3 -m ./template.rb --skip-test
+   rails _7.2.3.1_ new ../pruebapie01 -d sqlite3 -m ./template.rb --skip-test --skip-active-storage --skip-action-mailbox --skip-action-text
    ```
 
 2. Revisa que la app arranque y que las pruebas pasen:

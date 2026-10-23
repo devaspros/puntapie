@@ -183,16 +183,10 @@ def configure_rspec
   directory "spec/models", force: true
   directory "spec/assets", force: true
   directory "spec/config", force: true
+  directory "spec/routing", force: true
 
   copy_file ".simplecov"
   copy_file ".spec", force: true
-end
-
-def active_storage_setup
-  copy_file "config/storage.yml", force: true
-  directory "storage", force: true
-
-  rails_command "active_storage:install"
 end
 
 def add_action_mailer_configs
@@ -442,7 +436,6 @@ after_bundle do
   copy_templates
 
   configure_rspec
-  active_storage_setup
   add_action_mailer_configs
   setup_exception_handler
 
