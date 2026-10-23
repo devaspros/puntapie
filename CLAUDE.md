@@ -70,7 +70,7 @@ The app intentionally uses SQLite (not PostgreSQL) with WAL mode for concurrency
 `config/initializers/sqlite3_busy_handler_timeout.rb` backports Rails 8 behavior: it applies `timeout` with `busy_handler_timeout` (releases the GVL) instead of `busy_timeout` (holds it, so other Puma threads freeze while waiting). Delete it when upgrading to Rails 8.
 
 ### JavaScript
-Uses importmap-rails (no Node/Webpack/Vite). Hotwire stack: Turbo + Stimulus. Bootstrap 5.2 pinned in `config/importmap.rb`.
+Uses importmap-rails (no Node/Webpack/Vite). Hotwire stack: Turbo + Stimulus. Bootstrap 5.3 pinned in `config/importmap.rb`.
 
 ## Locale
 The app is configured for Colombian Spanish (`es-CO`). Devise views and locale files are in Spanish. Generated READMEs are in Spanish.

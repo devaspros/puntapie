@@ -55,18 +55,6 @@ echo "$(date '+%F %T') create vendor/bundle" >> $LOG_DIR/004_create_vendor.log 2
 echo "$(date '+%F %T') Symlink api-gems to vendor/bundle" >> $LOG_DIR/005_symlink_gems.log 2>&1
 ln -fsv $BASE_DIR/deployments/api-gems/bundle $APP_DIR_PATH/vendor/ >> $LOG_DIR/005_symlink_gems.log 2>&1
 
-# CHECK node en /usr/local/bin/node
-#
-# execjs (autoprefixer) lo usa en assets:precompile. El symlink se crea al
-# aprovisionar el servidor (dap_cloud/setup_server.sh), no en el deploy.
-#
-echo "$(date '+%F %T') Check /usr/local/bin/node" >> $LOG_DIR/006_check_node.log 2>&1
-if [ ! -x /usr/local/bin/node ]; then
-  echo "$(date '+%F %T') /usr/local/bin/node no existe o apunta a una versión que no está. Crear el symlink en el servidor." >> $LOG_DIR/006_check_node.log
-  exit 1
-fi
-/usr/local/bin/node --version >> $LOG_DIR/006_check_node.log 2>&1
-
 # CLEAN old assets
 #
 echo "$(date '+%F %T') Clobber assets" >> $LOG_DIR/007_clobber_assets.log 2>&1

@@ -19,7 +19,6 @@ Tener instalado:
 - Ruby 3.4.8
 - Bundler gem: `gem install bundler`
 - SQLite3
-- NodeJS en el servidor de producción, en `/usr/local/bin/node`
 
 Luego instala las gemas:
 

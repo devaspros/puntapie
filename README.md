@@ -10,7 +10,6 @@ Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 * Bundler `gem install bundler`
 * Rails `gem install rails -v 7.2.3.1`
 * Un servidor SMTP local en el puerto 1025 para ver los correos en desarrollo, como [Mailpit](https://mailpit.axllent.org/) o [MailCatcher](https://mailcatcher.me/)
-* En el servidor de producción: Node 22.14.0 (ver `.nvmrc`) disponible en `/usr/local/bin/node`. El script de despliegue verifica que exista
 
 ## ¿Cómo uso Puntapie?
 
