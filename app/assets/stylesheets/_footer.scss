@@ -1,0 +1,22 @@
+// Lo importan landing.scss y login.scss, porque las dos páginas renderizan shared/_footer.
+@use "sass:color";
+
+$footer-text-gray: #6b7280;
+$footer-border-gray: #e5e7eb;
+
+.landing-footer {
+  background-color: #fff;
+  border-top: 1px solid $footer-border-gray;
+}
+
+.footer-text {
+  color: $footer-text-gray;
+}
+
+.footer-link {
+  color: $footer-text-gray;
+
+  &:hover {
+    color: color.adjust($footer-text-gray, $lightness: -15%);
+  }
+}

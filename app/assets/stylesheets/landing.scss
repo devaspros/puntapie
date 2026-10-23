@@ -7,7 +7,6 @@ $bg-gray: #f2f2f2;
 $text-dark: #111827;
 $text-gray: #6b7280;
 $text-medium: #374151;
-$border-gray: #e5e7eb;
 
 // Navigation
 .landing-navbar {
@@ -115,22 +114,7 @@ details[open] .faq-question::after {
 }
 
 // Footer
-.landing-footer {
-  background-color: #fff;
-  border-top: 1px solid $border-gray;
-}
-
-.footer-text {
-  color: $text-gray;
-}
-
-.footer-link {
-  color: $text-gray;
-
-  &:hover {
-    color: color.adjust($text-gray, $lightness: -15%);
-  }
-}
+@import "footer";
 
 // Privacy Policy && Terms of Service
 .container.privacy-policy, .container.tos {

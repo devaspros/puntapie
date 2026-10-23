@@ -1,14 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= I18n.locale %>">
   <head>
-    <%= render "shared/head" %>
+    <% title = Rails.env.development? ? "#{t('shared.brand')} - Dev" : t("shared.brand") %>
+    <%= display_meta_tags(site: title, reverse: true) %>
+
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="robots" content="noindex, follow">
+
+    <%= csrf_meta_tags %>
+
+    <%= csp_meta_tag %>
+
     <%= stylesheet_link_tag "login", media: "all" %>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.12.1/font/bootstrap-icons.min.css">
+
+    <%# Sin esto no corren los controladores toast ni password-visibility. %>
+    <%= javascript_importmap_tags %>
   </head>
 
-  <body class="d-flex align-items-center py-4 bg-body-tertiary">
+  <body class="d-flex flex-column min-vh-100 bg-body-tertiary">
+    <nav class="navbar py-3 login-navbar">
+      <div class="container">
+        <span class="navbar-brand mb-0 h4 fw-bold">
+          <%= link_to t("shared.brand"), root_path, class: "text-decoration-none text-body" %>
+        </span>
+
+        <% if current_page?(new_user_registration_path) %>
+          <%= link_to t("layouts.login.sign_in"), new_user_session_path, class: "btn btn-outline-primary btn-sm" %>
+        <% else %>
+          <%= link_to t("layouts.login.sign_up"), new_user_registration_path, class: "btn btn-outline-primary btn-sm" %>
+        <% end %>
+      </div>
+    </nav>
+
     <main class="form-signin w-100 m-auto">
       <%= render "shared/notices" %>
+
       <%= yield %>
     </main>
+
+    <%= render "shared/footer" %>
   </body>
 </html>

@@ -7,6 +7,20 @@ es:
 
     password_hint: "Mínimo %{count} caracteres"
 
+    footer:
+      terms: Términos de Servicio
+      privacy: Política de Privacidad
+      made_by_html: >-
+        Hecho por un humano de
+        <a href="https://www.devaspros.com/" target="_blank" rel="noopener" class="text-decoration-none">DevAsPros</a>,
+        con la ayuda de un 🤖, en Barranquilla, 🇨🇴
+      copyright: "© %{year} %{app}"
+
+  layouts:
+    login:
+      sign_in: Iniciar sesión
+      sign_up: Regístrate
+
   devise:
     passwords:
       new:

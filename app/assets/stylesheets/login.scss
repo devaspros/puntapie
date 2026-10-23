@@ -1,9 +1,5 @@
 @import "bootstrap";
-
-html,
-body {
-  height: 100%;
-}
+@import "footer";
 
 .form-signin {
   max-width: 330px;
@@ -14,14 +10,23 @@ body {
   z-index: 2;
 }
 
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+// Correo y contraseña pegados, solo en el login (en el registro van separados).
+.form-signin-stacked {
+  input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
 }
 
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+.login-navbar {
+  .container {
+    flex-wrap: nowrap;
+  }
 }
