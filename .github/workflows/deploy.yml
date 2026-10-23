@@ -7,7 +7,7 @@ jobs:
     name: Deploy via SSH
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Configure SSH
         env:
           SSH_KEY: ${{ secrets.PRIVATE_KEY }}
@@ -34,16 +34,20 @@ jobs:
 
       - name: Notify success via NTFY
         if: success()
+        continue-on-error: true
         run: |
-          curl -H "Title: 🚀 Despliegue Exitoso - ${{ github.repository }}" \
+          curl --max-time 10 \
+               -H "Title: 🚀 Despliegue Exitoso - ${{ github.repository }}" \
                -H "Tags: rocket, white_check_mark" \
                -d "El commit en la rama '${{ github.ref }}' se desplegó correctamente. Ver workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
                https://ntfy.sh/${{ secrets.NTFY_TOPIC }}
 
       - name: Notify failure via NTFY
         if: failure()
+        continue-on-error: true
         run: |
-          curl -H "Title: ❌ Despliegue Fallido - ${{ github.repository }}" \
+          curl --max-time 10 \
+               -H "Title: ❌ Despliegue Fallido - ${{ github.repository }}" \
                -H "Tags: warning, skull" \
                -d "El despliegue falló para el commit en '${{ github.ref }}'. Ver logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
                -H "Priority: high" \
