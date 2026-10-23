@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "bootstrap";
 
 // Color variables
@@ -69,7 +70,7 @@ $border-gray: #e5e7eb;
   color: white;
 
   &:hover {
-    background-color: darken($primary-blue, 10%);
+    background-color: color.adjust($primary-blue, $lightness: -10%);
     color: white;
   }
 }
@@ -127,7 +128,7 @@ details[open] .faq-question::after {
   color: $text-gray;
 
   &:hover {
-    color: darken($text-gray, 15%);
+    color: color.adjust($text-gray, $lightness: -15%);
   }
 }
 

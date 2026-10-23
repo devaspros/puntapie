@@ -37,6 +37,12 @@ def set_application_name
   add_app_config "config.application_name = Rails.application.class.module_parent_name"
 end
 
+def silence_dart_sass_warnings
+  # Dart Sass: no mostrar los avisos que genera Bootstrap 5.3 (@import y funciones globales)
+  add_app_config "config.sass.quiet_deps = true"
+  add_app_config 'config.sass.silence_deprecations = ["import"]'
+end
+
 def disable_default_generators
   file 'config/initializers/generators.rb', <<~CODE
     Rails.application.config.generators do |g|
@@ -174,6 +180,7 @@ def configure_rspec
   directory "spec/factories", force: true
   directory "spec/mailers", force: true
   directory "spec/models", force: true
+  directory "spec/assets", force: true
 
   copy_file ".simplecov"
   copy_file ".spec", force: true
@@ -419,6 +426,7 @@ template "Gemfile.tt", force: true
 
 after_bundle do
   set_application_name
+  silence_dart_sass_warnings
   disable_default_generators
   stop_spring
   add_users
