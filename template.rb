@@ -128,7 +128,8 @@ def copy_templates
   copy_file ".env"
   copy_file ".env.test"
   copy_file ".editorconfig"
-  copy_file "lib/tasks/auto_annotate_models.rake"
+  copy_file "lib/tasks/annotate_rb.rake"
+  copy_file ".annotaterb.yml"
 
   copy_file "gitignore", ".gitignore", force: true
 

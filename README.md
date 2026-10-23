@@ -216,7 +216,7 @@ Producción:
 
 Desarrollo:
 
-- [annotate](https://github.com/ctran/annotate_models)
+- [annotaterb](https://github.com/drwl/annotaterb)
 - [foreman](https://github.com/ddollar/foreman)
 - [rubocop](https://github.com/rubocop/rubocop)
 - [solargraph](https://github.com/castwide/solargraph)
