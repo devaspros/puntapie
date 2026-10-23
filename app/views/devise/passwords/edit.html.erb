@@ -7,20 +7,21 @@
 
   <%= f.hidden_field :reset_password_token %>
 
-  <div class="form-floating mb-3 position-relative"
-       data-controller="password-visibility"
-  >
-    <%= f.password_field :password,
-        autofocus: true,
-        autocomplete: "new-password",
-        class: "form-control",
-        placeholder: t(".password"),
-        style: "padding-right: 2.5rem;",
-        data: { password_visibility_target: "input" } %>
+  <div class="mb-3">
+    <div class="form-floating position-relative"
+         data-controller="password-visibility"
+    >
+      <%= f.password_field :password,
+          autofocus: true,
+          autocomplete: "new-password",
+          class: "form-control",
+          placeholder: t(".password"),
+          data: { password_visibility_target: "input" } %>
 
-    <%= f.label :password, t(".password") %>
+      <%= f.label :password, t(".password") %>
 
-    <%= render "devise/shared/password_toggle" %>
+      <%= render "devise/shared/password_toggle" %>
+    </div>
 
     <small class="text-muted ms-1">
       <%= t("shared.password_hint", count: @minimum_password_length) %>
@@ -34,7 +35,6 @@
         autocomplete: "new-password",
         class: "form-control",
         placeholder: t(".password_confirmation"),
-        style: "padding-right: 2.5rem;",
         data: { password_visibility_target: "input" } %>
 
     <%= f.label :password_confirmation, t(".password_confirmation") %>

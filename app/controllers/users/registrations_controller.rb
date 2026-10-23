@@ -1,51 +1,31 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  layout "login"
+  layout :resolve_layout
 
   before_action :configure_sign_up_params, only: [:create]
-  # before_action :configure_account_update_params, only: [:update]
+  before_action :configure_account_update_params, only: [:update]
 
-  # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  private
 
-  # POST /resource
-  # def create
-  #   super
-  # end
-
-  # GET /resource/edit
-  # def edit
-  #   super
-  # end
-
-  # PUT /resource
-  # def update
-  #   super
-  # end
-
-  # DELETE /resource
-  # def destroy
-  #   super
-  # end
-
-  # protected
-
-  # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(
-      :sign_up,
-      keys: [:first_name, :last_name]
-    )
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name])
   end
 
-  # def configure_account_update_params
-  #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
-  # end
+  def configure_account_update_params
+    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name])
+  end
 
-  def after_inactive_sign_up_path_for(resource)
+  # La página "Mi cuenta" se muestra dentro del panel; el registro, con el layout de login.
+  def resolve_layout
+    %w[edit update].include?(action_name) ? "application" : "login"
+  end
+
+  def after_update_path_for(_resource)
+    edit_user_registration_path
+  end
+
+  def after_inactive_sign_up_path_for(_resource)
     new_user_session_path
   end
 end

@@ -16,6 +16,11 @@ es:
         con la ayuda de un 🤖, en Barranquilla, 🇨🇴
       copyright: "© %{year} %{app}"
 
+    sidebar:
+      my_account: Mi cuenta
+      sign_out: Cerrar sesión
+      sign_in: Iniciar sesión
+
   layouts:
     login:
       sign_in: Iniciar sesión
@@ -35,4 +40,44 @@ es:
         password: Nueva contraseña
         password_confirmation: Confirmar contraseña
         submit: Guardar nueva contraseña
+        back_to_sign_in: Volver a iniciar sesión
+
+    sessions:
+      new:
+        title: Iniciar sesión
+        email: Correo
+        password: Contraseña
+        remember_me: Recuérdame
+        submit: Iniciar sesión
+        forgot_password: ¿Olvidaste tu contraseña?
+        resend_confirmation: ¿No recibiste el correo de confirmación?
+        no_account: ¿No tienes cuenta?
+        sign_up: Regístrate
+
+    registrations:
+      new:
+        title: Crear cuenta
+        first_name: Nombre
+        last_name: Apellido
+        email: Correo
+        password: Contraseña
+        submit: Registrarme
+        has_account: ¿Ya tienes cuenta?
+        sign_in: Inicia sesión
+
+      edit:
+        title: Mi cuenta
+        waiting_confirmation: "Esperando confirmación de: %{email}"
+        password: Nueva contraseña
+        password_hint: Déjala en blanco si no quieres cambiarla.
+        password_confirmation: Confirmar nueva contraseña
+        current_password_hint: La necesitamos para confirmar cualquier cambio.
+        submit: Guardar cambios
+
+    confirmations:
+      new:
+        title: Reenviar instrucciones de confirmación
+        subtitle: Te enviaremos un correo con las instrucciones para confirmar tu cuenta.
+        email: Correo
+        submit: Reenviar instrucciones
         back_to_sign_in: Volver a iniciar sesión

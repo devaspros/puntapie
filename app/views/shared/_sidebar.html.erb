@@ -21,15 +21,27 @@
       <hr class="my-3">
 
       <ul class="nav flex-column mb-auto">
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to edit_user_registration_path, class: "nav-link d-flex align-items-center gap-2" do %>
+              <i class="bi bi-person"></i>
+
+              <%= t("shared.sidebar.my_account") %>
+            <% end %>
+          </li>
+        <% end %>
+
         <li class="nav-item">
           <% if user_signed_in? %>
             <%= link_to destroy_user_session_path,
               data: { turbo_method: :delete },
               class: "nav-link d-flex align-items-center gap-2" do %>
-              <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+              <i class="bi bi-box-arrow-right"></i>
+
+              <%= t("shared.sidebar.sign_out") %>
             <% end %>
           <% else %>
-            <%= link_to "Iniciar sesión", new_user_session_path, class: "nav-link d-flex align-items-center gap-2" %>
+            <%= link_to t("shared.sidebar.sign_in"), new_user_session_path, class: "nav-link d-flex align-items-center gap-2" %>
           <% end %>
         </li>
       </ul>

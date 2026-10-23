@@ -1,35 +1,89 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <h1 class="h3 mb-3 fw-normal text-center">
-    Crear Cuenta
+    <%= t(".title") %>
   </h1>
 
-  <%= render "devise/shared/error_messages", resource: resource %>
+  <div class="form-floating mb-3">
+    <%= f.text_field :first_name,
+        autofocus: true,
+        autocomplete: "given-name",
+        class: "form-control #{'is-invalid' if resource.errors[:first_name].any?}",
+        placeholder: t(".first_name"),
+        maxlength: 16 %>
 
-  <div class="form-floating">
-    <%= f.text_field :first_name, autofocus: true, class: "form-control mb-2", placeholder: "Nombre" %>
-    <%= f.label :first_name, "Nombre" %>
+    <%= f.label :first_name, t(".first_name") %>
+
+    <% if resource.errors[:first_name].any? %>
+      <div class="invalid-feedback d-block">
+        <%= resource.errors[:first_name].first %>
+      </div>
+    <% end %>
   </div>
 
-  <div class="form-floating">
-    <%= f.text_field :last_name, class: "form-control mb-2", placeholder: "Apellido" %>
-    <%= f.label :last_name, "Apellido" %>
+  <div class="form-floating mb-3">
+    <%= f.text_field :last_name,
+        autocomplete: "family-name",
+        class: "form-control #{'is-invalid' if resource.errors[:last_name].any?}",
+        placeholder: t(".last_name"),
+        maxlength: 16 %>
+
+    <%= f.label :last_name, t(".last_name") %>
+
+    <% if resource.errors[:last_name].any? %>
+      <div class="invalid-feedback d-block">
+        <%= resource.errors[:last_name].first %>
+      </div>
+    <% end %>
   </div>
 
-  <div class="form-floating">
-    <%= f.email_field :email, class: "form-control mb-2", placeholder: "Email" %>
-    <%= f.label :email, "Email" %>
+  <div class="form-floating mb-3">
+    <%= f.email_field :email,
+        autocomplete: "email",
+        class: "form-control #{'is-invalid' if resource.errors[:email].any?}",
+        placeholder: t(".email") %>
+
+    <%= f.label :email, t(".email") %>
+
+    <% if resource.errors[:email].any? %>
+      <div class="invalid-feedback d-block">
+        <%= resource.errors[:email].first %>
+      </div>
+    <% end %>
   </div>
 
-  <div class="form-floating">
-    <%= f.password_field :password, autocomplete: "off", class: "form-control mb-2", placeholder: "Contraseña" %>
-    <%= f.label :password, "Contraseña" %>
+  <div class="mb-3">
+    <div class="form-floating position-relative"
+         data-controller="password-visibility"
+    >
+      <%= f.password_field :password,
+          autocomplete: "new-password",
+          class: "form-control #{'is-invalid' if resource.errors[:password].any?}",
+          placeholder: t(".password"),
+          data: { password_visibility_target: "input" } %>
+
+      <%= f.label :password, t(".password") %>
+
+      <%= render "devise/shared/password_toggle" %>
+    </div>
+
+    <small class="text-muted ms-1">
+      <%= t("shared.password_hint", count: @minimum_password_length) %>
+    </small>
+
+    <% if resource.errors[:password].any? %>
+      <div class="invalid-feedback d-block">
+        <%= resource.errors[:password].first %>
+      </div>
+    <% end %>
   </div>
 
   <div class="form-group">
-    <%= f.submit "Registrarme", class: "btn btn-primary w-100 py-2" %>
+    <%= f.submit t(".submit"), class: "btn btn-primary w-100 py-2" %>
   </div>
-<% end %>
 
-<div class="text-center">
-  <%= render "devise/shared/links" %>
-</div>
+  <p class="text-center mt-3">
+    <%= t(".has_account") %>
+
+    <%= link_to t(".sign_in"), new_user_session_path, class: "text-muted small" %>
+  </p>
+<% end %>
