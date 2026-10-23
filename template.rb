@@ -243,6 +243,9 @@ def setup_exception_handler
   CONFIG
 
   environment(production_exception_handler, env: "production")
+
+  # Sin configuración en test, exception_handler usa el layout application, que falla sin current_user.
+  environment(production_exception_handler, env: "test")
 end
 
 def add_organization_migration
