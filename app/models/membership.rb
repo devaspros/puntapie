@@ -43,9 +43,9 @@ end
 #  organization_id :integer          not null
 #  user_id         :integer          not null
 #  invitation_id   :integer
+#  role_id         :integer          not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  role_id         :integer          not null
 #
 # Indexes
 #

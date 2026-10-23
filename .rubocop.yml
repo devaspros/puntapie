@@ -69,3 +69,11 @@ Naming/VariableNumber:
 Metrics/BlockLength:
   Exclude:
     - "spec/**/*_spec.rb"
+
+# Este cop lee db/schema.rb, que todavía no existe cuando template.rb genera .rubocop_todo.yml, así que
+# no queda en el todo. Agregar los índices únicos exige una migración aparte.
+Rails/UniqueValidationWithoutIndex:
+  Exclude:
+    - app/models/invitation.rb
+    - app/models/membership.rb
+    - app/models/role.rb

@@ -37,9 +37,9 @@ end
 #  id         :integer          not null, primary key
 #  name       :string           not null
 #  slug       :string           not null
-#  owner_id   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  owner_id   :integer
 #
 # Indexes
 #
