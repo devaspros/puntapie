@@ -75,6 +75,10 @@ Uses importmap-rails (no Node/Webpack/Vite). Hotwire stack: Turbo + Stimulus. Bo
 ## Locale
 The app is configured for Colombian Spanish (`es-CO`). Devise views and locale files are in Spanish. Generated READMEs are in Spanish.
 
+- View texts live in `config/locales/views.es.yml` (Devise views use lazy lookups, e.g. `t(".title")` → `es.devise.sessions.new.title`); model and attribute names in `config/locales/models.es.yml`.
+- `template.rb` only copies the locale files listed in `set_locales`, so every new YAML file needs its own `copy_file` there.
+- Password minimum is 10 characters (`config.password_length = 10..128`, set by `add_users`). Password fields use the `password-visibility` Stimulus controller and the `devise/shared/_password_toggle` partial.
+
 ## Seeded Data (via `setup:run`)
 - Organization: "DevAsPros" (slug: "dap")
 - Test user: frajaquico@aol.com with admin role
