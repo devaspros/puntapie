@@ -218,12 +218,12 @@ def add_action_mailer_configs
 
   environment(development_smtp_settings, env: "development")
 
-  production_smtp_settings = <<~SMTP_SETTINGS
-    config.action_mailer.default_url_options = { host: "CHANGE-ME" }
-    config.action_mailer.delivery_method = :resend
-  SMTP_SETTINGS
+  # production.rb de Rails 8 ya define default_url_options con example.com: se reemplaza el host.
+  gsub_file "config/environments/production.rb",
+            'config.action_mailer.default_url_options = { host: "example.com" }',
+            'config.action_mailer.default_url_options = { host: "CHANGE-ME" }'
 
-  environment(production_smtp_settings, env: "production")
+  environment("config.action_mailer.delivery_method = :resend", env: "production")
 end
 
 def setup_exception_handler
@@ -419,13 +419,13 @@ end
 def setup_log_rotate
   gsub_file(
     "config/environments/production.rb",
-    "Log to STDOUT by default",
-    "Log to production.log and rotate"
+    "Log to STDOUT with the current request id as a default log tag.",
+    "Log to production.log, rotated daily, with the current request id as a default log tag."
   )
   gsub_file(
     "config/environments/production.rb",
-    "config.logger = ActiveSupport::Logger.new(STDOUT)",
-    'config.logger = ActiveSupport::Logger.new("log/production.log", "daily")'
+    "config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)",
+    'config.logger   = ActiveSupport::TaggedLogging.logger("log/production.log", "daily")'
   )
 end
 
