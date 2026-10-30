@@ -43,6 +43,13 @@ def silence_dart_sass_warnings
   add_app_config 'config.sass.silence_deprecations = ["import"]'
 end
 
+# Rails 8 genera la app para Propshaft. La plantilla usa Sprockets (por dartsass-sprockets):
+# app/assets/config/manifest.js lo copia `directory "app"` y aquí se recupera la configuración de 7.2.
+def configure_sprockets
+  environment "config.assets.compile = false", env: "production"
+  environment "config.assets.quiet = true", env: "development"
+end
+
 def disable_default_generators
   file 'config/initializers/generators.rb', <<~CODE
     Rails.application.config.generators do |g|
@@ -433,6 +440,7 @@ template "Gemfile.tt", force: true
 after_bundle do
   set_application_name
   silence_dart_sass_warnings
+  configure_sprockets
   disable_default_generators
   stop_spring
   add_users
