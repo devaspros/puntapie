@@ -67,8 +67,6 @@ The app intentionally uses SQLite (not PostgreSQL) with WAL mode for concurrency
 
 `config/database.yml` is multi-database: `primary`, `queue` and `cable` in development; `primary`, `cache`, `queue` and `cable` in production; a single DB in test. The solid_* DBs have no migrations, only `db/*_schema.rb`, so use `db:prepare` (the deploy script does) instead of `db:migrate` to create them.
 
-`config/initializers/sqlite3_busy_handler_timeout.rb` backports Rails 8 behavior: it applies `timeout` with `busy_handler_timeout` (releases the GVL) instead of `busy_timeout` (holds it, so other Puma threads freeze while waiting). Delete it when upgrading to Rails 8.
-
 ### JavaScript
 Uses importmap-rails (no Node/Webpack/Vite). Hotwire stack: Turbo + Stimulus. Bootstrap 5.3 pinned in `config/importmap.rb`.
 

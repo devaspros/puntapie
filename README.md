@@ -166,7 +166,6 @@ En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.e
 
 - SQLite en modo WAL, con pragmas para producción y `timeout` para esperar el lock de escritura
 - Bases separadas para Solid Queue y Solid Cable en desarrollo, y para Solid Queue, Solid Cache y Solid Cable en producción
-- Backport de Rails 8 (`config/initializers/sqlite3_busy_handler_timeout.rb`) para esperar el lock sin bloquear los demás hilos de Puma. Se borra al actualizar a Rails 8
 - Sin Active Storage, Action Mailbox ni Action Text (ver las opciones de `rails new`)
 
 ### Interfaz
