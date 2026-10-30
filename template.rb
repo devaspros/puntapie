@@ -44,7 +44,7 @@ def silence_dart_sass_warnings
 end
 
 # Rails 8 genera la app para Propshaft. La plantilla usa Sprockets (por dartsass-sprockets):
-# app/assets/config/manifest.js lo copia `directory "app"` y aquí se recupera la configuración de 7.2.
+# aquí se recupera la configuración de 7.2. app/assets/config/manifest.js se copia antes del bundle.
 def configure_sprockets
   environment "config.assets.compile = false", env: "production"
   environment "config.assets.quiet = true", env: "development"
@@ -434,6 +434,9 @@ add_template_repository_to_source_path
 self.options = options.merge(skip_kamal: true).freeze
 
 template "Gemfile.tt", force: true
+
+# Sprockets no arranca sin manifest.js, y rails new arranca la app (importmap:install) antes de after_bundle.
+copy_file "app/assets/config/manifest.js"
 
 after_bundle do
   set_application_name
