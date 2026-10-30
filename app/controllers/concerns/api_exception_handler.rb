@@ -20,11 +20,11 @@ module ApiExceptionHandler
                       "¯\_(ツ)_/¯"
                     end
 
-    render json: { errors: error_message }, status: :unprocessable_entity
+    render json: { errors: error_message }, status: :unprocessable_content
   end
 
   def missing_parameter(exception)
     render json: { errors: exception.message },
-           status: :unprocessable_entity
+           status: :unprocessable_content
   end
 end
