@@ -259,7 +259,7 @@ def add_organization_migration
   timestamp = Time.now.utc.strftime("%Y%m%d%H%M%S")
 
   create_file "db/migrate/#{timestamp}_create_organizations.rb", <<~RUBY
-    class CreateOrganizations < ActiveRecord::Migration[7.2]
+    class CreateOrganizations < ActiveRecord::Migration[8.0]
       def change
         create_table :organizations do |t|
           t.string :name, null: false
@@ -281,7 +281,7 @@ def add_invitation_migration
   timestamp = Time.now.utc.strftime("%Y%m%d%H%M%S")
 
   create_file "db/migrate/#{timestamp}_create_invitations.rb", <<~RUBY
-    class CreateInvitations < ActiveRecord::Migration[7.2]
+    class CreateInvitations < ActiveRecord::Migration[8.0]
       def change
         create_table :invitations do |t|
           t.string :email
@@ -305,7 +305,7 @@ def add_current_organization_to_user
   timestamp = Time.now.utc.strftime("%Y%m%d%H%M%S")
 
   create_file "db/migrate/#{timestamp}_add_current_organization_id_to_user.rb", <<~RUBY
-    class AddCurrentOrganizationIdToUser < ActiveRecord::Migration[7.2]
+    class AddCurrentOrganizationIdToUser < ActiveRecord::Migration[8.0]
       def change
         add_column :users, :current_organization_id, :integer
       end
@@ -322,7 +322,7 @@ def add_role_migration
   timestamp = Time.now.utc.strftime("%Y%m%d%H%M%S")
 
   create_file "db/migrate/#{timestamp}_create_roles.rb", <<~RUBY
-    class CreateRoles < ActiveRecord::Migration[7.2]
+    class CreateRoles < ActiveRecord::Migration[8.0]
       def change
         create_table :roles do |t|
           t.string :name, null: false
@@ -343,7 +343,7 @@ def add_membership_migration
   timestamp = Time.now.utc.strftime("%Y%m%d%H%M%S")
 
   create_file "db/migrate/#{timestamp}_create_memberships.rb", <<~RUBY
-    class CreateMemberships < ActiveRecord::Migration[7.2]
+    class CreateMemberships < ActiveRecord::Migration[8.0]
       def change
         create_table :memberships do |t|
           t.references :organization, null: false, foreign_key: true
@@ -367,7 +367,7 @@ def add_owner_to_organizations
   timestamp = Time.now.utc.strftime("%Y%m%d%H%M%S")
 
   create_file "db/migrate/#{timestamp}_add_owner_to_organizations.rb", <<~RUBY
-    class AddOwnerToOrganizations < ActiveRecord::Migration[7.2]
+    class AddOwnerToOrganizations < ActiveRecord::Migration[8.0]
       def change
         add_reference :organizations, :owner, foreign_key: { to_table: :users }, null: true
       end
@@ -384,7 +384,7 @@ def add_confirmable_to_users
   timestamp = Time.now.utc.strftime("%Y%m%d%H%M%S")
 
   create_file "db/migrate/#{timestamp}_add_confirmable_to_users.rb", <<~RUBY
-    class AddConfirmableToUsers < ActiveRecord::Migration[7.2]
+    class AddConfirmableToUsers < ActiveRecord::Migration[8.0]
       def change
         add_column :users, :confirmation_token, :string
         add_column :users, :confirmed_at, :datetime
