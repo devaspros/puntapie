@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Repo Is
 
-**Puntapie is a Rails app template generator**, not a standard Rails application. The primary artifact is `template.rb`, which uses Thor to generate new Rails 7.2.x apps pre-configured with the full stack below. The files in `app/`, `config/`, `spec/`, etc. are the template source files that get copied into generated apps.
+**Puntapie is a Rails app template generator**, not a standard Rails application. The primary artifact is `template.rb`, which uses Thor to generate new Rails 8.0.x apps pre-configured with the full stack below. The files in `app/`, `config/`, `spec/`, etc. are the template source files that get copied into generated apps.
 
 To use the template:
 ```bash
@@ -56,19 +56,19 @@ The app uses an Organization-based multi-tenant model:
 Pundit policies in `app/policies/`. `ApplicationController` includes Pundit.
 
 ### Background Jobs
-Solid Queue (no Redis). `template.rb` runs the `solid_queue:install`, `solid_cache:install` and `solid_cable:install` generators, then overrides `config/cache.yml` and `config/cable.yml` with the files in this repo.
+Solid Queue (no Redis). `rails new` 8.0 runs the `solid_cache:install`, `solid_queue:install` and `solid_cable:install` generators before `after_bundle`; `template.rb` only overrides `config/cache.yml` and `config/cable.yml` with the files in this repo.
 - Jobs run with `bin/jobs --mode async` (`Procfile.dev` locally, `scripts/puntapie.jobs.service` on the VPS)
 - Mission Control at `/jobs`, admins only (`http_basic_auth_enabled = false`, Devise handles auth)
-- Solid Cache is the production `cache_store`; development uses `memory_store` via `rails dev:cache`
+- Solid Cache is the production `cache_store`; development uses `memory_store` (Rails 8 default)
 - Solid Cable is the Action Cable adapter in development and production
 
 ### SQLite in Production
-The app intentionally uses SQLite (not PostgreSQL) with WAL mode for concurrency. Configured in `config/database.yml` with pragmas: `journal_mode: WAL`, `synchronous: NORMAL`, `mmap_size: 128MB`, and `timeout: 5000` to wait for the write lock. Rails 7.2 no longer warns about SQLite in production, so no setting is needed.
+The app intentionally uses SQLite (not PostgreSQL) with WAL mode for concurrency. Configured in `config/database.yml` with pragmas: `journal_mode: WAL`, `synchronous: NORMAL`, `mmap_size: 128MB`, and `timeout: 5000` to wait for the write lock. Rails 8.0 does not warn about SQLite in production, so no setting is needed.
 
 `config/database.yml` is multi-database: `primary`, `queue` and `cable` in development; `primary`, `cache`, `queue` and `cable` in production; a single DB in test. The solid_* DBs have no migrations, only `db/*_schema.rb`, so use `db:prepare` (the deploy script does) instead of `db:migrate` to create them.
 
 ### JavaScript
-Uses importmap-rails (no Node/Webpack/Vite). Hotwire stack: Turbo + Stimulus. Bootstrap 5.3 pinned in `config/importmap.rb`.
+Uses importmap-rails (no Node/Webpack/Vite). Assets go through Sprockets + dartsass-sprockets, not Propshaft: `rails new` 8.0 no longer accepts `-a sprockets`, so `template.rb` copies `app/assets/config/manifest.js` before bundling (importmap/turbo/stimulus installers boot the app) and restores `config.assets.compile = false` (production) and `config.assets.quiet = true` (development). Kamal is skipped in `template.rb` (`skip_kamal`): deployment is via SSH. Hotwire stack: Turbo + Stimulus. Bootstrap 5.3 pinned in `config/importmap.rb`.
 
 ## Locale
 The app is configured for Colombian Spanish (`es-CO`). Devise views and locale files are in Spanish. Generated READMEs are in Spanish.

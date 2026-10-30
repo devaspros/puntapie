@@ -4,11 +4,11 @@ Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 
 ## Requisitos
 
-* Rails 7.2.3.1
+* Rails 8.0.5.1
 * Ruby 3.4.8
 * SQLite3
 * Bundler `gem install bundler`
-* Rails `gem install rails -v 7.2.3.1`
+* Rails `gem install rails -v 8.0.5.1`
 * Un servidor SMTP local en el puerto 1025 para ver los correos en desarrollo, como [Mailpit](https://mailpit.axllent.org/) o [MailCatcher](https://mailcatcher.me/)
 
 ## ¿Cómo uso Puntapie?
@@ -16,7 +16,7 @@ Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 Usando la plantilla desde el repositorio en GitHub:
 
 ```bash
-rails _7.2.3.1_ new ./pruebapie01 \
+rails _8.0.5.1_ new ./pruebapie01 \
   -d sqlite3 \
   -m https://raw.githubusercontent.com/devaspros/puntapie/master/template.rb \
   --skip-test \
@@ -28,7 +28,7 @@ rails _7.2.3.1_ new ./pruebapie01 \
 También se puede clonar el repo y leer la plantilla desde el archivo local:
 
 ```bash
-rails _7.2.3.1_ new ../pruebapie01 \
+rails _8.0.5.1_ new ../pruebapie01 \
   -d sqlite3 \
   -m ./template.rb \
   --skip-test \
@@ -109,13 +109,13 @@ En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.e
 - Para no crear el repo de git ni el commit inicial, define `SKIP_GIT=1`:
 
   ```bash
-  SKIP_GIT=1 rails _7.2.3.1_ new ./pruebapie01 -d sqlite3 -m ./template.rb --skip-test --skip-active-storage --skip-action-mailbox --skip-action-text
+  SKIP_GIT=1 rails _8.0.5.1_ new ./pruebapie01 -d sqlite3 -m ./template.rb --skip-test --skip-active-storage --skip-action-mailbox --skip-action-text
   ```
 
 - Para usar la plantilla de otra rama, cambia `master` por el nombre de la rama en la URL. La plantilla clona el repo y hace checkout de esa rama:
 
   ```bash
-  rails _7.2.3.1_ new ./pruebapie01 \
+  rails _8.0.5.1_ new ./pruebapie01 \
     -d sqlite3 \
     -m https://raw.githubusercontent.com/devaspros/puntapie/<rama>/template.rb \
     --skip-test \
@@ -148,7 +148,7 @@ En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.e
 
 ### Caché y tiempo real
 
-- Solid Cache como `cache_store` en producción, en su propia base de datos. En desarrollo se usa `memory_store` con `rails dev:cache`
+- Solid Cache como `cache_store` en producción, en su propia base de datos. En desarrollo se usa `memory_store`
 - Solid Cable como adaptador de Action Cable en desarrollo y producción, en su propia base de datos
 
 ### Correo
@@ -253,7 +253,7 @@ Pruebas:
 1. Genera una app desde el archivo local en una carpeta de pruebas fuera del repo:
 
    ```bash
-   rails _7.2.3.1_ new ../pruebapie01 -d sqlite3 -m ./template.rb --skip-test --skip-active-storage --skip-action-mailbox --skip-action-text
+   rails _8.0.5.1_ new ../pruebapie01 -d sqlite3 -m ./template.rb --skip-test --skip-active-storage --skip-action-mailbox --skip-action-text
    ```
 
 2. Revisa que la app arranque y que las pruebas pasen:

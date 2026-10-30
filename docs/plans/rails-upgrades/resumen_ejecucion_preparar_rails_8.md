@@ -52,3 +52,37 @@ La tarea 6.2 original (errores de la API en JSON) se quitó del plan a pedido de
 - SimpleCov avisa dos deprecations: `add_group` → `group`, y `SimpleCov.start` dentro de `.simplecov`.
 - Puma corre como root: `puntapie.puma.service` no tiene `User=`.
 - El deploy y `puntapie.jobs.service` usan `.PUNTAPIE.envs`, y `puntapie.puma.service` y el README `.puntapie.envs`.
+
+## Salto a Rails 8.0 (30 oct 2026)
+
+Todo en `master`, un commit por cambio, sin ramas ni PRs. Las apps nuevas nacen con Rails 8.0.5.1 y
+`load_defaults 8.0` (lo pone `rails new`), así que no hace falta `new_framework_defaults_8_0.rb`.
+
+| Cambio | Por qué |
+|---|---|
+| `rails` 8.0.5.1 y `Migration[8.0]` | El pin de `json ~> 2.19` se queda: json 3.x también rompe 8.0.5.1 |
+| `app/assets/config/manifest.js` se copia antes del bundle; `assets.compile = false` y `assets.quiet = true` | `rails new` 8.0 ya no acepta `-a sprockets` y genera para Propshaft. `importmap:install` arranca la app antes de `after_bundle` y Sprockets falla sin el manifest |
+| La plantilla ya no corre `solid_*:install` | `rails new` 8.0 los corre antes de `after_bundle` |
+| `skip_kamal` en `template.rb` | `kamal init` falla porque `Gemfile.tt` no trae `kamal`; el deploy es por SSH |
+| `gsub` del logger: `ActiveSupport::TaggedLogging.logger("log/production.log", "daily")` | El `production.rb` de 8.0 cambió la línea del logger y el `gsub` de 7.2 no encontraba nada |
+| `default_url_options` de production por `gsub` | El `production.rb` de 8.0 ya trae `{ host: "example.com" }` y pisaba el `CHANGE-ME` |
+| Borrado `sqlite3_busy_handler_timeout.rb` | Rails 8 ya usa `busy_handler_timeout` con `timeout` |
+| `:unprocessable_content` en `ApiExceptionHandler` | Deprecación de Rack 3.2. Devise 5 ya genera el símbolo nuevo |
+
+### Resultado (app generada en el scratchpad)
+
+- RSpec: 60 ejemplos, 0 fallos, también con `deprecation = :raise`. `RAILS_ENV=test bin/rails runner 1`: 0 deprecations.
+  `Regexp.timeout` = 1.0, `strict_freshness` = true, `to_time_preserves_timezone` = `:zone`.
+- RuboCop: 54 archivos, sin ofensas.
+- Desarrollo: `/`, login, registro y recuperar clave → 200; login web con el usuario de `setup:run` → `/dashboard`;
+  `/jobs` abre Mission Control para el admin; login de la API devuelve el JWT; `bin/jobs` arranca supervisor,
+  dispatcher y worker.
+- Producción: arranca con Solid Cache y Solid Queue; `assets:precompile` sin avisos y Bootstrap v5.3.8 en
+  `application`, `login` y `landing`; 404 y 500 con `layouts/4xx` y `layouts/5xx`; el log va a `log/production.log`.
+
+### Queda igual que en 7.2 (no se tocó)
+
+- `rails new` 8.0 deja `bin/thrust`, `bin/dev` y un `Dockerfile` que llama a `bin/thrust`. No se usan.
+- `assume_ssl` y `force_ssl` quedan en `true` (default de 8.0). Requiere que nginx mande `X-Forwarded-Proto https`,
+  como ya hace `config/nginx.puntapie.production.conf`. Ver `../docs/plan-force-ssl.md`.
+- Deprecations de SimpleCov y el 500 con JSON malformado en la API (ver "Encontrado, sin tocar").
