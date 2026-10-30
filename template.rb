@@ -100,12 +100,9 @@ def add_authorization
 end
 
 def add_solid_trifecta
-  # Los generadores crean queue.yml, recurring.yml, bin/jobs y los *_schema.rb,
-  # y configuran queue_adapter, connects_to y cache_store en production.rb.
-  generate "solid_queue:install"
-  generate "solid_cache:install"
-  generate "solid_cable:install"
-
+  # rails new 8.0 ya corrió solid_cache:install, solid_queue:install y solid_cable:install antes de
+  # after_bundle: crean queue.yml, recurring.yml, bin/jobs y los *_schema.rb, y production.rb ya trae
+  # queue_adapter, connects_to y cache_store.
   copy_file "config/cache.yml", force: true
   copy_file "config/cable.yml", force: true
 
@@ -434,6 +431,10 @@ end
 
 # Setup starts from here
 add_template_repository_to_source_path
+
+# El deploy es por SSH (scripts/). Sin esto rails new 8.0 corre `kamal init`, que falla porque
+# Gemfile.tt no trae kamal.
+self.options = options.merge(skip_kamal: true).freeze
 
 template "Gemfile.tt", force: true
 
