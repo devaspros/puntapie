@@ -25,6 +25,7 @@ echo "$(date '+%F %T') rsyncing release folder with app folder" >> $LOG_DIR/012_
 rsync -ar --delete-after \
   --exclude "vendor/" \
   --exclude "tmp/" \
+  --exclude "log/" \
   $DEPLOY_DIR/ \
   $BASE_DIR/app/ \
   >> $LOG_DIR/012_rsync_files.log 2>&1
