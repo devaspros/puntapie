@@ -8,7 +8,7 @@ gem "bootsnap", require: false
 gem "bootstrap", "~> 5.3.8"
 gem "blueprinter"
 gem "dartsass-sprockets", "~> 3.2"
-gem "devise", "5.0.3"
+gem "devise", "5.0.4"
 gem "exception_handler", "~> 0.8.0.0"
 gem "importmap-rails", "2.2.3"
 # json 3.x rompe Rails 7.2 y 8.0.5.1: JSON.generate da "unknown keyword: quirks_mode" al renderizar vistas.
