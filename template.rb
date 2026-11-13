@@ -169,6 +169,7 @@ def copy_templates
   directory "scripts", force: true
 
   copy_file ".rubocop.yml", force: true
+  copy_file ".herb.yml", force: true
   copy_file ".solargraph.yml", force: true
 
   copy_file "bin/setup-project-name.tt", "bin/setup-project-name", force: true
