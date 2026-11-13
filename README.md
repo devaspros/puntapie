@@ -9,6 +9,7 @@ Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 * SQLite3
 * Bundler `gem install bundler`
 * Rails `gem install rails -v 8.0.5.1`
+* Node 22.14.0 (la versión de `.nvmrc`), solo para correr el linter de Herb
 * Un servidor SMTP local en el puerto 1025 para ver los correos en desarrollo, como [Mailpit](https://mailpit.axllent.org/) o [MailCatcher](https://mailcatcher.me/)
 
 ## ¿Cómo uso Puntapie?
@@ -179,7 +180,7 @@ En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.e
 
 ### Despliegue
 
-- Despliegue a VPS por SSH con GitHub Actions: corre RSpec, despliega desde `main` y avisa por [ntfy.sh](https://ntfy.sh/) (ver [`scripts/README.md`](scripts/README.md))
+- Despliegue a VPS por SSH con GitHub Actions: corre RSpec, RuboCop y Herb, despliega desde `main` solo si los tres pasan y avisa por [ntfy.sh](https://ntfy.sh/) (ver [`scripts/README.md`](scripts/README.md))
 - `scripts/set_repo_secrets.sh` para configurar los secrets del repo
 - Configuración de nginx, servicios de systemd para Puma y los jobs, y logrotate
 - El deploy corre `db:prepare`, que migra las bases existentes y crea las nuevas desde su schema
@@ -191,7 +192,8 @@ En desarrollo se leen de `.env` con dotenv. En el servidor van en `~/.puntapie.e
 
 - `bin/setup-project-name` para reemplazar `Puntapie` por el nombre del proyecto
 - RSpec con FactoryBot, DatabaseCleaner, Capybara, helpers de Devise y SimpleCov
-- RuboCop configurado
+- RuboCop con `rubocop-rails`: líneas de 130 caracteres, comillas dobles, sin los cops de `Metrics` y con varios cops pendientes activados explícitamente. Al generar la app, `template.rb` corre `rubocop --auto-gen-config` y deja en `.rubocop_todo.yml` los offenses del código de la plantilla, así que la app nace sin offenses
+- [Herb](https://herb-tools.dev) 0.11.2 para revisar las vistas HTML+ERB (`.herb.yml`). El linter falla solo con offenses de nivel error y el formatter está desactivado. Corre con `npx`, así que no es una gema
 - Generadores de Rails sin assets, helpers, jbuilder ni specs de vistas y helpers
 - `.editorconfig`, archivos `.env` y Foreman con `Procfile.dev`
 
@@ -228,6 +230,7 @@ Desarrollo:
 - [annotaterb](https://github.com/drwl/annotaterb)
 - [foreman](https://github.com/ddollar/foreman)
 - [rubocop](https://github.com/rubocop/rubocop)
+- [rubocop-rails](https://github.com/rubocop/rubocop-rails)
 - [solargraph](https://github.com/castwide/solargraph)
 - [solargraph-rails](https://github.com/iftheshoefritz/solargraph-rails)
 - [spring](https://github.com/rails/spring)
@@ -256,13 +259,17 @@ Pruebas:
    rails _8.0.5.1_ new ../pruebapie01 -d sqlite3 -m ./template.rb --skip-test --skip-active-storage --skip-action-mailbox --skip-action-text
    ```
 
-2. Revisa que la app arranque y que las pruebas pasen:
+2. Revisa que la app arranque y que las pruebas y los linters pasen:
 
    ```bash
    cd ../pruebapie01
    bundle exec rails db:prepare setup:run
    bundle exec rspec
+   bundle exec rubocop
+   npx --yes @herb-tools/linter@0.11.2
    ```
+
+   Las vistas de la plantilla también se pueden revisar con Herb sin generar una app, desde la raíz de este repo: `npx --yes @herb-tools/linter@0.11.2`.
 
 3. Borra la carpeta cuando termines: `rm -rf ../pruebapie01`.
 
