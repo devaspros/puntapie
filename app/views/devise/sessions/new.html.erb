@@ -1,4 +1,4 @@
-<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form-signin-stacked" }) do |f| %>
+<%= form_with(model: resource, scope: resource_name, url: session_path(resource_name), class: "form-signin-stacked") do |f| %>
   <h1 class="h3 mb-3 fw-normal text-center">
     <%= t(".title") %>
   </h1>
