@@ -32,6 +32,7 @@ bundle exec rspec spec/requests/api/v1/users/sessions_spec.rb  # single file
 
 # Lint
 bundle exec rubocop
+npx --yes @herb-tools/linter@0.11.2  # HTML+ERB views; works from this repo's root too
 ```
 
 ## Architecture
@@ -82,7 +83,14 @@ The app is configured for Colombian Spanish (`es-CO`). Devise views and locale f
 - Test user: frajaquico@aol.com with admin role
 
 ## Deployment
-SSH-based VPS deployment via scripts in `scripts/`. GitHub Actions runs tests then triggers `scripts/001_deploy_api.sh` via SSH on push to `main`. Notifications via ntfy.sh.
+SSH-based VPS deployment via scripts in `scripts/`. GitHub Actions runs RSpec, RuboCop and Herb, then, only if all three pass, triggers `scripts/001_deploy_api.sh` via SSH on push to `main`. Notifications via ntfy.sh.
 
 ## RuboCop Config
 130-character line length, double-quoted strings enforced. See `.rubocop.yml` for full config.
+
+`.rubocop.yml` inherits from `.rubocop_todo.yml`, which is not in this repo: `template.rb` generates it with `rubocop --auto-gen-config` so the generated app starts with no offenses. `Rails/UniqueValidationWithoutIndex` is excluded by hand because `db/schema.rb` doesn't exist yet when the todo is generated.
+
+## Herb Config
+`.herb.yml` (Herb 0.11.2) lints HTML+ERB views. It fails only on error-level offenses; the formatter is disabled. It runs with `npx`, not as a gem, using the Node version in `.nvmrc`. `template.rb` copies `.rubocop.yml`, `.herb.yml` and `.nvmrc` into the generated app. Keep the template's views clean with `--log-level=hint`.
+
+The `.rubocop.yml`, `.herb.yml` and `.github/workflows/workflow.yml` files mirror the sibling Rails projects in the parent folder (coshinotes, enlacito, postlane-backend, supermenu); keep them in sync.
