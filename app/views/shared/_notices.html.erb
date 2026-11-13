@@ -1,9 +1,9 @@
 <% flash.each do |msg_type, message| %>
-  <% color = msg_type == "alert" ? "warning" : "success" %>
+  <% color_class = msg_type == "alert" ? "text-bg-warning" : "text-bg-success" %>
 
   <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 2000;">
     <div
-      class="toast align-items-center border-0 text-bg-<%= color %>"
+      class="toast align-items-center border-0 <%= color_class %>"
       data-controller="toast"
       data-bs-delay="2500"
     >

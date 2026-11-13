@@ -32,7 +32,7 @@
     <meta name="twitter:description" content="Descripción de tu aplicación.">
     <meta name="twitter:image" content="<%= request.base_url %>/og-image.png">
 
-    <%#= favicon_link_tag asset_path("favicon.png") %>
+    <%# Agrega app/assets/images/favicon.png y usa aquí favicon_link_tag asset_path("favicon.png") %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -50,7 +50,7 @@
   </head>
 
   <body>
-    <div class="">
+    <div>
       <%= yield %>
     </div>
   </body>
