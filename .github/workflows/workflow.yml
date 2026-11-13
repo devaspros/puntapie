@@ -6,7 +6,7 @@ on:
 jobs:
   rspec-tests:
     name: RSpec
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
@@ -18,9 +18,32 @@ jobs:
       - name: Run tests
         run: bundler exec rspec
 
+  rubocop:
+    name: RuboCop
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.4.8
+          bundler-cache: true
+      - name: Run RuboCop
+        run: bundle exec rubocop --format github
+
+  herb:
+    name: Herb
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - name: Lint HTML+ERB templates
+        run: npx --yes @herb-tools/linter@0.11.2
+
   deploy:
     name: Deploy
     if: github.ref == 'refs/heads/main'
-    needs: [rspec-tests]
+    needs: [rspec-tests, rubocop, herb]
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
