@@ -1,7 +1,7 @@
+inherit_from: .rubocop_todo.yml
+
 plugins:
   - rubocop-rails
-
-inherit_from: .rubocop_todo.yml
 
 AllCops:
   TargetRubyVersion: 3.4
@@ -23,24 +23,9 @@ Style/Documentation:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-Style/ClassAndModuleChildren:
-  Enabled: false
-
 Style/SymbolArray:
   Exclude:
     - spec/factories/*
-
-Style/AccessorGrouping:
-  Enabled: false
-
-Style/KeywordParametersOrder:
-  Enabled: false
-
-Style/NumericLiterals:
-  Enabled: false
-
-Style/HashSyntax:
-  Enabled: false
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
@@ -57,18 +42,119 @@ Metrics/MethodLength:
 Metrics/ClassLength:
   Enabled: false
 
+Metrics/BlockLength:
+  Enabled: false
+
 Metrics/CyclomaticComplexity:
   Enabled: false
 
 Metrics/PerceivedComplexity:
   Enabled: false
 
-Naming/VariableNumber:
-  Enabled: false
+Lint/AmbiguousOperatorPrecedence:
+  Enabled: true
 
-Metrics/BlockLength:
-  Exclude:
-    - "spec/**/*_spec.rb"
+Lint/DuplicateBranch:
+  Enabled: true
+
+Lint/LiteralAssignmentInCondition:
+  Enabled: true
+
+Lint/UnusedPrivateMethod:
+  Enabled: true
+
+Lint/UselessRescue:
+  Enabled: true
+
+Rails/ActionControllerFlashBeforeRender:
+  Enabled: true
+
+Rails/ActionOrder:
+  Enabled: true
+
+Rails/CompactBlank:
+  Enabled: true
+
+Rails/DuplicateAssociation:
+  Enabled: true
+
+Rails/DurationArithmetic:
+  Enabled: true
+
+Rails/EnvLocal:
+  Enabled: true
+
+Rails/ExpandedDateRange:
+  Enabled: true
+
+Rails/FreezeTime:
+  Enabled: true
+
+Rails/NegateInclude:
+  Enabled: true
+
+Rails/Pluck:
+  Enabled: true
+
+Rails/RedundantActiveRecordAllMethod:
+  Enabled: true
+
+Rails/RedundantPresenceValidationOnBelongsTo:
+  Enabled: true
+
+Rails/ResponseParsedBody:
+  Enabled: true
+
+Rails/SelectMap:
+  Enabled: true
+
+Rails/TransactionExitStatement:
+  Enabled: true
+
+Rails/WhereExists:
+  Enabled: true
+
+Rails/WhereMissing:
+  Enabled: true
+
+Rails/WhereNot:
+  Enabled: true
+
+Rails/WhereRange:
+  Enabled: true
+
+Style/ArrayFirstLast:
+  Enabled: true
+
+Style/ComparableBetween:
+  Enabled: true
+
+Style/ComparableClamp:
+  Enabled: true
+
+Style/HashExcept:
+  Enabled: true
+
+Style/HashSlice:
+  Enabled: true
+
+Style/MapIntoArray:
+  Enabled: true
+
+Style/RedundantFilterChain:
+  Enabled: true
+
+Style/ReturnNilInPredicateMethodDefinition:
+  Enabled: true
+
+Style/SafeNavigationChainLength:
+  Enabled: true
+
+Style/StaticClass:
+  Enabled: true
+
+Style/YodaExpression:
+  Enabled: true
 
 # Este cop lee db/schema.rb, que todavía no existe cuando template.rb genera .rubocop_todo.yml, así que
 # no queda en el todo. Agregar los índices únicos exige una migración aparte.
