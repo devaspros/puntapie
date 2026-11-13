@@ -19,6 +19,7 @@ Tener instalado:
 - Ruby 3.4.8
 - Bundler gem: `gem install bundler`
 - SQLite3
+- Node 22.14.0 (la versión de `.nvmrc`), solo para correr el linter de Herb
 
 Luego instala las gemas:
 
@@ -55,6 +56,26 @@ Con el comando de `rspec`:
 ```bash
 rspec ./spec
 ```
+
+### Linters
+
+RuboCop revisa el código Ruby con la configuración de `.rubocop.yml`:
+
+```bash
+bundle exec rubocop
+```
+
+Los offenses que traía el código de la plantilla quedaron en `.rubocop_todo.yml`. Para sacar uno de ahí, corrígelo y borra su entrada del archivo.
+
+[Herb](https://herb-tools.dev) revisa las vistas HTML+ERB con la configuración de `.herb.yml`:
+
+```bash
+npx --yes @herb-tools/linter@0.11.2
+```
+
+Solo los offenses de nivel error hacen fallar el comando. Para ver también los warnings y sugerencias, agrega `--log-level=hint`.
+
+El workflow de GitHub Actions corre RSpec, RuboCop y Herb en cada pull request y en cada push a `main`. El despliegue desde `main` solo ocurre si los tres pasan.
 
 ## Despliegue
 
