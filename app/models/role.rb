@@ -1,3 +1,5 @@
+# Roles predefinidos del sistema: admin, member, viewer.
+# Se asignan a través de Membership para controlar permisos dentro de una organización.
 class Role < ApplicationRecord
   ADMIN = "admin".freeze
   MEMBER = "member".freeze

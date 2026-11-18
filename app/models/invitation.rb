@@ -1,3 +1,5 @@
+# Invitación pendiente para que un usuario se una a una organización.
+# Al aceptarla se crea un Membership.
 class Invitation < ApplicationRecord
   belongs_to :organization
   belongs_to :from_membership, class_name: "Membership", optional: true

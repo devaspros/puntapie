@@ -1,3 +1,5 @@
+# Una organización (equipo/empresa) que agrupa usuarios, cuentas sociales y posts.
+# Es la unidad multi-tenant del sistema.
 class Organization < ApplicationRecord
   belongs_to :owner, class_name: "User", optional: true
 

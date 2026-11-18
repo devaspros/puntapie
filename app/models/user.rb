@@ -1,3 +1,5 @@
+# Usuario del sistema. Pertenece a organizaciones a través de memberships.
+# Puede conectar cuentas sociales y crear posts dentro de su organización activa.
 class User < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :organizations, through: :memberships

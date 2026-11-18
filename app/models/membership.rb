@@ -1,3 +1,5 @@
+# Join table que vincula un usuario con una organización y le asigna un rol.
+# Define qué puede hacer cada persona dentro de una organización.
 class Membership < ApplicationRecord
   scope :admins, -> { joins(:role).where(roles: { name: Role::ADMIN }) }
   scope :members, -> { joins(:role).where(roles: { name: Role::MEMBER }) }
