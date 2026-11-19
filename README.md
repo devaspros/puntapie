@@ -5,7 +5,7 @@ Plantilla para empezar aplicaciones Rails con un puntazo inicial.
 ## Requisitos
 
 * Rails 8.0.5.1
-* Ruby 3.4.8
+* Ruby 3.4.8 (la versión de `.ruby-version` y `mise.toml`; con [mise](https://mise.jdx.dev/): `mise install`)
 * SQLite3
 * Bundler `gem install bundler`
 * Rails `gem install rails -v 8.0.5.1`
