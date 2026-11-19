@@ -32,6 +32,8 @@ mkdir -p ~/PUNTAPIE/{app,deployments/{api-gems,api-release,logs},backups,db}
 > [!Important]
 > Nota que el url es `git@gh`. Eso es intencional. En el VPS se configura el acceso a github.com como alias `gh`
 
+El VPS usa [mise](https://mise.jdx.dev/) instalado en `~/.local/bin/mise` para Ruby: `003_after_deploy.sh` usa sus shims y los servicios de systemd arrancan con `mise exec -- bundle exec`. Ruby se instala con `mise install` desde la carpeta `app`, que tiene el `mise.toml`.
+
 El primero paso es hacer un `git clone` manual desde la carpeta `~/PUNTAPIE/deployments/api-release` en el VPS.
 
 Ejemplo:

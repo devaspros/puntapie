@@ -16,7 +16,7 @@ despliegue, configuraciones, etc.) por el nombre que ingreses.
 
 Tener instalado:
 
-- Ruby 3.4.8
+- Ruby 3.4.8 (la versión de `.ruby-version` y `mise.toml`; con [mise](https://mise.jdx.dev/): `mise install`)
 - Bundler gem: `gem install bundler`
 - SQLite3
 - Node 22.14.0 (la versión de `.nvmrc`), solo para correr el linter de Herb

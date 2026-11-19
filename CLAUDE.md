@@ -85,6 +85,8 @@ The app is configured for Colombian Spanish (`es-CO`). Devise views and locale f
 ## Deployment
 SSH-based VPS deployment via scripts in `scripts/`. GitHub Actions runs RSpec, RuboCop and Herb, then, only if all three pass, triggers `scripts/001_deploy_api.sh` via SSH on push to `main`. Notifications via ntfy.sh.
 
+Ruby is managed with mise, locally and on the VPS. `Gemfile.tt` reads the version from `.ruby-version` (`ruby file: ".ruby-version"`), and `template.rb` copies `.ruby-version` and `mise.toml` into the generated app; keep both on the same version. `003_after_deploy.sh` puts the mise shims on `PATH` and sets `PUMA_DISABLE_SSL=1` (mise's Ruby has static OpenSSL 3 and puma crashes linking the system's libssl 1.1; nginx terminates TLS). The systemd services start with `mise exec -- bundle exec`.
+
 ## RuboCop Config
 130-character line length, double-quoted strings enforced. See `.rubocop.yml` for full config.
 

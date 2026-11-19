@@ -28,7 +28,7 @@ Environment=MALLOC_ARENA_MAX=2
 Environment=RAILS_ENV=production
 
 EnvironmentFile=/home/ubuntu/.PUNTAPIE.envs
-ExecStart=/home/ubuntu/.rubies/ruby-3.4.8/bin/bundle exec bin/jobs start --mode async
+ExecStart=/home/ubuntu/.local/bin/mise exec -- bundle exec bin/jobs start --mode async
 
 # if we crash, restart
 RestartSec=1

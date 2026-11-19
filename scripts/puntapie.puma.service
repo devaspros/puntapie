@@ -3,6 +3,8 @@ Description=puntapie (puma)
 After=network.target
 
 [Service]
+User=ubuntu
+
 Type=simple
 
 WorkingDirectory=/home/ubuntu/puntapie/app
@@ -13,7 +15,7 @@ Environment=MALLOC_ARENA_MAX=2
 # Si tienes variables globales (DB, secrets, etc)
 EnvironmentFile=/home/ubuntu/.puntapie.envs
 
-ExecStart=/home/ubuntu/.rubies/ruby-3.4.8/bin/bundle exec puma -C config/puma.rb
+ExecStart=/home/ubuntu/.local/bin/mise exec -- bundle exec puma -C config/puma.rb
 
 ExecReload=/bin/kill -USR2 $MAINPID
 
