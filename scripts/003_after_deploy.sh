@@ -17,8 +17,11 @@ set -a
 . /home/ubuntu/.PUNTAPIE.envs
 set +a
 
-source /usr/local/share/chruby/chruby.sh
-chruby ruby-3.4.8
+export PATH="/home/ubuntu/.local/share/mise/shims:$PATH"
+
+# Ruby de mise trae OpenSSL 3 estático; si puma enlaza el libssl 1.1 del
+# sistema, el proceso se cae en openssl/pkey.rb. Nginx termina TLS.
+export PUMA_DISABLE_SSL=1
 
 set -eo pipefail
 
