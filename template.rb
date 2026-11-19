@@ -438,6 +438,7 @@ self.options = options.merge(skip_kamal: true).freeze
 template "Gemfile.tt", force: true
 # El Gemfile lee la versión de Ruby de .ruby-version; se copia antes del bundle install.
 copy_file ".ruby-version", force: true
+copy_file "mise.toml", force: true
 
 # Sprockets no arranca sin manifest.js, y rails new arranca la app (importmap:install) antes de after_bundle.
 copy_file "app/assets/config/manifest.js"
